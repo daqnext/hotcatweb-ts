@@ -1,0 +1,35 @@
+.sidebar-list-item i{
+margin:10px;
+}
+
+
+.sidebar-menu .sidebar-list-item .sidebar-link i{
+    margin-left: 40px !important;
+}
+   
+.header .navbar .lead{
+display: none;
+}
+
+.navlogo{
+height: 40px;
+}
+
+@media (max-width: 1199.98px) {
+.header .navbar .navlogo{
+position: absolute;
+left: 60px;
+}
+}
+
+
+.loadertext{
+margin-left: -10px;
+color: #4650dd;
+margin-top: 10px;
+font-weight: bold;
+transition: .3s all ease;
+}
+
+
+
