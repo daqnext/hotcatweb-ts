@@ -1,20 +1,38 @@
 /*
  * @Author: your name
  * @Date: 2021-07-16 14:18:43
- * @LastEditTime: 2021-07-16 15:32:18
+ * @LastEditTime: 2021-07-17 13:27:07
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/components/TopHeader/TopHeader.ts
  */
 import React from "react";
+import { IUserInfo } from "../../interface/interface";
+import { UserManager } from "../../manager/UserManager";
 interface Props {}
 
-interface State {}
+interface State {
+    userInfo:IUserInfo
+}
 class TopHeader extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
 
-        this.state = {};
+        this.state = {
+            userInfo:null
+        };
+    }
+
+    async componentDidMount(){
+        if (UserManager.GetUserInfo() == null) {
+            await UserManager.UpdateUserInfo();
+        }
+        //UserManager.TokenCheckAndRedirectLogin();
+        const info=UserManager.GetUserInfo()
+        if (info==null) {
+            return
+        }
+        this.setState({userInfo:info})
     }
 
     render() {
@@ -24,7 +42,8 @@ class TopHeader extends React.Component<Props, State> {
                     <a className="sidebar-toggler text-gray-500 me-4 me-lg-5 lead" href="#">
                         <i className="fas fa-align-left"></i>
                     </a>
-                    <img className="navlogo" src="/img/navlogo.png"></img>
+                    <img className="navlogo" src="/img/navlogo.png"/>
+                    {this.state.userInfo?
                     <ul className="ms-auto d-flex align-items-center list-unstyled mb-0">
                         <li className="nav-item dropdown ms-auto">
                             <a
@@ -42,7 +61,7 @@ class TopHeader extends React.Component<Props, State> {
                                 aria-labelledby="userInfo"
                             >
                                 <div className="dropdown-header text-gray-700">
-                                    <h6 className="text-uppercase font-weight-bold">Jack</h6>
+                                    <h6 className="text-uppercase font-weight-bold">{this.state.userInfo.name}</h6>
                                     <small>Programmer</small>
                                 </div>
                                 <div className="dropdown-divider"></div>
@@ -50,12 +69,19 @@ class TopHeader extends React.Component<Props, State> {
                                     Settings
                                 </a>
                                 <div className="dropdown-divider"></div>
-                                <a className="dropdown-item" href="login.html">
+                                <a className="dropdown-item" href="/index"
+                                onClick={()=>{
+                                    UserManager.UnsetUserToken()
+                                }}>
                                     Logout
                                 </a>
                             </div>
                         </li>
                     </ul>
+                    :
+                    <a className="ms-auto d-flex align-items-center list-unstyled mb-0 btn btn-primary btn-lg" href="/signin">Sign In</a>
+                    }
+                    
                 </nav>
             </header>
         );

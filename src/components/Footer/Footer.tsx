@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-16 14:17:39
- * @LastEditTime: 2021-07-16 14:36:31
+ * @LastEditTime: 2021-07-17 13:07:58
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/components/Footer/Footer.ts
@@ -22,10 +22,10 @@ class Footer extends React.Component<Props, State> {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-md-6 text-center text-md-start fw-bold">
-                            <p className="mb-2 mb-md-0 fw-bold">Your company &copy; 2021</p>
+                            <p className="mb-2 mb-md-0 fw-bold">hotcat.live &copy; 2021</p>
                         </div>
                         <div className="col-md-6 text-center text-md-end text-gray-400">
-                            <p className="mb-0">Version x.y.z</p>
+                            <p className="mb-0">Version 1.0.0</p>
                         </div>
                     </div>
                 </div>
