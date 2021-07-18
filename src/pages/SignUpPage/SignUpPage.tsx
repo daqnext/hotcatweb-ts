@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-16 15:06:28
- * @LastEditTime: 2021-07-17 13:22:09
+ * @LastEditTime: 2021-07-18 13:14:52
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/SignUpPage/SignUpPage.tsx
@@ -47,7 +47,17 @@ class SignUpPage extends React.Component<Props, State> {
         //this.getCaptcha();
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        if (UserManager.GetUserInfo() == null) {
+            await UserManager.UpdateUserInfo();
+        }
+        //UserManager.TokenCheckAndRedirectLogin();
+        const info=UserManager.GetUserInfo()
+        if (info!==null) {
+            //to index page
+            window.location.href = "/index";
+            return
+        }
         this.getCaptcha();
     }
 
