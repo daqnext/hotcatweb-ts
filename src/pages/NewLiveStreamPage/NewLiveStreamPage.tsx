@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-18 17:33:49
- * @LastEditTime: 2021-07-18 23:23:35
+ * @LastEditTime: 2021-07-18 23:31:14
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/NewLiveStreamPage/NewLiveStreamPage.tsx
@@ -11,6 +11,7 @@ import React from "react";
 import Choices from "choices.js";
 import DashboardLayout from "../../layout/DashboardLayout";
 import { UserManager } from "../../manager/UserManager";
+import { Utils } from "../../utils/Utils";
 
 declare class Dropzone {
     constructor(selectorOrElement: string | HTMLInputElement | HTMLSelectElement, userConfig?: any);
@@ -50,11 +51,8 @@ class NewLiveStreamPage extends React.Component<Props, State> {
         new Choices(element as any);
 
         //upload
-       
-        const script: any = document.createElement("script");
-        script.src = "/js/dropzone.js";
-        script.async = true;
-        (document as any).body.appendChild(script);
+       await Utils.loadScript("/js/dropzone.js");
+        
         
         (Dropzone as any).autoDiscover = false;
         new Dropzone("#cover-upload", {
