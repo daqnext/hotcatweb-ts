@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-16 15:19:04
- * @LastEditTime: 2021-07-18 17:25:26
+ * @LastEditTime: 2021-07-20 11:50:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/IndexPage/IndexPage.tsx
@@ -10,10 +10,13 @@
 import React from "react";
 import VideoCard from "../../components/VideoCard/VideoCard";
 import DashboardLayout from "../../layout/DashboardLayout";
+import { CategoryManager } from "../../manager/CategoryManager";
 
 interface Props {}
 
 interface State {
+    categoryArray:string[];
+    
     checkedCategory:{[key:string]:boolean}
 }
 
@@ -124,23 +127,31 @@ const video = [
     },
 ];
 
-const category = ["Crypto", "Games", "Sports", "Technology"];
+// const category = ["Crypto", "Games", "Sports", "Technology"];
 
 class IndexPage extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state={
+            categoryArray:[],
             checkedCategory:{
-                "Crypto":true,
-                "Games":true,
-                "Sports":true,
-                "Technology":true
+               
             }
         }
     }
 
     async componentDidMount(){
-
+        const cate=await CategoryManager.GetCategory()
+        if (cate.length>0) {
+            const checked:{[key:string]:boolean}={}
+            for (let i = 0; i < cate.length; i++) {
+                checked[cate[i]]=true
+            }
+            this.setState({
+                categoryArray:cate,
+                checkedCategory:checked
+            })
+        }
     }
 
     render() {
@@ -153,7 +164,7 @@ class IndexPage extends React.Component<Props, State> {
                         role="group"
                         aria-label="Basic checkbox toggle button group"
                     >
-                        {category.map((value, index, array) => {
+                        {this.state.categoryArray.map((value, index, array) => {
                             return (
                                 <div key={index}>
                                     <input

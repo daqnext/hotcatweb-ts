@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-18 17:36:43
- * @LastEditTime: 2021-07-20 00:27:21
+ * @LastEditTime: 2021-07-20 12:08:57
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/ManageLiveStream/ManageLiveStreamPage.tsx
@@ -12,6 +12,8 @@ import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import BootstrapTable, { ROW_SELECT_MULTIPLE } from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import moment from 'moment'
+import { UserManager } from "../../manager/UserManager";
+import LiveStreamDetail from "./LiveStreamDetail";
 
 const products: any[] = [
     // { id: 300, streamName: "myStream", category: "Sports", created: 1626706861681, status: "OnLive" },
@@ -42,24 +44,24 @@ const columns = [
         dataField: "status",
         text: "Status",
     },
-    {
-        dataField: "df1",
-        isDummyField: true,
-        text: "Action 1",
-        formatter: (cellContent: any, row: any) => {
-            return (
-                <div
-                    className="btn btn-primary"
-                    onClick={() => {
-                        console.log(cellContent);
-                        console.log(row);
-                    }}
-                >
-                    SomeAction
-                </div>
-            );
-        },
-    },
+    // {
+    //     dataField: "df1",
+    //     isDummyField: true,
+    //     text: "Action 1",
+    //     formatter: (cellContent: any, row: any) => {
+    //         return (
+    //             <div
+    //                 className="btn btn-primary"
+    //                 onClick={() => {
+    //                     console.log(cellContent);
+    //                     console.log(row);
+    //                 }}
+    //             >
+    //                 SomeAction
+    //             </div>
+    //         );
+    //     },
+    // },
 ];
 
 const expandRow = {
@@ -74,16 +76,20 @@ const expandRow = {
     },
 };
 
+
 interface Props {}
 
 interface State {
+    showStreamDetail:boolean;
+    openStreamInfo:any;
+
     page:number;
     sizePerPage:number;
     totalSize:number;
     data:any[]
+    hoverIndex:number
+    
 }
-
-const category = ["Crypto", "Games", "Sports", "Technology"];
 
 class ManageLiveStreamPage extends React.Component<Props, State> {
     node: BootstrapTable<any, number> = null;
@@ -91,30 +97,90 @@ class ManageLiveStreamPage extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state={
+            showStreamDetail:false,
+            openStreamInfo:null,
             page:1,
             sizePerPage:10,
             totalSize:0,
-            data:[]
+            data:[],
+            hoverIndex:null
         }
 
         
     }
 
     async componentDidMount() {
+        if (UserManager.GetUserInfo() == null) {
+            await UserManager.UpdateUserInfo();
+        }
+        //UserManager.TokenCheckAndRedirectLogin();
+        const info=UserManager.GetUserInfo()
+        if (info==null) {
+            //show login success msg
+            (window as any).notify("success", "Please sign in first", "error");
+
+            //to login page
+            window.location.href = "/signin";
+            return
+        }
+
+        
         for (let i = 0; i < 5; i++) {
-            // products.push({
-            //     id: i + 1,
-            //     streamName: "myStream" + i,
-            //     category: "Sports",
-            //     created: 1626706861681,
-            //     status: "OnLive",
-            // });
+            products.push({
+                id: i + 1,
+                streamName: "myStream" + i,
+                category: "Sports",
+                created: 1626706861681,
+                status: "OnLive",
+                coverImgUrl:"/public/livestreamCover/4/123456_i6TYKaDfI9.jpeg"
+            });
         }
         this.setState({data:products,totalSize:products.length})
         
         console.log(this.node);
         await this.getLiveStreamList(0,0);
     }
+
+    rowStyle = (row:any, rowIndex:number) => {
+        row.index = rowIndex;
+        const style:any = {};
+        if (rowIndex % 2 === 0) {
+          style.backgroundColor = 'transparent';
+        } else {
+          style.backgroundColor = 'rgba(230, 230, 230, .2)';
+        }
+        // style.borderTop = 'none';
+        style.cursor="pointer"
+        if (this.state.hoverIndex===rowIndex) {
+            style.backgroundColor = 'rgba(230, 230, 230, .5)';
+        }
+    
+        return style;
+      }
+
+      rowEvents = {
+        onClick: (e:any, row:any, rowIndex:number) => {
+          //console.log(e);
+          console.log(row);
+          //console.log(rowIndex);
+          //console.log(this.node);
+          
+          this.setState({
+              showStreamDetail:true,
+              openStreamInfo:row
+          })
+          
+        },
+
+        onMouseEnter: (e:any, row:any, rowIndex:number) => {
+            this.setState({ hoverIndex: rowIndex });
+        },
+        onMouseLeave: (e:any, row:any, rowIndex:number) => {
+            this.setState({ hoverIndex: null });
+        }
+      };
+
+      
 
     handleTableChange=async (type:any,{page,sizePerPage}:{page:number,sizePerPage:number})=>{
         console.log(page,sizePerPage);
@@ -150,6 +216,15 @@ class ManageLiveStreamPage extends React.Component<Props, State> {
     render() {
         return (
             <DashboardLayout>
+                {this.state.showStreamDetail?<LiveStreamDetail
+                liveStreamInfo={this.state.openStreamInfo}
+                onBackClick={()=>{
+                    this.setState({
+                        showStreamDetail:false,
+                        openStreamInfo:null
+                    })
+                }}
+                ></LiveStreamDetail>:
                 <BootstrapTable
                     ref={(n) => (this.node = n)}
                     remote
@@ -157,11 +232,13 @@ class ManageLiveStreamPage extends React.Component<Props, State> {
                     data={this.state.data}
                     columns={columns}
                     bordered={false}
-                    expandRow={ expandRow }
+                    rowStyle={ this.rowStyle }
+                    // expandRow={ expandRow }
+                    rowEvents={ this.rowEvents }
                     noDataIndication={this.indication}
                     pagination={paginationFactory({page:this.state.page,sizePerPage:this.state.sizePerPage,totalSize:this.state.totalSize})}
                     onTableChange={this.handleTableChange}
-                />
+                />}
             </DashboardLayout>
         );
     }

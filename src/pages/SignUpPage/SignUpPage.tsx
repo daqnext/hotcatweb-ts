@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-16 15:06:28
- * @LastEditTime: 2021-07-18 13:14:52
+ * @LastEditTime: 2021-07-20 15:57:09
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/SignUpPage/SignUpPage.tsx
@@ -209,7 +209,6 @@ class SignUpPage extends React.Component<Props, State> {
         //auto login
         const userInfo: IUserInfo = responseData.data;
         UserManager.SetUserToken(userInfo.cookie);
-        //UserManager.SetUserInfo(userInfo)
 
         //show login success msg
         (window as any).notify("success", "SignUp success", "error");

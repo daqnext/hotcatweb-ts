@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-16 15:43:01
- * @LastEditTime: 2021-07-16 22:17:17
+ * @LastEditTime: 2021-07-21 15:15:08
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/manager/usermanager.ts
@@ -27,11 +27,15 @@ export class UserManager {
 
         if (response.data.status === 0) {
             UserManager.userInfo = response.data.data;
+            if (UserManager.userInfo) {
+                UserManager.userInfo.avatarUrl="/public/avatar/"+UserManager.userInfo.id
+            }
+            
             return;
         }
 
         /////wrong user
-        UserManager.UnsetUserToken();
+        //UserManager.UnsetUserToken();
         //console.log(response.data);
     }
 
@@ -50,9 +54,9 @@ export class UserManager {
         localStorage.removeItem("hotCatUserToken");
     }
 
-    static SetUserInfo(info:IUserInfo){
-        UserManager.userInfo=info
-    }
+    // static SetUserInfo(info:IUserInfo){
+    //     UserManager.userInfo=info
+    // }
 
     static GetUserToken() {
         let result = localStorage.getItem("hotCatUserToken");

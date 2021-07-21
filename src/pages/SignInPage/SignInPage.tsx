@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-16 15:06:05
- * @LastEditTime: 2021-07-18 13:14:39
+ * @LastEditTime: 2021-07-21 15:21:51
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/SignInPage/SignInPage.tsx
@@ -131,8 +131,9 @@ class SignInPage extends React.Component<Props, State> {
         //register success
         //auto login
         const userInfo: IUserInfo = responseData.data;
+        console.log(userInfo);
+        
         UserManager.SetUserToken(userInfo.cookie);
-        //UserManager.SetUserInfo(userInfo)
 
         //show login success msg
         (window as any).notify("success", "SignIn success", "error");

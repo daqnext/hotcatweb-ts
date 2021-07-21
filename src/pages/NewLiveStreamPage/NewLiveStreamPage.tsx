@@ -2,7 +2,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-18 17:33:49
- * @LastEditTime: 2021-07-19 16:30:43
+ * @LastEditTime: 2021-07-20 11:43:30
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/NewLiveStreamPage/NewLiveStreamPage.tsx
@@ -12,11 +12,13 @@ import React from "react";
 import Choices from "choices.js";
 import DashboardLayout from "../../layout/DashboardLayout";
 import Dropzone from "react-dropzone";
+import CoverUploader from "../../components/CoverUploader/CoverUploader";
 import "./NewLiveStreamPage.css";
 import { UserManager } from "../../manager/UserManager";
 import { Utils } from "../../utils/Utils";
 import { RequestTool } from "../../utils/RequestTool";
 import { GlobalData } from "../../global/global";
+import { CategoryManager } from "../../manager/CategoryManager";
 
 // declare class Dropzone {
 //     constructor(selectorOrElement: string | HTMLInputElement | HTMLSelectElement, userConfig?: any);
@@ -26,6 +28,8 @@ import { GlobalData } from "../../global/global";
 interface Props {}
 
 interface State {
+    categoryArray:string[];
+
     streamName: string;
     subTitle: string;
     description: string;
@@ -41,6 +45,8 @@ class NewLiveStreamPage extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
+            categoryArray:[],
+
             streamName: "",
             subTitle: "",
             description: "",
@@ -52,6 +58,28 @@ class NewLiveStreamPage extends React.Component<Props, State> {
     }
 
     async componentDidMount() {
+        if (UserManager.GetUserInfo() == null) {
+            await UserManager.UpdateUserInfo();
+        }
+        //UserManager.TokenCheckAndRedirectLogin();
+        const info=UserManager.GetUserInfo()
+        if (info==null) {
+            //show login success msg
+            (window as any).notify("success", "Please sign in first", "error");
+
+            //to login page
+            window.location.href = "/signin";
+            return
+        }
+
+        const cate=await CategoryManager.GetCategory()
+        if (cate.length>0) {
+            this.setState({
+                categoryArray:cate,
+                category:cate[0]
+            })
+        }
+        
         //Choices
         const element = document.querySelector(".choices-category-newstream");
         new Choices(element as any);
@@ -199,7 +227,7 @@ class NewLiveStreamPage extends React.Component<Props, State> {
                                         this.setState({ category: event.target.value });
                                     }}
                                 >
-                                    {category.map((value, index, array) => {
+                                    {this.state.categoryArray.map((value, index, array) => {
                                         return <option>{value}</option>;
                                     })}
                                 </select>
@@ -220,7 +248,13 @@ class NewLiveStreamPage extends React.Component<Props, State> {
                             {/* coverUrl */}
                             <div className="mb-3">
                                 <label className="form-label text-uppercase">Cover</label>
-                                <Dropzone
+                                <CoverUploader
+                                    onCoverUploaded={(uploadedCoverUrl:string)=>{
+                                        this.setState({coverImgUrl:uploadedCoverUrl})
+                                    }}
+                                    oldCoverImgUrl={this.state.coverImgUrl}
+                                ></CoverUploader>
+                                {/* <Dropzone
                                     accept="image/*"
                                     maxFiles={1}
                                     maxSize={500 * 1024}
@@ -322,8 +356,9 @@ class NewLiveStreamPage extends React.Component<Props, State> {
                                                 </p>
                                             </div>
                                             {this.state.coverImgUrl !== "" && (
-                                                <div>
+                                                <div className="text-center">
                                                     <img
+                                                        className="rounded img-fluid"
                                                         src={this.state.coverImgUrl}
                                                         alt={this.state.coverImgUrl}
                                                     />
@@ -363,7 +398,7 @@ class NewLiveStreamPage extends React.Component<Props, State> {
                                             )}
                                         </section>
                                     )}
-                                </Dropzone>
+                                </Dropzone> */}
                             </div>
                             <div className="mb-3">
                                 <div
