@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-16 14:17:58
- * @LastEditTime: 2021-07-20 08:46:17
+ * @LastEditTime: 2021-07-23 12:13:22
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/components/SideBar/SideBar.ts
@@ -60,11 +60,11 @@ class SideBar extends React.Component<Props,State> {
 
                     <li className="sidebar-list-item">
                         <a className="sidebar-link text-muted" href="#" data-bs-target="#documentDropDown" data-bs-toggle="collapse"> 
-                            <i className="fas fa-book"></i><span className="sidebar-link-title">My program</span>
+                            <i className="fas fa-book"></i><span className="sidebar-link-title">My video</span>
                         </a>
                         <ul className={"sidebar-menu list-unstyled "+ (this.checkactive("/newlivestream")||this.checkactive("/managelivestream") ? "":"collapse")}  id="documentDropDown">
                             <li className="sidebar-list-item"><a className={"sidebar-link text-muted "+ (this.checkactive("/newlivestream"))} href="/newlivestream"><i className="fas fa-bomb"></i>New livestream</a></li>
-                            <li className="sidebar-list-item"><a className={"sidebar-link text-muted "+ (this.checkactive("/managelivestream"))} href="/managelivestream"><i className="fas fa-icons"></i>Manager program</a></li>
+                            <li className="sidebar-list-item"><a className={"sidebar-link text-muted "+ (this.checkactive("/managelivestream"))} href="/managelivestream"><i className="fas fa-icons"></i>Manager video</a></li>
                         </ul>
                     </li>
 

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-18 17:42:28
- * @LastEditTime: 2021-07-20 17:56:30
+ * @LastEditTime: 2021-07-23 16:05:33
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/PlayPage/PlayPage.tsx
@@ -9,17 +9,21 @@
 
 import React from "react";
 import { GlobalData } from "../../global/global";
-import { ILiveStreamInfo } from "../../interface/interface";
+import { ELiveStreamStatus, ILiveStreamInfo } from "../../interface/interface";
 import DashboardLayout from "../../layout/DashboardLayout";
 import { RequestTool } from "../../utils/RequestTool";
 import ReactPlayer from "react-player";
 import Avatar from "react-avatar";
-import "./PlayPage.css"
+import "./PlayPage.css";
+import moment from "moment";
 
 interface Props {}
 
 interface State {
     liveStreamInfo: ILiveStreamInfo;
+
+    videoUrl: string;
+    playing: boolean;
 }
 
 class PlayPage extends React.Component<Props, State> {
@@ -27,13 +31,15 @@ class PlayPage extends React.Component<Props, State> {
         super(props);
         this.state = {
             liveStreamInfo: null,
+            videoUrl: null,
+            playing: false,
         };
     }
 
     getQueryVariable(variable: string) {
         var query = window.location.search.substring(1);
         console.log(query);
-        
+
         var vars = query.split("&");
         for (var i = 0; i < vars.length; i++) {
             var pair = vars[i].split("=");
@@ -56,7 +62,12 @@ class PlayPage extends React.Component<Props, State> {
             return;
         }
 
-        this.getLiveStream(id);
+        this.getLiveStream(id); 
+    }
+
+    async watched(id:number,category:string){
+        const url = GlobalData.apiHost + "/api/livestream/watch/"+id+"/"+category;
+        await RequestTool.get(url);
     }
 
     async getLiveStream(id: number) {
@@ -78,8 +89,19 @@ class PlayPage extends React.Component<Props, State> {
         }
 
         console.log(responseData);
-
-        this.setState({ liveStreamInfo: responseData.data });
+        const stream = responseData.data;
+        //watched
+        this.watched(id,stream.category)
+        
+        this.setState({ liveStreamInfo: stream });
+        if (stream.status === ELiveStreamStatus.PAUSE || stream.status === ELiveStreamStatus.END) {
+            this.setState({ videoUrl: stream.cdnRecordM3u8Link, playing: false });
+        } else if (stream.status === ELiveStreamStatus.ONLIVE) {
+            this.setState({ videoUrl: stream.cdnLiveM3u8Link, playing: true });
+        } else {
+            //this.setState({ videoUrl: stream.cdnRecordM3u8Link, playing: true });
+            (window as any).notify("error", "Livestreaming has not started yet", "error");
+        }
     }
 
     errorLiveStream() {
@@ -88,33 +110,42 @@ class PlayPage extends React.Component<Props, State> {
 
     render() {
         console.log(this.state.liveStreamInfo);
-        
+        const {liveStreamInfo}=this.state
         return (
+            
             <DashboardLayout>
                 {/* {this.state.liveStreamInfo ? ( */}
-                    <div className="container">
-                        <div className="col-10">
-                            <ReactPlayer className="video-player" url="https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8" controls 
-                            />
-                        </div>
-                        
-                        <div>title</div>
-                        <div>author info</div>
-                        <Avatar
-                            name={
-                                this.state.liveStreamInfo && this.state.liveStreamInfo.userName
-                                    ? this.state.liveStreamInfo.userName
-                                    : ""
-                            }
-                            round={true}
-                            size="45"
-                            src={"/public/avatar/" + (this.state.liveStreamInfo?this.state.liveStreamInfo.userId:"0")}
+                <div className="container">
+                    <div className="col-10">
+                        <ReactPlayer
+                            className="video-player"
+                            width="100%"
+                            height="100%"
+                            url={this.state.videoUrl}
+                            controls
+                            config={{file:{
+                                forceHLS:true
+                            }}}
+                            playing={this.state.playing}
+                            // onReady={(player)=>{
+                            //     player.
+                            // }}
                         />
-                        <div>description</div>
-                        <div>Onlive or record</div>
-                        <div>share button</div>
-                        <div>start time</div>
                     </div>
+
+                    <div>{liveStreamInfo&&liveStreamInfo.name}</div>
+                    <div>{liveStreamInfo&&liveStreamInfo.userName}</div>
+                    <Avatar
+                        name={this.state.liveStreamInfo && this.state.liveStreamInfo.userName ? this.state.liveStreamInfo.userName : ""}
+                        round={true}
+                        size="45"
+                        src={"/public/avatar/" + (this.state.liveStreamInfo ? this.state.liveStreamInfo.userId : "0")}
+                    />
+                    <div>{liveStreamInfo&&liveStreamInfo.description}</div>
+                    <div>{liveStreamInfo&&liveStreamInfo.status===ELiveStreamStatus.ONLIVE?"onlive":"record"}</div>
+                    <div>share button</div>
+                    <div>{liveStreamInfo?moment(liveStreamInfo.startTimeStamp).format("lll"):""}</div>
+                </div>
                 {/* ):(
                     this.errorLiveStream()
                 )} */}

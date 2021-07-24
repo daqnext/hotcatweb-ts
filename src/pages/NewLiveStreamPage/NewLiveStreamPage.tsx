@@ -2,7 +2,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-18 17:33:49
- * @LastEditTime: 2021-07-20 11:43:30
+ * @LastEditTime: 2021-07-24 23:16:22
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/NewLiveStreamPage/NewLiveStreamPage.tsx
@@ -11,14 +11,15 @@
 import React from "react";
 import Choices from "choices.js";
 import DashboardLayout from "../../layout/DashboardLayout";
-import Dropzone from "react-dropzone";
-import CoverUploader from "../../components/CoverUploader/CoverUploader";
+import CoverUploader from "../../components/CoverUploader/CoverUplodaer2";
 import "./NewLiveStreamPage.css";
 import { UserManager } from "../../manager/UserManager";
 import { Utils } from "../../utils/Utils";
 import { RequestTool } from "../../utils/RequestTool";
 import { GlobalData } from "../../global/global";
 import { CategoryManager } from "../../manager/CategoryManager";
+import { ILanguage } from "../../interface/interface";
+import { LanguageOptionManager } from "../../manager/LanguageManager";
 
 // declare class Dropzone {
 //     constructor(selectorOrElement: string | HTMLInputElement | HTMLSelectElement, userConfig?: any);
@@ -29,11 +30,13 @@ interface Props {}
 
 interface State {
     categoryArray:string[];
+    languageOption:ILanguage;
 
     streamName: string;
     subTitle: string;
     description: string;
     category: string;
+    language:string;
     coverImgUrl: string;
     captcha: string;
     captchaId: string;
@@ -46,11 +49,13 @@ class NewLiveStreamPage extends React.Component<Props, State> {
         super(props);
         this.state = {
             categoryArray:[],
+            languageOption:{},
 
             streamName: "",
             subTitle: "",
             description: "",
             category: category[0],
+            language:"English",
             coverImgUrl: "",
             captcha: "",
             captchaId: "",
@@ -79,14 +84,22 @@ class NewLiveStreamPage extends React.Component<Props, State> {
                 category:cate[0]
             })
         }
+
+        const languageOption=await LanguageOptionManager.GetLanguageOption()
+        this.setState({languageOption:languageOption})
         
-        //Choices
-        const element = document.querySelector(".choices-category-newstream");
-        new Choices(element as any);
+        //category
+        const category = document.querySelector(".choices-category-newstream");
+        new Choices(category as any);
+
+        //language
+        const language = document.querySelector(".choices-language-newstream");
+        new Choices(language as any);
     }
 
     checkStreamName() {
-        if (this.state.streamName.length <= 5 || this.state.streamName.length >= 40) {
+        const temp=this.state.subTitle.trim()
+        if (temp.length <= 5 || temp.length >= 40) {
             //chapter length error
             (window as any).notify("error", "Please input stream name(5~40 letters)", "error");
             return false;
@@ -95,7 +108,8 @@ class NewLiveStreamPage extends React.Component<Props, State> {
     }
 
     checkSubTitle() {
-        if (this.state.subTitle.length <= 5 || this.state.subTitle.length >= 40) {
+        const temp=this.state.subTitle.trim()
+        if (temp.length <= 5 || temp.length >= 40) {
             //chapter length error
             (window as any).notify("error", "Please input subtitle(5~40 letters)", "error");
             return false;
@@ -104,7 +118,8 @@ class NewLiveStreamPage extends React.Component<Props, State> {
     }
 
     checkDescription() {
-        if (this.state.description.length <= 10 || this.state.description.length >= 100) {
+        const temp=this.state.description.trim()
+        if (temp.length <= 5 || temp.length >= 100) {
             //chapter length error
             (window as any).notify("error", "Please input description(10~100 letters)", "error");
             return false;
@@ -149,10 +164,11 @@ class NewLiveStreamPage extends React.Component<Props, State> {
 
         const url = GlobalData.apiHost + "/api/livestream/create";
         const sendData = {
-            streamName: this.state.streamName,
-            subTitle: this.state.subTitle,
-            description: this.state.description,
+            streamName: this.state.streamName.trim(),
+            subTitle: this.state.subTitle.trim(),
+            description: this.state.description.trim(),
             category: this.state.category,
+            language:this.state.language,
             coverImgUrl: this.state.coverImgUrl,
             captcha: "",
             captchaId: "",
@@ -175,13 +191,19 @@ class NewLiveStreamPage extends React.Component<Props, State> {
             return;
         }
 
-        //register success
-        //auto login
-        // const userInfo: IUserInfo = responseData.data;
-        // UserManager.SetUserToken(userInfo.cookie);
+        //success
+        //to manage page
+        window.location.href = "/managelivestream";
     }
 
     render() {
+        const languageNameArray:string[]=[]
+        const languageLocalNameArray:string[]=[]
+        for (const key in this.state.languageOption) {
+            languageNameArray.push(key)
+            languageLocalNameArray.push(this.state.languageOption[key])
+        }
+        
         return (
             <DashboardLayout>
                 <div className="card">
@@ -199,7 +221,7 @@ class NewLiveStreamPage extends React.Component<Props, State> {
                                     placeholder="Livestreaming name"
                                     onChange={(event) => {
                                         this.setState({
-                                            streamName: event.target.value.trim(),
+                                            streamName: event.target.value,
                                         });
                                     }}
                                 />
@@ -212,10 +234,25 @@ class NewLiveStreamPage extends React.Component<Props, State> {
                                     placeholder="Subtitle"
                                     onChange={(event) => {
                                         this.setState({
-                                            subTitle: event.target.value.trim(),
+                                            subTitle: event.target.value,
                                         });
                                     }}
                                 />
+                            </div>
+                            {/* language */}
+                            <div className="mb-3">
+                                <label className="form-label text-uppercase">Language</label>
+                                <select
+                                    className="choices-language-newstream"
+                                    onChange={(event) => {
+                                        console.log(event.target.value);
+                                        this.setState({ language: event.target.value });
+                                    }}
+                                >
+                                    {languageLocalNameArray.map((value, index, array) => {
+                                        return <option value={languageNameArray[index]}>{value+" "+languageNameArray[index] }</option>;
+                                    })}
+                                </select>
                             </div>
                             {/* category */}
                             <div className="mb-3">
@@ -240,7 +277,7 @@ class NewLiveStreamPage extends React.Component<Props, State> {
                                     placeholder="Description"
                                     onChange={(event) => {
                                         this.setState({
-                                            description: event.target.value.trim(),
+                                            description: event.target.value,
                                         });
                                     }}
                                 />

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-18 17:36:43
- * @LastEditTime: 2021-07-20 12:08:57
+ * @LastEditTime: 2021-07-23 12:19:29
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/ManageLiveStream/ManageLiveStreamPage.tsx
@@ -11,21 +11,37 @@ import DashboardLayout from "../../layout/DashboardLayout";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import BootstrapTable, { ROW_SELECT_MULTIPLE } from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
-import moment from 'moment'
+import moment from "moment";
 import { UserManager } from "../../manager/UserManager";
 import LiveStreamDetail from "./LiveStreamDetail";
+import { RequestTool } from "../../utils/RequestTool";
 
-const products: any[] = [
-    // { id: 300, streamName: "myStream", category: "Sports", created: 1626706861681, status: "OnLive" },
-];
 const columns = [
     {
         dataField: "id",
-        text: "Product ID",
+        text: "ID",
+        headerStyle: () => {
+            return { width: "5%" };
+        },
     },
     {
-        dataField: "streamName",
+        dataField: "name",
         text: "Name",
+    },
+    {
+        dataField: "rtmpLink",
+        text: "RTMP Ingest Url",
+        headerStyle: () => {
+            return { width: "40%" };
+        },
+        formatter: (cellContent: any, row: any) => {
+            return (
+                <>
+                  <span >{ cellContent }</span>
+                  {/* <span>  copy icon</span> */}
+                </>
+              );
+        },
     },
     {
         dataField: "category",
@@ -35,9 +51,7 @@ const columns = [
         dataField: "created",
         text: "Created",
         formatter: (cellContent: any, row: any) => {
-            return (
-                moment(row.created).format("lll")
-            );
+            return moment(row.created).format("lll");
         },
     },
     {
@@ -65,30 +79,28 @@ const columns = [
 ];
 
 const expandRow = {
-    renderer: (row:any) => {
-        return (<div>
-            <p>{`This Expand row is belong to rowKey ${row.id}`}</p>
-            <p>
-                You can render anything here, also you can add additional data on every row object
-            </p>
-            <p>expandRow.renderer callback will pass the origin row object to you</p>
-        </div>);
+    renderer: (row: any) => {
+        return (
+            <div>
+                <p>{`This Expand row is belong to rowKey ${row.id}`}</p>
+                <p>You can render anything here, also you can add additional data on every row object</p>
+                <p>expandRow.renderer callback will pass the origin row object to you</p>
+            </div>
+        );
     },
 };
-
 
 interface Props {}
 
 interface State {
-    showStreamDetail:boolean;
-    openStreamInfo:any;
+    showStreamDetail: boolean;
+    openStreamInfo: any;
 
-    page:number;
-    sizePerPage:number;
-    totalSize:number;
-    data:any[]
-    hoverIndex:number
-    
+    page: number;
+    sizePerPage: number;
+    totalSize: number;
+    data: any[];
+    hoverIndex: number;
 }
 
 class ManageLiveStreamPage extends React.Component<Props, State> {
@@ -96,17 +108,15 @@ class ManageLiveStreamPage extends React.Component<Props, State> {
 
     constructor(props: Props) {
         super(props);
-        this.state={
-            showStreamDetail:false,
-            openStreamInfo:null,
-            page:1,
-            sizePerPage:10,
-            totalSize:0,
-            data:[],
-            hoverIndex:null
-        }
-
-        
+        this.state = {
+            showStreamDetail: false,
+            openStreamInfo: null,
+            page: 1,
+            sizePerPage: 10,
+            totalSize: 0,
+            data: [],
+            hoverIndex: null,
+        };
     }
 
     async componentDidMount() {
@@ -114,91 +124,111 @@ class ManageLiveStreamPage extends React.Component<Props, State> {
             await UserManager.UpdateUserInfo();
         }
         //UserManager.TokenCheckAndRedirectLogin();
-        const info=UserManager.GetUserInfo()
-        if (info==null) {
+        const info = UserManager.GetUserInfo();
+        if (info == null) {
             //show login success msg
             (window as any).notify("success", "Please sign in first", "error");
 
             //to login page
             window.location.href = "/signin";
-            return
+            return;
         }
 
-        
-        for (let i = 0; i < 5; i++) {
-            products.push({
-                id: i + 1,
-                streamName: "myStream" + i,
-                category: "Sports",
-                created: 1626706861681,
-                status: "OnLive",
-                coverImgUrl:"/public/livestreamCover/4/123456_i6TYKaDfI9.jpeg"
-            });
-        }
-        this.setState({data:products,totalSize:products.length})
-        
+        // for (let i = 0; i < 5; i++) {
+        //     products.push({
+        //         id: i + 1,
+        //         streamName: "myStream" + i,
+        //         category: "Sports",
+        //         created: 1626706861681,
+        //         status: "OnLive",
+        //         coverImgUrl:"/public/livestreamCover/4/123456_i6TYKaDfI9.jpeg"
+        //     });
+        // }
+        // this.setState({data:products,totalSize:products.length})
+
         console.log(this.node);
-        await this.getLiveStreamList(0,0);
+        const offset = (this.state.page - 1) * this.state.sizePerPage;
+        await this.getLiveStreamList(this.state.sizePerPage, offset);
     }
 
-    rowStyle = (row:any, rowIndex:number) => {
+    rowStyle = (row: any, rowIndex: number) => {
         row.index = rowIndex;
-        const style:any = {};
+        const style: any = {};
         if (rowIndex % 2 === 0) {
-          style.backgroundColor = 'transparent';
+            style.backgroundColor = "transparent";
         } else {
-          style.backgroundColor = 'rgba(230, 230, 230, .2)';
+            style.backgroundColor = "rgba(230, 230, 230, .2)";
         }
         // style.borderTop = 'none';
-        style.cursor="pointer"
-        if (this.state.hoverIndex===rowIndex) {
-            style.backgroundColor = 'rgba(230, 230, 230, .5)';
+        style.cursor = "pointer";
+        if (this.state.hoverIndex === rowIndex) {
+            style.backgroundColor = "rgba(230, 230, 230, .5)";
         }
-    
-        return style;
-      }
 
-      rowEvents = {
-        onClick: (e:any, row:any, rowIndex:number) => {
-          //console.log(e);
-          console.log(row);
-          //console.log(rowIndex);
-          //console.log(this.node);
-          
-          this.setState({
-              showStreamDetail:true,
-              openStreamInfo:row
-          })
-          
+        return style;
+    };
+
+    rowEvents = {
+        onClick: (e: any, row: any, rowIndex: number) => {
+            //console.log(e);
+            // console.log(row);
+            //console.log(rowIndex);
+            //console.log(this.node);
+
+            this.setState({
+                showStreamDetail: true,
+                openStreamInfo: row,
+            });
         },
 
-        onMouseEnter: (e:any, row:any, rowIndex:number) => {
+        onMouseEnter: (e: any, row: any, rowIndex: number) => {
             this.setState({ hoverIndex: rowIndex });
         },
-        onMouseLeave: (e:any, row:any, rowIndex:number) => {
+        onMouseLeave: (e: any, row: any, rowIndex: number) => {
             this.setState({ hoverIndex: null });
-        }
-      };
+        },
+    };
 
-      
+    handleTableChange = async (type: any, { page, sizePerPage }: { page: number; sizePerPage: number }) => {
+        console.log(page, sizePerPage);
 
-    handleTableChange=async (type:any,{page,sizePerPage}:{page:number,sizePerPage:number})=>{
-        console.log(page,sizePerPage);
-        
         try {
-            this.setState({sizePerPage:sizePerPage})
+            this.setState({ sizePerPage: sizePerPage });
             const offset = (page - 1) * sizePerPage;
-        await this.getLiveStreamList(sizePerPage,offset)
+            await this.getLiveStreamList(sizePerPage, offset);
         } catch (error) {
             console.log(error);
-            
         }
-        
-    }
+    };
 
-    async getLiveStreamList(limit:number,offset:number) {
-        console.log(1);
-        return 1
+    async getLiveStreamList(limit: number, offset: number) {
+        const sendData = {
+            limit: limit,
+            offset: offset,
+        };
+
+        let response = await RequestTool.post("/api/livestream/managelist", sendData, {
+            headers: {
+                Authorization: "Bearer " + UserManager.GetUserToken(),
+            },
+        });
+
+        if (response === null) {
+            return;
+        }
+
+        console.log(response);
+
+        if (response && response.status === 0) {
+            const streamData = response.data;
+            console.log(streamData);
+
+            this.setState({ totalSize: streamData.count, data: streamData.data });
+
+            return;
+        }
+
+        this.setState({ totalSize: 0, data: [] });
     }
 
     indication() {
@@ -216,29 +246,39 @@ class ManageLiveStreamPage extends React.Component<Props, State> {
     render() {
         return (
             <DashboardLayout>
-                {this.state.showStreamDetail?<LiveStreamDetail
-                liveStreamInfo={this.state.openStreamInfo}
-                onBackClick={()=>{
-                    this.setState({
-                        showStreamDetail:false,
-                        openStreamInfo:null
-                    })
-                }}
-                ></LiveStreamDetail>:
-                <BootstrapTable
-                    ref={(n) => (this.node = n)}
-                    remote
-                    keyField="id"
-                    data={this.state.data}
-                    columns={columns}
-                    bordered={false}
-                    rowStyle={ this.rowStyle }
-                    // expandRow={ expandRow }
-                    rowEvents={ this.rowEvents }
-                    noDataIndication={this.indication}
-                    pagination={paginationFactory({page:this.state.page,sizePerPage:this.state.sizePerPage,totalSize:this.state.totalSize})}
-                    onTableChange={this.handleTableChange}
-                />}
+                {this.state.showStreamDetail ? (
+                    <LiveStreamDetail
+                        liveStreamInfo={this.state.openStreamInfo}
+                        onBackClick={async () => {
+                            const offset = (this.state.page - 1) * this.state.sizePerPage;
+                            await this.getLiveStreamList(this.state.sizePerPage, offset);
+                            this.setState({
+                                showStreamDetail: false,
+                                openStreamInfo: null,
+                            });
+                        }}
+                    ></LiveStreamDetail>
+                ) : (
+                    <BootstrapTable
+                        bootstrap4
+                        ref={(n) => (this.node = n)}
+                        remote
+                        keyField="id"
+                        data={this.state.data}
+                        columns={columns}
+                        bordered={false}
+                        rowStyle={this.rowStyle}
+                        // expandRow={ expandRow }
+                        rowEvents={this.rowEvents}
+                        noDataIndication={this.indication}
+                        pagination={paginationFactory({
+                            page: this.state.page,
+                            sizePerPage: this.state.sizePerPage,
+                            totalSize: this.state.totalSize,
+                        })}
+                        onTableChange={this.handleTableChange}
+                    />
+                )}
             </DashboardLayout>
         );
     }

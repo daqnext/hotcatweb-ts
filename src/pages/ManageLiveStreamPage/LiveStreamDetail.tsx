@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-20 09:15:51
- * @LastEditTime: 2021-07-20 14:15:31
+ * @LastEditTime: 2021-07-23 12:18:48
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/ManageLiveStreamPage/LiveStreamDetail.tsx
@@ -16,19 +16,23 @@ import { UserManager } from "../../manager/UserManager";
 import { RequestTool } from "../../utils/RequestTool";
 import { CategoryManager } from "../../manager/CategoryManager";
 import { Confirm } from "../../components/Confirm/Confirm";
+import { ILanguage, ILiveStreamInfo } from "../../interface/interface";
+import { LanguageOptionManager } from "../../manager/LanguageManager";
 
 interface Props {
-    liveStreamInfo: any;
+    liveStreamInfo: ILiveStreamInfo;
     onBackClick: () => void;
 }
 
 interface State {
     categoryArray: string[];
+    languageOption:ILanguage,
 
     streamName: string;
     subTitle: string;
     description: string;
     category: string;
+    language:string;
     coverImgUrl: string;
 }
 
@@ -37,13 +41,17 @@ class LiveStreamDetail extends React.Component<Props, State> {
         super(props);
         this.state = {
             categoryArray: [],
+            languageOption:{},
 
-            streamName: this.props.liveStreamInfo.streamName,
+            streamName: this.props.liveStreamInfo.name,
             subTitle: this.props.liveStreamInfo.subTitle,
             description: this.props.liveStreamInfo.description,
             category: this.props.liveStreamInfo.category,
-            coverImgUrl: this.props.liveStreamInfo.coverImg,
+            language:this.props.liveStreamInfo.language,
+            coverImgUrl: this.props.liveStreamInfo.coverImgUrl,
         };
+        // console.log(this.state);
+        
     }
 
     async componentDidMount() {
@@ -54,12 +62,159 @@ class LiveStreamDetail extends React.Component<Props, State> {
             });
         }
 
-        //Choices
-        const element = document.querySelector(".choices-category-streamdetail");
-        new Choices(element as any);
+        const languageOption=await LanguageOptionManager.GetLanguageOption()
+        this.setState({languageOption:languageOption})
+        
+        //category
+        const category = document.querySelector(".choices-category-streamdetail");
+        new Choices(category as any);
+
+        //language
+        const language = document.querySelector(".choices-language-streamdetail");
+        new Choices(language as any);
+    }
+
+    async finishStream() {}
+
+
+    checkStreamName() {
+        const temp=this.state.subTitle.trim()
+        if (temp.length <= 5 || temp.length >= 40) {
+            //chapter length error
+            (window as any).notify("error", "Please input stream name(5~40 letters)", "error");
+            return false;
+        }
+        return true;
+    }
+
+    checkSubTitle() {
+        const temp=this.state.subTitle.trim()
+        if (temp.length <= 5 || temp.length >= 40) {
+            //chapter length error
+            (window as any).notify("error", "Please input subtitle(5~40 letters)", "error");
+            return false;
+        }
+        return true;
+    }
+
+    checkDescription() {
+        const temp=this.state.description.trim()
+        if (temp.length <= 5 || temp.length >= 100) {
+            //chapter length error
+            (window as any).notify("error", "Please input description(10~100 letters)", "error");
+            return false;
+        }
+        return true;
+    }
+
+    checkCategory() {
+        if (this.state.category === "") {
+            //chapter length error
+            (window as any).notify("error", "Please choose a category", "error");
+            return false;
+        }
+        return true;
+    }
+
+    checkCover() {
+        if (this.state.coverImgUrl === "") {
+            //chapter length error
+            (window as any).notify("error", "Please upload a cover", "error");
+            return false;
+        }
+        return true;
+    }
+
+    async updateStream() {
+        if (!this.checkStreamName()) {
+            return;
+        }
+        if (!this.checkSubTitle()) {
+            return;
+        }
+        if (!this.checkDescription()) {
+            return;
+        }
+        if (!this.checkCategory()) {
+            return;
+        }
+        if (!this.checkCover()) {
+            return;
+        }
+        
+        const sendData = {
+            streamId: this.props.liveStreamInfo.id,
+            secret: this.props.liveStreamInfo.secret,
+            streamName: this.state.streamName.trim(),
+            subTitle: this.state.subTitle.trim(),
+            description: this.state.description.trim(),
+            category: this.state.category,
+            language:this.state.language,
+            coverImgUrl: this.state.coverImgUrl,
+        };
+
+        let response = await RequestTool.post("/api/livestream/update", sendData, {
+            headers: {
+                Authorization: "Bearer " + UserManager.GetUserToken(),
+            },
+        });
+
+        if (response === null) {
+            (window as any).notify("error", "update error", "error");
+            return
+        }
+
+        console.log(response);
+
+        if (response && response.status === 0) {
+            (window as any).notify("success", "Livestreaming updated", "success");
+
+            //set new state
+
+            return true;
+        }
+
+        (window as any).notify("error", "update error", "error");
+        return false;
+    }
+
+    async deleteStream(streamId: number, secret: string) {
+        const sendData = {
+            streamId: streamId,
+            secret: secret,
+        };
+
+        let response = await RequestTool.post("/api/livestream/delete", sendData, {
+            headers: {
+                Authorization: "Bearer " + UserManager.GetUserToken(),
+            },
+        });
+
+        if (response === null) {
+            return false;
+        }
+
+        console.log(response);
+
+        if (response && response.status === 0) {
+            return true;
+        }
+
+        return false;
     }
 
     render() {
+        // console.log(this.props.liveStreamInfo);
+        // console.log(this.state);
+        
+
+        const languageNameArray:string[]=[]
+        const languageLocalNameArray:string[]=[]
+        for (const key in this.state.languageOption) {
+            languageNameArray.push(key)
+            languageLocalNameArray.push(this.state.languageOption[key])
+        }
+
         return (
             <div>
                 <div className="container">
@@ -108,8 +263,12 @@ class LiveStreamDetail extends React.Component<Props, State> {
                                     "danger",
                                     "primary",
                                     "Confirm",
-                                    () => {
+                                    async () => {
                                         console.log("delete confirm");
+                                        const result = await this.deleteStream(this.props.liveStreamInfo.id, this.props.liveStreamInfo.secret);
+                                        if (result) {
+                                            this.props.onBackClick();
+                                        }
                                     }
                                 );
                             }}
@@ -151,32 +310,17 @@ class LiveStreamDetail extends React.Component<Props, State> {
                     {/* id */}
                     <div className="mb-3">
                         <label className="form-label text-uppercase">Stream Id</label>
-                        <input
-                            className="form-control"
-                            placeholder="Livestreaming name"
-                            value={this.props.liveStreamInfo.id}
-                            disabled
-                        />
+                        <input className="form-control" placeholder="Livestreaming name" value={this.props.liveStreamInfo.id} disabled />
                     </div>
                     {/* secret */}
                     <div className="mb-3">
                         <label className="form-label text-uppercase">Stream Secret</label>
-                        <input
-                            className="form-control"
-                            placeholder="Livestreaming name"
-                            value={this.props.liveStreamInfo.secret}
-                            disabled
-                        />
+                        <input className="form-control" placeholder="Livestreaming name" value={this.props.liveStreamInfo.secret} disabled />
                     </div>
                     {/* rtmp */}
                     <div className="mb-3">
                         <label className="form-label text-uppercase">RTMP ingest URL</label>
-                        <input
-                            className="form-control"
-                            placeholder="Livestreaming name"
-                            value={this.props.liveStreamInfo.rtmp}
-                            disabled
-                        />
+                        <input className="form-control" placeholder="Livestreaming name" value={this.props.liveStreamInfo.rtmpLink} disabled />
                     </div>
                     {/* playback */}
                     <div className="mb-3">
@@ -184,7 +328,7 @@ class LiveStreamDetail extends React.Component<Props, State> {
                         <input
                             className="form-control"
                             placeholder="Livestreaming name"
-                            value={this.props.liveStreamInfo.playback}
+                            value={"https://hotcat.live/play?id=" + this.props.liveStreamInfo.id}
                             disabled
                         />
                     </div>
@@ -197,7 +341,7 @@ class LiveStreamDetail extends React.Component<Props, State> {
                             value={this.state.streamName}
                             onChange={(event) => {
                                 this.setState({
-                                    streamName: event.target.value.trim(),
+                                    streamName: event.target.value,
                                 });
                             }}
                         />
@@ -211,11 +355,27 @@ class LiveStreamDetail extends React.Component<Props, State> {
                             value={this.state.subTitle}
                             onChange={(event) => {
                                 this.setState({
-                                    subTitle: event.target.value.trim(),
+                                    subTitle: event.target.value,
                                 });
                             }}
                         />
                     </div>
+                    {/* language */}
+                    <div className="mb-3">
+                                <label className="form-label text-uppercase">Language</label>
+                                <select
+                                    className="choices-language-streamdetail"
+                                    value={this.state.language}
+                                    onChange={(event) => {
+                                        console.log(event.target.value);
+                                        this.setState({ language: event.target.value });
+                                    }}
+                                >
+                                    {languageLocalNameArray.map((value, index, array) => {                                       
+                                        return <option key={index} value={languageNameArray[index]}>{value+" "+languageNameArray[index] }</option>;
+                                    })}
+                                </select>
+                            </div>
                     {/* category */}
                     <div className="mb-3">
                         <label className="form-label text-uppercase">Category</label>
@@ -228,7 +388,7 @@ class LiveStreamDetail extends React.Component<Props, State> {
                             }}
                         >
                             {this.state.categoryArray.map((value, index, array) => {
-                                return <option>{value}</option>;
+                                return <option key={index}>{value}</option>;
                             })}
                         </select>
                     </div>
@@ -241,7 +401,7 @@ class LiveStreamDetail extends React.Component<Props, State> {
                             value={this.state.description}
                             onChange={(event) => {
                                 this.setState({
-                                    description: event.target.value.trim(),
+                                    description: event.target.value,
                                 });
                             }}
                         />
@@ -261,6 +421,7 @@ class LiveStreamDetail extends React.Component<Props, State> {
                             className="btn btn-primary"
                             onClick={() => {
                                 console.log("submit");
+                                this.updateStream()
                             }}
                         >
                             update

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-18 13:16:44
- * @LastEditTime: 2021-07-18 17:19:22
+ * @LastEditTime: 2021-07-24 21:31:32
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/components/VideoCard/VideoCard.tsx
@@ -11,16 +11,17 @@ import moment from "moment"
 import Image from "../Image/Img";
 
 interface Props {
+  id:number
     title: string;
     subTitle: string;
     author: string;
     description: string;
     status: "onLive" | "record";
-    duration: number; //second
-    createTimeStamp: number;
+    // duration: number; //ms
+    // createTimeStamp: number;
     startTimeStamp: number;
-    endTimeStamp: number;
-    videoLink: string;
+    // endTimeStamp: number;
+    //videoLink: string;
     coverImgUrl: string;
 }
 
@@ -33,9 +34,11 @@ class VideoCard extends React.Component<Props, State> {
     async componentDidMount() {}
 
     render() {
-        const startTime=moment(this.props.startTimeStamp).format("YYYY-MM-DD HH:mm:ss")
+        const startTime=moment(this.props.startTimeStamp).format("YYYY-MM-DD HH:mm")
         return (
-            <div className="col-md-4">
+            <div className="col-md-3" onClick={()=>{
+              window.location.href = `/play?id=${this.props.id}`;
+            }}>
                 <div className="card mb-4"><Image className="card-img-top img-fluid" src={this.props.coverImgUrl} alt={this.props.title}/>
                   <div className="card-body">
                     <h5 className="card-title">{this.props.title}</h5>
