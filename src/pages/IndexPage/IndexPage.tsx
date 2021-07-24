@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-16 15:19:04
- * @LastEditTime: 2021-07-24 20:36:50
+ * @LastEditTime: 2021-07-25 01:20:06
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/IndexPage/IndexPage.tsx
@@ -184,7 +184,13 @@ class IndexPage extends React.Component<Props, State> {
             console.log(streamInfo);
             streamInfos.push(streamInfo)
         }
-        this.setState({videoList:{...this.state.videoList,[category]:streamInfos}})
+        const list={...this.state.videoList}
+        if (list[category]) {
+            list[category].push(...streamInfos)
+        }else{
+            list[category]=streamInfos
+        }
+        this.setState({videoList:list})
     }
 
     async componentDidMount(){
@@ -203,6 +209,7 @@ class IndexPage extends React.Component<Props, State> {
                 for (let i = 0; i < cate.length; i++) {
                     this.getVideoList(cate[i],12)
                 }
+                //this.getVideoList("Crypto",12)
             })
         }
 
