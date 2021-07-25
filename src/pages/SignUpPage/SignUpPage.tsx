@@ -305,15 +305,12 @@ class SignUpPage extends React.Component<Props, State> {
                                                     }}
                                                 />
 
-                                                    <div className="btn btn-outline-primary"> 
-                                                            <SendCode
+                                                        <SendCode
                                                             localStorageKey="emailVCodeSendTimeStamp"
                                                             click={async () => {
                                                                 return this.getEmailVCode();
                                                             }}
                                                         ></SendCode>
-                                                    
-                                                    </div>
 
                                             </div>
                                         </div>
