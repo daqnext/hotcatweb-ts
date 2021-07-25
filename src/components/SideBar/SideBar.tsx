@@ -48,17 +48,35 @@ class SideBar extends React.Component<Props,State> {
 
     render() {return (
             <div className="sidebar py-3" id="sidebar">
-                <h6 className="sidebar-heading">hotcat</h6>
+             
+             
                 <ul className="list-unstyled">
 
                     <li className="sidebar-list-item">
                         <a className={"sidebar-link text-muted "+ (this.checkactive("/index")) } href="/index">
-                            <i className="far fa-sticky-note"/><span className="sidebar-link-title">Index</span>
+                            <i className={"fas fa-film"}></i><span className="sidebar-link-title">Videos</span>
+                        </a>
+                    </li>
+
+                     
+
+                    <li className="sidebar-list-item">
+                        <a className={"sidebar-link text-muted "+ (this.checkactive("/newlivestream")) } href="/newlivestream">
+                         <i className="fas fa-video"></i><span className="sidebar-link-title">Create Livestream</span>
                         </a>
                     </li>
 
 
                     <li className="sidebar-list-item">
+                        <a className={"sidebar-link text-muted "+ (this.checkactive("/managelivestream")) } href="/managelivestream">
+                            <i className="fas fa-icons"/><span className="sidebar-link-title">Video Management</span>
+                        </a>
+                    </li>
+
+
+
+
+                    {/* <li className="sidebar-list-item">
                         <a className="sidebar-link text-muted" href="#" data-bs-target="#documentDropDown" data-bs-toggle="collapse"> 
                             <i className="fas fa-book"></i><span className="sidebar-link-title">My video</span>
                         </a>
@@ -66,7 +84,7 @@ class SideBar extends React.Component<Props,State> {
                             <li className="sidebar-list-item"><a className={"sidebar-link text-muted "+ (this.checkactive("/newlivestream"))} href="/newlivestream"><i className="fas fa-bomb"></i>New livestream</a></li>
                             <li className="sidebar-list-item"><a className={"sidebar-link text-muted "+ (this.checkactive("/managelivestream"))} href="/managelivestream"><i className="fas fa-icons"></i>Manager video</a></li>
                         </ul>
-                    </li>
+                    </li> */}
 
 
 

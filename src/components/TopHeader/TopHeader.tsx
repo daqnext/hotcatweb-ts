@@ -46,13 +46,13 @@ class TopHeader extends React.Component<Props, State> {
                     <img className="navlogo" src="/img/navlogo.png" />
                     {this.state.userInfo ? (
                         <ul className="ms-auto d-flex align-items-center list-unstyled mb-0">
-                            <a href="/newlivestream">
+                            {/* <a href="/newlivestream">
                             <i
                                 className="fas fa-video"
                                 style={{ fontSize: "30px", cursor: "pointer",color:"#343a40" }}
                                 
                             />
-                            </a>
+                            </a> */}
                             
 
                             <li className="nav-item dropdown ms-auto">
@@ -65,10 +65,8 @@ class TopHeader extends React.Component<Props, State> {
                                     aria-expanded="false"
                                 >
                                     {/* <img className="avatar p-1" src="/img/avatar.png" /> */}
-                                    <Avatar
-                                        name={this.state.userInfo ? this.state.userInfo.name : ""}
-                                        round={true}
-                                        size="45"
+                                    <Avatar name={this.state.userInfo ? this.state.userInfo.name : ""}
+                                        round={true} size="35"
                                         src={
                                             this.state.userInfo &&
                                             this.state.userInfo.avatarUrl !== ""
@@ -106,12 +104,10 @@ class TopHeader extends React.Component<Props, State> {
                         </ul>
                     ) : (
                         <div className="ms-auto d-flex align-items-center list-unstyled mb-0 ">
-                            <a className=" btn btn-primary btn-lg" href="/signin">
+                            <a className="btn btn-sm btn-outline-primary" href="/signin">
                                 Sign In
                             </a>
-                            <a className=" btn btn-primary btn-lg" href="/signup">
-                                Sign Up
-                            </a>
+                            
                         </div>
                     )}
                 </nav>

@@ -12,7 +12,7 @@ display: none;
 }
 
 .navlogo{
-height: 40px;
+height: 55px;
 }
 
 @media (max-width: 1199.98px) {
@@ -33,3 +33,39 @@ transition: .3s all ease;
 
 
 
+.text-muted {
+    color: #4d5052 !important;
+}
+
+.sidebar-heading{
+    color: #4d4f50 !important;
+}
+
+.header .navbar{
+    padding-top: 0.8rem !important;
+    padding-bottom: 0.8rem !important;
+}
+
+.card-heading
+{
+    font-weight: bold;
+}
+.captchaimg{
+    height: 22px;
+}
+
+.signinlogo
+{
+width: 200px;
+border-radius: 150px;
+background: white;
+border: 12px solid #e7e8e9;
+}
+
+.signinlogotext{
+    color: #ababab !important;
+}
+
+.footer{
+    margin-top: 30px;
+}

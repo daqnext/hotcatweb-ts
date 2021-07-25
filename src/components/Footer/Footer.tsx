@@ -22,10 +22,10 @@ class Footer extends React.Component<Props, State> {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-md-6 text-center text-md-start fw-bold">
-                            <p className="mb-2 mb-md-0 fw-bold">hotcat.live &copy; 2021</p>
+                            
                         </div>
-                        <div className="col-md-6 text-center text-md-end text-gray-400">
-                            <p className="mb-0">Version 1.0.0</p>
+                        <div className="col-md-6 text-center text-md-end text-gray">
+                             <p className="mb-2 mb-md-0  ">hotcat.live &copy; 2021</p>
                         </div>
                     </div>
                 </div>

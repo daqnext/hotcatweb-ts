@@ -224,16 +224,14 @@ class SignUpPage extends React.Component<Props, State> {
                     <div className="row align-items-center">
                         <div className="col-lg-6 px-lg-4">
                             <div className="card">
-                                <div className="card-header px-lg-5">
-                                    <div className="card-heading text-primary">Sign up</div>
-                                </div>
+                                
                                 <div className="card-body p-lg-5">
-                                    <h3 className="mb-4">Create account in hotcat</h3>
-                                    <p className="text-muted text-sm mb-5">
-                                        welcome to hotcat.live
-                                    </p>
+                                    <h3 className=" mb-4 text-gray">Sign Up</h3>
                                     <form>
-                                        <div className="form-floating mb-3">
+                                        
+                                        <div className=" mb-3">
+
+                                            <label htmlFor="username" className="form-label text-uppercase">UserName</label>
                                             <input
                                                 className="form-control"
                                                 id="username"
@@ -245,9 +243,10 @@ class SignUpPage extends React.Component<Props, State> {
                                                     });
                                                 }}
                                             />
-                                            <label htmlFor="username">Username</label>
+                                           
                                         </div>
-                                        <div className="form-floating mb-3">
+                                        <div className="mb-3">
+                                            <label htmlFor="floatingInput" className="form-label text-uppercase">Email</label>
                                             <input
                                                 className="form-control"
                                                 id="floatingInput"
@@ -259,9 +258,10 @@ class SignUpPage extends React.Component<Props, State> {
                                                     });
                                                 }}
                                             />
-                                            <label htmlFor="floatingInput">Email address</label>
+                                            
                                         </div>
-                                        <div className="form-floating mb-3">
+                                        <div className="mb-3">
+                                            <label htmlFor="floatingPassword" className="form-label text-uppercase">Password</label>
                                             <input
                                                 className="form-control"
                                                 id="floatingPassword"
@@ -272,76 +272,85 @@ class SignUpPage extends React.Component<Props, State> {
                                                         password: event.target.value.trim(),
                                                     });
                                                 }}
-                                            />
-                                            <label htmlFor="floatingPassword">Password</label>
+                                            />      
                                         </div>
-                                        <div className="form-floating mb-3">
-                                            <input
-                                                className="form-control"
-                                                id="floatingRepeatPassword"
-                                                type="password"
-                                                placeholder="Repeat Password"
+                                        <div className="mb-3">
+                                            <label htmlFor="floatingRepeatPassword" className="form-label text-uppercase">Repeat Password</label>
+                                            <input className="form-control" id="floatingRepeatPassword"
+                                                type="password" placeholder="Repeat Password"
                                                 onChange={(event) => {
                                                     this.setState({
                                                         repeatPassword: event.target.value.trim(),
                                                     });
                                                 }}
                                             />
-                                            <label htmlFor="floatingRepeatPassword">
-                                                Repeat Password
-                                            </label>
+                                             
                                         </div>
-                                        <div className="">
-                                            <div className="form-floating col-3">
-                                                <input
-                                                    className="form-control"
-                                                    id="captcha"
-                                                    type="text"
-                                                    placeholder="captcha"
-                                                    onChange={(event) => {
-                                                        this.setState({
-                                                            captcha: event.target.value.trim(),
-                                                        });
-                                                    }}
-                                                />
-                                                <label htmlFor="captcha">captcha</label>
-                                            </div>
 
-                                            <div className="input-group col-3">
-                                                <img
-                                                    src={this.state.captchaBase64}
-                                                    alt="click to refresh"
-                                                    onClick={() => {
-                                                        this.getCaptcha();
-                                                    }}
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="">
-                                            <div className="form-floating col-3">
+                                        
+  
+                                        <div className="mb-3">
+                                            <label className="form-label text-uppercase">Email Verification Code</label>
+                                            <div className="input-group mb-3">
+                                                
                                                 <input
                                                     className="form-control"
                                                     id="captcha"
                                                     type="text"
-                                                    placeholder="Email captcha"
+                                                    placeholder="Email Verification Code"
                                                     onChange={(event) => {
                                                         this.setState({
                                                             vCode: event.target.value.trim(),
                                                         });
                                                     }}
                                                 />
-                                                <label htmlFor="captcha">Email captcha</label>
-                                            </div>
 
-                                            <div className="input-group col-3">
-                                                <SendCode
-                                                    localStorageKey="emailVCodeSendTimeStamp"
-                                                    click={async () => {
-                                                        return this.getEmailVCode();
-                                                    }}
-                                                ></SendCode>
+                                                    <div className="btn btn-outline-primary"> 
+                                                            <SendCode
+                                                            localStorageKey="emailVCodeSendTimeStamp"
+                                                            click={async () => {
+                                                                return this.getEmailVCode();
+                                                            }}
+                                                        ></SendCode>
+                                                    
+                                                    </div>
+
                                             </div>
                                         </div>
+
+
+
+                                        <div className="mb-3">
+                                            <label className="form-label text-uppercase">captcha</label>
+                                            <div className="input-group mb-3">
+                                                <input
+                                                        className="form-control"
+                                                        id="captcha"
+                                                        type="text"
+                                                        placeholder="captcha"
+                                                        onChange={(event) => {
+                                                            this.setState({
+                                                                captcha: event.target.value.trim(),
+                                                            });
+                                                        }}
+                                                    />
+
+                                            <div className="btn btn-outline-secondary"><img
+                                                    className="captchaimg"
+                                                    src={this.state.captchaBase64}
+                                                    alt="click to refresh"
+                                                    onClick={() => {
+                                                        this.getCaptcha();
+                                                    }}
+                                                /></div>
+
+                                            </div>
+                                        </div>
+
+
+
+                                         
+                               
                                         {/* <div className="form-check mb-3">
                                             <input
                                                 className="form-check-input"
@@ -355,7 +364,7 @@ class SignUpPage extends React.Component<Props, State> {
                                         </div> */}
                                         <div className="form-group">
                                             <div
-                                                className="btn btn-primary"
+                                                className="btn btn-outline-primary"
                                                 id="regidter"
                                                 //type="submit"
                                                 // name="registerSubmit"
@@ -377,23 +386,12 @@ class SignUpPage extends React.Component<Props, State> {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-6 col-xl-5 ms-xl-auto px-lg-4 text-center text-primary">
-                            <img
-                                className="img-fluid mb-4"
-                                width="300"
-                                src="/img/drawkit-illustration.svg"
-                                alt=""
-                                style={{ transform: "rotate(10deg)" }}
-                            />
-                            <h1 className="mb-4">
-                                something you want <br className="d-none d-lg-inline" /> to type
-                                here
-                            </h1>
-                            <p className="lead text-muted">
-                                One morning, when Gregor Samsa woke from troubled dreams, he found
-                                himself transformed in his bed in
-                            </p>
+
+                        <div className="col-lg-6 col-xl-5   px-lg-4 text-center text-primary">
+                            <img className="img-fluid mb-4 signinlogo" src="/img/hotcat.png" />
+                            <p className="lead text-muted signinlogotext">welcome to hotcat.live <br/>share happiness with your friends</p>
                         </div>
+ 
                     </div>
                 </div>
             </DashboardLayout>
