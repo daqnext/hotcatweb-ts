@@ -74,24 +74,22 @@ class SendCode extends React.Component<Props, State> {
     render() {
         if (this.state.pasttime > 0) {
             return (
-                <button className="btn btn-light" type="button" disabled>
+                <div className="gray-text">
                     SendAgain:{this.state.pasttime}
-                </button>
+                </div>
             );
         } else {
             return (
-                <button
+                <div
                     onClick={async () => {
                         const isSuccess=await this.props.click()
                         if (isSuccess) {
                             this.startCount();
                         }
                     }}
-                    className="btn btn-primary"
-                    type="button"
                 >
                     SendCode
-                </button>
+                </div>
             );
         }
     }

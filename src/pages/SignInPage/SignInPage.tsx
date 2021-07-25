@@ -149,17 +149,14 @@ class SignInPage extends React.Component<Props, State> {
                     <div className="row align-items-center">
                         <div className="col-lg-6 px-lg-4">
                             <div className="card">
-                                <div className="card-header px-lg-5">
-                                    <div className="card-heading text-primary">Sign In</div>
-                                </div>
+                               
                                 <div className="card-body p-lg-5">
-                                    <h3 className="mb-4">Hi, welcome back! 👋👋</h3>
-                                    <p className="text-muted text-sm mb-5">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                        sed do eiusmod tempor incididunt ut labore.
-                                    </p>
+                                    <h3 className="mb-4 text-gray">Sign In</h3>
+                                    
                                     <form id="loginForm" action="index.html">
-                                        <div className="form-floating mb-3">
+
+                                        <div className="mb-3">
+                                            <label className="form-label text-uppercase">Email</label>
                                             <input
                                                 className="form-control"
                                                 id="floatingInput"
@@ -171,9 +168,10 @@ class SignInPage extends React.Component<Props, State> {
                                                     });
                                                 }}
                                             />
-                                            <label htmlFor="floatingInput">Email address</label>
+                                            
                                         </div>
-                                        <div className="form-floating mb-3">
+                                        <div className="mb-3">
+                                            <label className="form-label text-uppercase">Password</label>
                                             <input
                                                 className="form-control"
                                                 id="floatingPassword"
@@ -185,39 +183,43 @@ class SignInPage extends React.Component<Props, State> {
                                                     });
                                                 }}
                                             />
-                                            <label htmlFor="floatingPassword">Password</label>
+                                            
                                         </div>
-                                        <div className="">
-                                            <div className="form-floating col-3">
-                                                <input
-                                                    className="form-control"
-                                                    id="captcha"
-                                                    type="text"
-                                                    placeholder="captcha"
-                                                    onChange={(event) => {
-                                                        this.setState({
-                                                            captcha: event.target.value.trim(),
-                                                        });
-                                                    }}
-                                                />
-                                                <label htmlFor="captcha">captcha</label>
-                                            </div>
 
-                                            <div className="input-group col-3">
-                                                <img
+                                        <div className="mb-3">
+                                            <label className="form-label text-uppercase">captcha</label>
+                                            <div className="input-group mb-3">
+                                                <input
+                                                        className="form-control"
+                                                        id="captcha"
+                                                        type="text"
+                                                        placeholder="captcha"
+                                                        onChange={(event) => {
+                                                            this.setState({
+                                                                captcha: event.target.value.trim(),
+                                                            });
+                                                        }}
+                                                    />
+                                                    <div className="btn btn-outline-secondary"><img
+                                                    className="captchaimg"
                                                     src={this.state.captchaBase64}
                                                     alt="click to refresh"
                                                     onClick={() => {
                                                         this.getCaptcha();
                                                     }}
-                                                />
+                                                /></div>
+
                                             </div>
+                                             
+                                            
                                         </div>
+
+ 
                                         {/* <div className="form-check mb-3">
                                         <input className="form-check-input" type="checkbox" name="remember" id="remember"/>
                                         <label className="form-check-label" htmlFor="remember">Remember me</label>
                                     </div> */}
-                                        <div className="btn btn-primary btn-lg"
+                                        <div className="btn btn-outline-primary"
                                         onClick={()=>{
                                             this.login()
                                         }}
@@ -232,21 +234,9 @@ class SignInPage extends React.Component<Props, State> {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-6 col-xl-5 ms-xl-auto px-lg-4 text-center text-primary">
-                            <img
-                                className="img-fluid mb-4"
-                                width="300"
-                                src="/img/drawkit-illustration.svg"
-                                alt=""
-                                style={{ transform: "rotate(10deg)" }}
-                            />
-                            <h1 className="mb-4">
-                                something you want <br className="d-none d-lg-inline" />
-                                to type here
-                            </h1>
-                            <p className="lead text-muted">
-                                somethign your want say to user when he comes back!
-                            </p>
+                        <div className="col-lg-6 col-xl-5   px-lg-4 text-center text-primary">
+                            <img className="img-fluid mb-4 signinlogo" src="/img/hotcat.png" />
+                            <p className="lead text-muted signinlogotext">welcome back to hotcat.live <br/>share happiness with your friends</p>
                         </div>
                     </div>
                 </div>
