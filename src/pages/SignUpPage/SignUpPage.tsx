@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-16 15:06:28
- * @LastEditTime: 2021-07-20 15:57:09
+ * @LastEditTime: 2021-07-25 19:10:05
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/SignUpPage/SignUpPage.tsx
@@ -360,7 +360,8 @@ class SignUpPage extends React.Component<Props, State> {
                                                 //type="submit"
                                                 // name="registerSubmit"
                                                 onClick={() => {
-                                                    console.log(this.state);
+                                                    //console.log(this.state);
+                                                    this.register()
                                                 }}
                                             >
                                                 Sign Up

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-18 17:42:28
- * @LastEditTime: 2021-07-23 16:05:33
+ * @LastEditTime: 2021-07-25 10:23:40
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/PlayPage/PlayPage.tsx
@@ -16,6 +16,7 @@ import ReactPlayer from "react-player";
 import Avatar from "react-avatar";
 import "./PlayPage.css";
 import moment from "moment";
+import { Utils } from "../../utils/Utils";
 
 interface Props {}
 
@@ -93,11 +94,23 @@ class PlayPage extends React.Component<Props, State> {
         //watched
         this.watched(id,stream.category)
         
+        
         this.setState({ liveStreamInfo: stream });
         if (stream.status === ELiveStreamStatus.PAUSE || stream.status === ELiveStreamStatus.END) {
-            this.setState({ videoUrl: stream.cdnRecordM3u8Link, playing: false });
+            
+            if(!await Utils.IsRemoteFileAvailable(stream.cdnRecordM3u8Link)){                
+                this.setState({ videoUrl: stream.originRecordM3u8Link, playing: false });
+            }else{                
+                this.setState({ videoUrl: stream.cdnRecordM3u8Link, playing: false });
+            }
+            
         } else if (stream.status === ELiveStreamStatus.ONLIVE) {
-            this.setState({ videoUrl: stream.cdnLiveM3u8Link, playing: true });
+            if(!await Utils.IsRemoteFileAvailable(stream.cdnLiveM3u8Link)){
+                this.setState({ videoUrl: stream.originLiveM3u8Link, playing: true });
+            }else{
+                this.setState({ videoUrl: stream.cdnLiveM3u8Link, playing: true });
+            }
+            
         } else {
             //this.setState({ videoUrl: stream.cdnRecordM3u8Link, playing: true });
             (window as any).notify("error", "Livestreaming has not started yet", "error");

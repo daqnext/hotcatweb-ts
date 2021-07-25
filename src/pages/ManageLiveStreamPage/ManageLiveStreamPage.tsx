@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-18 17:36:43
- * @LastEditTime: 2021-07-23 12:19:29
+ * @LastEditTime: 2021-07-25 18:54:15
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/ManageLiveStream/ManageLiveStreamPage.tsx
@@ -15,6 +15,7 @@ import moment from "moment";
 import { UserManager } from "../../manager/UserManager";
 import LiveStreamDetail from "./LiveStreamDetail";
 import { RequestTool } from "../../utils/RequestTool";
+import { GlobalData } from "../../global/global";
 
 const columns = [
     {
@@ -207,7 +208,7 @@ class ManageLiveStreamPage extends React.Component<Props, State> {
             offset: offset,
         };
 
-        let response = await RequestTool.post("/api/livestream/managelist", sendData, {
+        let response = await RequestTool.post(GlobalData.apiHost+"/api/livestream/managelist", sendData, {
             headers: {
                 Authorization: "Bearer " + UserManager.GetUserToken(),
             },

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-18 13:16:44
- * @LastEditTime: 2021-07-24 21:31:32
+ * @LastEditTime: 2021-07-25 10:08:02
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/components/VideoCard/VideoCard.tsx
@@ -37,7 +37,8 @@ class VideoCard extends React.Component<Props, State> {
         const startTime=moment(this.props.startTimeStamp).format("YYYY-MM-DD HH:mm")
         return (
             <div className="col-md-3" onClick={()=>{
-              window.location.href = `/play?id=${this.props.id}`;
+              //window.location.href = `/play?id=${this.props.id}`;
+              window.open(`/play?id=${this.props.id}`);  
             }}>
                 <div className="card mb-4"><Image className="card-img-top img-fluid" src={this.props.coverImgUrl} alt={this.props.title}/>
                   <div className="card-body">

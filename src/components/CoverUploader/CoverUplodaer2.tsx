@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-24 22:34:08
- * @LastEditTime: 2021-07-25 01:12:57
+ * @LastEditTime: 2021-07-25 19:05:26
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/components/CoverUploader/CoverUplodaer2.tsx
@@ -12,6 +12,7 @@ import Cropper, { ReactCropperElement } from "react-cropper";
 import Dropzone, { DropEvent } from "react-dropzone";
 import { UserManager } from "../../manager/UserManager";
 import { RequestTool } from "../../utils/RequestTool";
+import { GlobalData } from "../../global/global";
 
 interface Props {
     onCoverUploaded: (newUrl: string) => void;
@@ -71,7 +72,7 @@ class CoverUploader extends React.Component<Props, State> {
                     },
                 };
 
-                const responseData = await RequestTool.post("/api/livestream/uploadcover", formData, config);
+                const responseData = await RequestTool.post(GlobalData.apiHost+"/api/livestream/uploadcover", formData, config);
 
                 if (responseData === null) {
                     //request error
@@ -94,7 +95,7 @@ class CoverUploader extends React.Component<Props, State> {
                         },
                     };
                     await RequestTool.post(
-                        "/api/livestream/deletecover",
+                        GlobalData.apiHost+"/api/livestream/deletecover",
                         {
                             imgName: this.state.coverImgUrl,
                         },
@@ -208,6 +209,7 @@ class CoverUploader extends React.Component<Props, State> {
                                         this.cropper=instance
                                     }}
                                 />
+                                {this.state.fileName!==""&&
                                 <div className="text-center">
                                     <div
                                         className="btn btn-primary"
@@ -217,7 +219,7 @@ class CoverUploader extends React.Component<Props, State> {
                                     >
                                         upload
                                     </div>
-                                </div>
+                                </div>}
                             </div>
 
                             <div>
@@ -227,7 +229,7 @@ class CoverUploader extends React.Component<Props, State> {
 
                         {this.state.coverImgUrl && this.state.coverImgUrl !== "" && (
                             <div className="text-center">
-                                <img className="rounded img-fluid" src={this.state.coverImgUrl} alt={this.state.coverImgUrl} />
+                                <img className="rounded img-fluid" src={GlobalData.apiHost+this.state.coverImgUrl} alt={GlobalData.apiHost+this.state.coverImgUrl} />
                                 <a
                                     href="#"
                                     style={{ display: "block" }}
@@ -240,7 +242,7 @@ class CoverUploader extends React.Component<Props, State> {
                                                 },
                                             };
                                             await RequestTool.post(
-                                                "/api/livestream/deletecover",
+                                                GlobalData.apiHost+"/api/livestream/deletecover",
                                                 {
                                                     imgName: this.state.coverImgUrl,
                                                 },

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-20 09:15:51
- * @LastEditTime: 2021-07-23 12:18:48
+ * @LastEditTime: 2021-07-25 18:56:36
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/ManageLiveStreamPage/LiveStreamDetail.tsx
@@ -9,7 +9,7 @@
 
 import React from "react";
 import Choices from "choices.js";
-import CoverUploader from "../../components/CoverUploader/CoverUploader";
+import CoverUploader from "../../components/CoverUploader/CoverUplodaer2";
 import SweetAlert from "react-bootstrap-sweetalert";
 import Dropzone from "react-dropzone";
 import { UserManager } from "../../manager/UserManager";

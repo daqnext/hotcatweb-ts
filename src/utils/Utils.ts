@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-16 17:01:26
- * @LastEditTime: 2021-07-18 23:30:17
+ * @LastEditTime: 2021-07-25 10:21:15
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/manager/Utils.ts
@@ -59,5 +59,13 @@ export class Utils {
             resolve(null)
           })
         })
+      }
+
+      static async IsRemoteFileAvailable(url:string){
+        const response =await RequestTool.get(url)
+        if (response) {
+            return true
+        }
+        return false
       }
 }
