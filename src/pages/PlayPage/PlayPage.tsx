@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-18 17:42:28
- * @LastEditTime: 2021-07-25 10:23:40
+ * @LastEditTime: 2021-07-26 17:31:01
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/PlayPage/PlayPage.tsx
@@ -72,7 +72,8 @@ class PlayPage extends React.Component<Props, State> {
     }
 
     async getLiveStream(id: number) {
-        const url = GlobalData.apiHost + "/api/livestream/get";
+        //const url = GlobalData.apiHost + "/api/livestream/get";
+        const url = "http://13.57.179.134:7000/api/livestream/get"
         const sendData = {
             id: id,
         };
