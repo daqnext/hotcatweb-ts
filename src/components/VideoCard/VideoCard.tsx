@@ -44,13 +44,24 @@ class VideoCard extends React.Component<Props, State> {
               //window.location.href = `/play?id=${this.props.id}`;
               window.open(`/play?id=${this.props.video.id}`);  
             }}>
-                <div className="card mb-4"><Image className="card-img-top img-fluid" src={GlobalData.apiHost+this.props.video.coverImgUrl} alt={GlobalData.apiHost+this.props.video.subTitle}/>
+                <div className="card mb-4">
+                  <div className="btn btn-sm btn-outline-danger livetag">Live</div>
+                  <Image className="card-img-top img-fluid" src={GlobalData.apiHost+this.props.video.coverImgUrl} alt={GlobalData.apiHost+this.props.video.subTitle}/>
                   <div className="card-body">
-                    
+                    <div className="user">
+                      <div className="avawrap"><img src="/img/hotcat.png"></img></div>   
+                      <span>User Name</span>
+                    </div>
                     <h5 className="card-title">{this.props.video.name}</h5>
-                    <p className="card-text">{this.props.video.userName}</p>
-                    <p className="card-text">{this.props.video.subTitle}</p>
-                    <p className="card-text"><small className="text-muted">{startTime}</small></p>
+                    {/* <p className="card-text">{this.props.video.userName}</p> */}
+                    {/* <p className="card-text">{this.props.video.subTitle}</p> */}
+                    <p className="card-text footer">
+                     <small className="st text-muted">{startTime}</small>
+ 
+                      <i className="fas fa-eye"></i>
+                      <small className="st text-muted">{this.props.video.watched}</small>
+                      
+                    </p>
                   </div>
                 </div>
               </div>

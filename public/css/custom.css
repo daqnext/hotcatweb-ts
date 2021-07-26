@@ -97,6 +97,92 @@ padding: 30px 0px;
 }
  
 .videoscontainer .card-body{
-padding: 0.3rem 0.5rem !important;
+padding: 0rem 0rem !important;
+position: relative;
+}
+
+.videoscontainer .card{
+margin-bottom: 30px !important;
+margin-right: 15px;
+border-radius: 30px;
+background-color: #efefef !important;
+margin-top: 10px !important;
+cursor: pointer;
+}
+
+.videoscontainer .card:hover{
+    box-shadow: 0 0.5rem 1rem rgb(201 204 249);
+}
+
+.card-img, .card-img-top 
+{
+    border-top-left-radius: 30px; 
+    border-top-right-radius: 30px; 
+}
+
+.videoscontainer .card .card-title{ 
+    background-color: #f9f9f9 !important;
+    color: #636363;
+    padding: 0.5rem 0.8rem !important;
+    padding-top: 5px;
+    font-size: 13px;
+    margin-bottom: 0px;
+}
+ 
+.videoscontainer .card .footer{
+text-align: right;
+margin-top: 5px;
+padding: 1px 30px 5px 0px;
+font-size: 16px;
+}
+
+.videoscontainer .card .footer i{
+color: #888888 !important;
+margin-right: 5px;
+margin-left: 5px;
+font-size: 13px;
+}
+
+
+.videoscontainer .card .footer small{
+color: #888888  !important;
+font-size: 13px;
+}
+ 
+
+.videoscontainer .card .livetag{
+color: white;
+border: 1px solid red;
+background: #cc0000;
+padding: 0px 10px;
+right: 4px;
+position: absolute;
+top: 25px;
+font-size: 13px;
+font-weight: bold;
+}
+
+
+.videoscontainer .card .user{
+width: 100%;
+background: #0000004f;
+position: absolute;
+top: -36px;
+padding: 3px 0px;
+color: #efefef;
+font-size: 15px;
+}
+
+.videoscontainer .card .user img{
+   width: 30px;
+   height: 30px;
+}
+
+.videoscontainer .card .avawrap{
+    display: inline-block;
+    background: gainsboro;
+    border-radius: 30px;
+    width: 30px;
+    margin: 0px 5px;
 }
  
