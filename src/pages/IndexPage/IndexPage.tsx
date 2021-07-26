@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-16 15:19:04
- * @LastEditTime: 2021-07-25 01:20:06
+ * @LastEditTime: 2021-07-26 09:08:04
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/IndexPage/IndexPage.tsx
@@ -219,6 +219,9 @@ class IndexPage extends React.Component<Props, State> {
 
     renderOnliveVideo(){
         const list=this.state.videoList[ELiveStreamStatus.ONLIVE]
+        if (!list||list.length<=0) {
+            return null
+        }
         return <><h2 className="section-heading section-heading-ms mb-4 mb-lg-5">On Live</h2>
         <div className="row">
             {list&&list.map((value, index, array) => {
@@ -246,6 +249,9 @@ class IndexPage extends React.Component<Props, State> {
     renderCategory(category:string){
         const list=this.state.videoList[category]
         if (this.state.checkedCategory[category]==false) {
+            return null
+        }
+        if (!list||list.length<=0) {
             return null
         }
         return <><h2 className="section-heading section-heading-ms mb-4 mb-lg-5">{category}</h2>
