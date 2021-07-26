@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-18 13:16:44
- * @LastEditTime: 2021-07-26 08:52:50
+ * @LastEditTime: 2021-07-26 13:12:04
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/components/VideoCard/VideoCard.tsx
@@ -10,23 +10,10 @@ import React from "react";
 import moment from "moment"
 import Image from "../Image/Img";
 import { GlobalData } from "../../global/global";
-import { ILiveStreamInfo } from "../../interface/interface";
-
+import { ELiveStreamStatus, ILiveStreamInfo } from "../../interface/interface";
+import Avatar from "react-avatar";
 interface Props {
   video:ILiveStreamInfo
-    // id:number
-    // title: string;
-    // subTitle: string;
-    // author: string;
-    // description: string;
-    // status: "onLive" | "record";
-    
-    // //duration: number; //ms
-    // createTimeStamp: number;
-    // startTimeStamp: number;
-    // // endTimeStamp: number;
-    // //videoLink: string;
-    // coverImgUrl: string;
 }
 
 interface State {}
@@ -45,12 +32,21 @@ class VideoCard extends React.Component<Props, State> {
               window.open(`/play?id=${this.props.video.id}`);  
             }}>
                 <div className="card mb-4">
-                  <div className="btn btn-sm btn-outline-danger livetag">Live</div>
+                  {this.props.video.status===ELiveStreamStatus.ONLIVE&&<div className="btn btn-sm btn-outline-danger livetag">Live</div>}
+                  
                   <Image className="card-img-top img-fluid" src={GlobalData.apiHost+this.props.video.coverImgUrl} alt={GlobalData.apiHost+this.props.video.subTitle}/>
                   <div className="card-body">
                     <div className="user">
-                      <div className="avawrap"><img src="/img/hotcat.png"></img></div>   
-                      <span>User Name</span>
+                      {/* <div className="avawrap"><img src="/img/hotcat.png"></img></div>    */}
+                      <div className="avawrap">
+                      <Avatar
+                        name={this.props && this.props.video.userName ? this.props.video.userName : ""}
+                        round={true}
+                        size="30"
+                        src={GlobalData.apiHost+"/public/avatar/" + (this.props.video ? this.props.video.userId : "0")}
+                    />
+                    </div>
+                      <span>{this.props.video.userName}</span>
                     </div>
                     <h5 className="card-title">{this.props.video.name}</h5>
                     {/* <p className="card-text">{this.props.video.userName}</p> */}

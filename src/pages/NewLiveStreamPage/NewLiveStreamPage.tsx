@@ -2,7 +2,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-18 17:33:49
- * @LastEditTime: 2021-07-24 23:16:22
+ * @LastEditTime: 2021-07-26 13:19:02
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/NewLiveStreamPage/NewLiveStreamPage.tsx
@@ -149,9 +149,9 @@ class NewLiveStreamPage extends React.Component<Props, State> {
         if (!this.checkStreamName()) {
             return;
         }
-        if (!this.checkSubTitle()) {
-            return;
-        }
+        // if (!this.checkSubTitle()) {
+        //     return;
+        // }
         if (!this.checkDescription()) {
             return;
         }
@@ -227,7 +227,7 @@ class NewLiveStreamPage extends React.Component<Props, State> {
                                 />
                             </div>
                             {/* subtitle */}
-                            <div className="mb-3">
+                            {/* <div className="mb-3">
                                 <label className="form-label text-uppercase">Subtitle</label>
                                 <input
                                     className="form-control"
@@ -238,7 +238,7 @@ class NewLiveStreamPage extends React.Component<Props, State> {
                                         });
                                     }}
                                 />
-                            </div>
+                            </div> */}
                             {/* language */}
                             <div className="mb-3">
                                 <label className="form-label text-uppercase">Language</label>

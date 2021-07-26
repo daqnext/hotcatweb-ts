@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-16 15:19:04
- * @LastEditTime: 2021-07-26 09:08:04
+ * @LastEditTime: 2021-07-26 13:41:55
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/IndexPage/IndexPage.tsx
@@ -19,119 +19,16 @@ interface Props {}
 
 interface State {
     categoryArray:string[];
-    checkedCategory:{[key:string]:boolean}
+    //checkedCategory:{[key:string]:boolean}
+    checkedCategory:string[]
 
-    videoList:{[key:string]:ILiveStreamInfo[]}
+    //videoList:{[key:string]:ILiveStreamInfo[]}
 
+    
+    onLiveVideos:ILiveStreamInfo[]
     videos:ILiveStreamInfo[]
 }
 
-const video = [
-    {
-        title: "MyVideoTitle",
-        subTitle: "subTitle here",
-        author: "zzb",
-        description: "video log",
-        status: "record",
-        duration: 1800,
-        createTimeStamp: 1626587861000,
-        startTimeStamp: 1626587861000,
-        endTimeStamp: 1626587861000,
-        videoLink: "",
-        coverImgUrl: "",
-    },
-    {
-        title: "MyVideoTitle",
-        subTitle: "subTitle here",
-        author: "zzb",
-        description: "video log",
-        status: "record",
-        duration: 1800,
-        createTimeStamp: 1626587861000,
-        startTimeStamp: 1626587861000,
-        endTimeStamp: 1626587861000,
-        videoLink: "",
-        coverImgUrl: "https://imgs.699pic.com/01/500/465/562/500465562.jpg!list2x.v1",
-    },
-    {
-        title: "MyVideoTitle",
-        subTitle: "subTitle here",
-        author: "zzb",
-        description: "video log",
-        status: "record",
-        duration: 1800,
-        createTimeStamp: 1626587861000,
-        startTimeStamp: 1626587861000,
-        endTimeStamp: 1626587861000,
-        videoLink: "",
-        coverImgUrl: "https://imgs.699pic.com/01/500/465/562/500465562.jpg!list2x.v1",
-    },
-    {
-        title: "MyVideoTitle",
-        subTitle: "subTitle here",
-        author: "zzb",
-        description: "video log",
-        status: "record",
-        duration: 1800,
-        createTimeStamp: 1626587861000,
-        startTimeStamp: 1626587861000,
-        endTimeStamp: 1626587861000,
-        videoLink: "",
-        coverImgUrl: "https://imgs.699pic.com/01/500/465/562/500465562.jpg!list2x.v1",
-    },
-    {
-        title: "MyVideoTitle",
-        subTitle: "subTitle here",
-        author: "zzb",
-        description: "video log",
-        status: "record",
-        duration: 1800,
-        createTimeStamp: 1626587861000,
-        startTimeStamp: 1626587861000,
-        endTimeStamp: 1626587861000,
-        videoLink: "",
-        coverImgUrl: "https://imgs.699pic.com/01/500/465/562/500465562.jpg!list2x.v1",
-    },
-    {
-        title: "MyVideoTitle",
-        subTitle: "subTitle here",
-        author: "zzb",
-        description: "video log",
-        status: "record",
-        duration: 1800,
-        createTimeStamp: 1626587861000,
-        startTimeStamp: 1626587861000,
-        endTimeStamp: 1626587861000,
-        videoLink: "",
-        coverImgUrl: "https://imgs.699pic.com/01/500/465/562/500465562.jpg!list2x.v1",
-    },
-    {
-        title: "MyVideoTitle",
-        subTitle: "subTitle here",
-        author: "zzb",
-        description: "video log",
-        status: "record",
-        duration: 1800,
-        createTimeStamp: 1626587861000,
-        startTimeStamp: 1626587861000,
-        endTimeStamp: 1626587861000,
-        videoLink: "",
-        coverImgUrl: "https://imgs.699pic.com/01/500/465/562/500465562.jpg!list2x.v1",
-    },
-    {
-        title: "MyVideoTitle",
-        subTitle: "subTitle here",
-        author: "zzb",
-        description: "video log",
-        status: "record",
-        duration: 1800,
-        createTimeStamp: 1626587861000,
-        startTimeStamp: 1626587861000,
-        endTimeStamp: 1626587861000,
-        videoLink: "",
-        coverImgUrl: "https://imgs.699pic.com/01/500/465/562/500465562.jpg!list2x.v1",
-    },
-];
 
 // const category = ["Crypto", "Games", "Sports", "Technology"];
 
@@ -140,9 +37,10 @@ class IndexPage extends React.Component<Props, State> {
         super(props);
         this.state={
             categoryArray:[],
-            checkedCategory:{},
-            videoList:{},
+            checkedCategory:[],
+            //videoList:{},
 
+            onLiveVideos:[],
             videos:[]
         }
     }
@@ -184,33 +82,39 @@ class IndexPage extends React.Component<Props, State> {
             console.log(streamInfo);
             streamInfos.push(streamInfo)
         }
-        const list={...this.state.videoList}
-        if (list[category]) {
-            list[category].push(...streamInfos)
+
+        
+        if (category===ELiveStreamStatus.ONLIVE ) {
+            const list=[...this.state.onLiveVideos]
+            list.push(...streamInfos)
+            this.setState({onLiveVideos:list}) 
         }else{
-            list[category]=streamInfos
+            const list=[...this.state.videos]
+            list.push(...streamInfos)
+            this.setState({videos:list}) 
         }
-        this.setState({videoList:list})
     }
 
     async componentDidMount(){
         const cate=await CategoryManager.GetCategory()
         if (cate.length>0) {
-            const checked:{[key:string]:boolean}={}
-            for (let i = 0; i < cate.length; i++) {
-                
-                checked[cate[i]]=true
-            }
+            const checked:string[]=[]
+            checked.push(...cate)
+            
             this.setState({
                 categoryArray:cate,
                 checkedCategory:checked,
                 //videoList:{}
             },()=>{
-                 
+                for(let j=0;j<10;j++)
+                {
+                    this.getVideoList(ELiveStreamStatus.ONLIVE,8)
+                }
+
                 for (let i = 0; i < cate.length; i++) {
                     for(let j=0;j<10;j++)
                     {
-                        this.getVideoList(ELiveStreamStatus.ONLIVE,8)
+                        
                         this.getVideoList(cate[i],12)
                     }
                      
@@ -228,8 +132,8 @@ class IndexPage extends React.Component<Props, State> {
         
     }
 
-    renderOnliveVideo(){
-        const list=this.state.videoList[ELiveStreamStatus.ONLIVE]
+    renderVideos(list:ILiveStreamInfo[]){
+        //const list=this.state.onLiveVideos
         if (!list||list.length<=0) {
             return null
         }
@@ -244,24 +148,40 @@ class IndexPage extends React.Component<Props, State> {
         </div></>
     }
 
-    renderCategory(category:string){
-        const list=this.state.videoList[category]
-        if (this.state.checkedCategory[category]==false) {
-            return null
-        }
-        if (!list||list.length<=0) {
-            return null
-        }
-        return <>
-        {/* <h2 className="section-heading section-heading-ms mb-4 mb-lg-5">{category}</h2> */}
-        <div className="row">
-            {list&&list.map((value, index, array) => {
-                return (
-                    <VideoCard video={value}></VideoCard>
-                );
-            })}
-        </div></>
-    }
+    // renderCategoryVideos(){
+    //     const list=this.state.videos
+    //     if (!list||list.length<=0) {
+    //         return null
+    //     }
+    //     return <>
+    //     {/* <h2 className="section-heading section-heading-ms mb-4 mb-lg-5">On Live</h2> */}
+    //     <div className="row">
+    //         {list&&list.map((value, index, array) => {
+    //             return (
+    //                 <VideoCard video={value}></VideoCard>
+    //             );
+    //         })}
+    //     </div></>
+    // }
+
+    // renderCategory(category:string){
+    //     const list=this.state.videoList[category]
+    //     if (this.state.checkedCategory[category]==false) {
+    //         return null
+    //     }
+    //     if (!list||list.length<=0) {
+    //         return null
+    //     }
+    //     return <>
+    //     {/* <h2 className="section-heading section-heading-ms mb-4 mb-lg-5">{category}</h2> */}
+    //     <div className="row">
+    //         {list&&list.map((value, index, array) => {
+    //             return (
+    //                 <VideoCard video={value}></VideoCard>
+    //             );
+    //         })}
+    //     </div></>
+    // }
 
     render() {
         return (
@@ -316,11 +236,19 @@ class IndexPage extends React.Component<Props, State> {
                 {/* onlive */}
 
                 <div className="videoscontainer">
-                    {this.renderOnliveVideo()}
+                    {this.renderVideos(this.state.onLiveVideos)}
 
-                    {this.state.categoryArray.map((value,index,array)=>{
-                        return this.renderCategory(value)
-                    })}
+                    {this.state.onLiveVideos.length>0&&<div onClick={()=>{
+                        console.log("more live video");
+                        
+                    }}>------------more live video button-----------</div>}
+
+                    {this.renderVideos(this.state.videos)}
+
+                    <div onClick={()=>{
+                        console.log("more video");
+                        
+                    }}>------------more video button-----------</div>
                 </div>
                  
 

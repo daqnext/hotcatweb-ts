@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-20 09:15:51
- * @LastEditTime: 2021-07-26 08:59:03
+ * @LastEditTime: 2021-07-26 13:19:55
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/ManageLiveStreamPage/LiveStreamDetail.tsx
@@ -130,9 +130,9 @@ class LiveStreamDetail extends React.Component<Props, State> {
         if (!this.checkStreamName()) {
             return;
         }
-        if (!this.checkSubTitle()) {
-            return;
-        }
+        // if (!this.checkSubTitle()) {
+        //     return;
+        // }
         if (!this.checkDescription()) {
             return;
         }
@@ -278,34 +278,7 @@ class LiveStreamDetail extends React.Component<Props, State> {
                         </div>
                     </div>
                 </div>
-                {/* <div className="row">
-                    <div
-                        className="btn btn-primary "
-                        onClick={() => {
-                            this.props.onBackClick();
-                        }}
-                    >
-                        {"< back"}
-                    </div>
-
-                    <div
-                        className="btn btn-primary"
-                        onClick={() => {
-                            this.props.onBackClick();
-                        }}
-                    >
-                        {"< back"}
-                    </div>
-
-                    <div
-                        className="btn btn-primary"
-                        onClick={() => {
-                            this.props.onBackClick();
-                        }}
-                    >
-                        {"< back"}
-                    </div>
-                </div> */}
+                
 
                 <form>
                     {/* id */}
@@ -348,7 +321,7 @@ class LiveStreamDetail extends React.Component<Props, State> {
                         />
                     </div>
                     {/* subtitle */}
-                    <div className="mb-3">
+                    {/* <div className="mb-3">
                         <label className="form-label text-uppercase">Subtitle</label>
                         <input
                             className="form-control"
@@ -360,7 +333,7 @@ class LiveStreamDetail extends React.Component<Props, State> {
                                 });
                             }}
                         />
-                    </div>
+                    </div> */}
                     {/* language */}
                     <div className="mb-3">
                                 <label className="form-label text-uppercase">Language</label>
