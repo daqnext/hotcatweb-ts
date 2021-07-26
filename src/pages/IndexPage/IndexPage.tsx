@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-16 15:19:04
- * @LastEditTime: 2021-07-26 15:35:36
+ * @LastEditTime: 2021-07-26 16:27:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/IndexPage/IndexPage.tsx
@@ -96,6 +96,14 @@ class IndexPage extends React.Component<Props, State> {
         }
     }
 
+    async getMoreOnLiveVideo(){
+        
+    }
+
+    async getMoreVideo(){
+        
+    }
+
     async componentDidMount(){
         const cate=await CategoryManager.GetCategory()
         if (cate.length>0) {
@@ -148,6 +156,8 @@ class IndexPage extends React.Component<Props, State> {
             })}
         </div></>
     }
+
+    
 
     // renderCategoryVideos(){
     //     const list=this.state.videos
