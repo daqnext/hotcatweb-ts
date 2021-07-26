@@ -151,7 +151,7 @@ class SignInPage extends React.Component<Props, State> {
                             <div className="card">
                                
                                 <div className="card-body p-lg-5">
-                                    <h3 className="mb-4 text-gray">Sign In</h3>
+                                    <h3 className="mb-4">Sign In</h3>
                                     
                                     <form id="loginForm" action="index.html">
 
@@ -160,8 +160,7 @@ class SignInPage extends React.Component<Props, State> {
                                             <input
                                                 className="form-control"
                                                 id="floatingInput"
-                                                type="email"
-                                                placeholder="name@example.com"
+                                                type="email" 
                                                 onChange={(event) => {
                                                     this.setState({
                                                         email: event.target.value.trim(),
@@ -176,7 +175,7 @@ class SignInPage extends React.Component<Props, State> {
                                                 className="form-control"
                                                 id="floatingPassword"
                                                 type="password"
-                                                placeholder="Password"
+                                                
                                                 onChange={(event) => {
                                                     this.setState({
                                                         password: event.target.value.trim(),
@@ -193,7 +192,6 @@ class SignInPage extends React.Component<Props, State> {
                                                         className="form-control"
                                                         id="captcha"
                                                         type="text"
-                                                        placeholder="captcha"
                                                         onChange={(event) => {
                                                             this.setState({
                                                                 captcha: event.target.value.trim(),
@@ -219,7 +217,7 @@ class SignInPage extends React.Component<Props, State> {
                                         <input className="form-check-input" type="checkbox" name="remember" id="remember"/>
                                         <label className="form-check-label" htmlFor="remember">Remember me</label>
                                     </div> */}
-                                        <div className="btn btn-outline-primary"
+                                        <div className="btn btn-primary"
                                         onClick={()=>{
                                             this.login()
                                         }}

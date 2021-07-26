@@ -1,12 +1,142 @@
+body{
+background-color: #19191c;
+}
+
+table{
+color: #cacaca !important;
+}
+
+.btn{
+font-weight: bold !important;
+}
+
+.page-holder{
+background-color: #0f0f11;
+border: none;
+}
+
+.sb-avatar__text{
+background: rgb(115 115 115) !important;
+}
+
+.dropzone {
+background: #464649;
+border: none;
+}
+
+.card-header
+{
+color: white;
+background-color: #39393a;
+}
+
+
+.choices__inner{
+    background-color: #464649 !important;
+    color: white;
+    border:none !important;
+}
+
+.input-group  .btn-outline-secondary
+{
+background-color: #9e9e9e;
+border: none;
+}
+
+.input-group .btn:hover{
+    background-color: black;
+}
+
+.indexsearch .choices__inner{
+background: none;
+border: none;
+border-radius: 0px !important;
+padding:0px !important;
+}
+
+.indexsearch .choices__inner{
+background-color: #101012 !important;
+}
+
+.indexsearch .choices__input{
+background-color: #101012 !important
+}
+.indexsearch .choices__input:focus{
+    color: gray;
+}
+
+.input-group-text{
+padding: 0.5rem 0.75rem !important;
+margin-left: -1px;
+border-radius: 0px !important;
+}
+
+.choices__list--multiple .choices__item{
+background: #383838 !important;
+color: #fdfdfd  !important;
+border: 1px solid #4a4a4b !important;
+margin-top: 8px !important;
+}
+
+.is-open .choices__inner{
+margin-left: 0px !important;
+border-radius: 0px !important;
+}
+.choices .choices__button{
+    border-left: 1px solid #4a4a4b !important;
+}
+
+.choices__list--dropdown{
+border-radius: 0px !important;
+border: none !important;
+}
+
+.choices__list--dropdown .choices__item{
+color: #c8c8c9;
+background: #464649;
+}
+
+.choices__list--dropdown .choices__item--selectable.is-highlighted {
+color: white;
+background-color: #060606;
+}
+
+
 .sidebar-list-item i{
 margin:10px;
 }
 
 
 .sidebar-menu .sidebar-list-item .sidebar-link i{
-    margin-left: 40px !important;
+margin-left: 40px !important;
 }
-   
+
+
+.sidebar-menu{
+padding: 0.4rem 1.5rem !important;
+}
+.sidebar-link.active {
+background: #2a2d31;
+}
+
+.sidebar-link-title{
+font-weight: bold;
+}
+
+.sidebar-link:hover{
+background: #2a2d31;
+color: white;
+}
+
+.footer{
+background-color: #19191c;
+}
+
+.header .navbar{
+background-color: #19191c;
+box-shadow:1px 1px 1px black;
+}
+
 .header .navbar .lead{
 display: none;
 }
@@ -33,17 +163,42 @@ transition: .3s all ease;
 
 
 
+.card{
+color: #dedee3 !important;
+background-color: #19191c !important;
+}
+
+.card input{
+color: white;
+border:none !important;
+background-color: #464649 !important;
+}
+
+.card input:focus {
+color: white !important;
+background-color: black !important;
+}
+
+
 .text-muted {
     color: #4d5052 !important;
 }
 
+.sidebar{
+background-color: #1f2024;
+}
+
+.sidebar .sidebar-link{
+color: #dedee3 !important;
+}
 .sidebar-heading{
     color: #4d4f50 !important;
 }
 
 .header .navbar{
-    padding-top: 0.8rem !important;
-    padding-bottom: 0.8rem !important;
+    padding-top: 0.4rem !important;
+    padding-bottom: 0.4rem !important;
+    min-height: 60px;
 }
 
 .card-heading
@@ -63,28 +218,38 @@ border: 12px solid #e7e8e9;
 }
 
 .signinlogotext{
-    color: #ababab !important;
+color: #ababab !important;
 }
 
 .footer{
-    margin-top: 30px;
+margin-top: 30px;
 }
 
 .navtext{
-font-size: 28px;
+font-size: 22px;
 font-weight: bold;
-color: #ff3434;
+color: white;
+margin-bottom: 0px;
 }
+
  
+.navtext span {
+border-radius: 5px;
+color: #ff3434;
+padding: 2px 5px;
+margin-right: 5px;
+background: white;
+}
+
 
 .indexsearch .choices{
-    min-width: 450px;
+min-width: 450px;
 }
  
 .indexsearch .input-group-text {
-    background: #f8f9fa;
-    color: #909090;
-    border: 1px solid #dddddd;
+background: none !important;
+color: #c8c8c9;
+border:none;
 }
 
 .indexsearch .input-group-text i{
@@ -102,44 +267,78 @@ position: relative;
 }
 
 .videoscontainer .card{
-margin-bottom: 30px !important;
-margin-right: 15px;
-border-radius: 30px;
-background-color: #efefef !important;
+border-radius: 0px;
+background-color: #101012 !important;
+margin-right: 0px;
 margin-top: 10px !important;
+margin-bottom: 20px !important;
 cursor: pointer;
+box-shadow: none !important;
 }
 
-.videoscontainer .card:hover{
-    box-shadow: 0 0.5rem 1rem rgb(201 204 249);
+ 
+
+.videoscontainer .card .imgwrapper{
+height: 180px;
+width: 100%;
+text-align: center;
+overflow: hidden;
+background-color: #4650dd;
+margin-bottom: 10px;
 }
 
-.card-img, .card-img-top 
+.videoscontainer .card:hover img{
+transition-property: transform;
+transition-timing-function: ease;
+transition-duration: 0.2s;
+transform: translate3d(0.3rem, 0rem, 0px);
+}
+ 
+
+.videoscontainer .card  .card-img-top 
 {
-    border-top-left-radius: 30px; 
-    border-top-right-radius: 30px; 
+background-color: black;
+border-top-left-radius: 0px; 
+border-top-right-radius: 0px; 
 }
 
 .videoscontainer .card .card-title{ 
-    background-color: #f9f9f9 !important;
-    color: #636363;
-    padding: 0.5rem 0.8rem !important;
-    padding-top: 5px;
-    font-size: 13px;
-    margin-bottom: 0px;
+color: #636363;
+padding: 0.5rem 0.8rem !important;
+padding-top: 5px;
+font-size: 13px;
+margin-bottom: 0px;
 }
+
+.videoscontainer .card .card-title .mid{
+margin-top: 10px;
+}
+
+.videoscontainer .card .card-title .nametext{
+margin-right: 10px;
+}
+
+.videoscontainer .card .card-title .lan{
+background: #383838;
+color: #ababab;
+margin: 0px 10px;
+border-radius: 6px;
+padding: 1px 5px 2px;
+} 
+ 
  
 .videoscontainer .card .footer{
 text-align: right;
 margin-top: 5px;
 padding: 1px 30px 5px 0px;
 font-size: 16px;
+background-color: #101012 !important;
 }
 
 .videoscontainer .card .footer i{
-color: #888888 !important;
-margin-right: 5px;
-margin-left: 5px;
+color: #949498 !important;
+margin-right: 8px;
+margin-left: 8px;
 font-size: 13px;
 }
 
@@ -179,10 +378,29 @@ font-size: 15px;
 }
 
 .videoscontainer .card .avawrap{
-    display: inline-block;
-    background: gainsboro;
-    border-radius: 30px;
-    width: 30px;
-    margin: 0px 5px;
+position: absolute;
+left: 0px;
+top: 8px;
+background: gainsboro;
+border-radius: 40px;
+width: 40px;
+height: 40px;
+margin: 0px 5px;
+}
+
+.videoscontainer .card .card-title{
+color: #dedee3;
+padding: 0.5rem 0.8rem !important;
+padding-top: 5px;
+font-size: 13px;
+margin-bottom: 0px;
+margin-left: 50px;
 }
  
+
+.morevideowrap{
+text-align: center;
+}
+
+.morevideowrap .btn{
+}

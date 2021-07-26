@@ -237,7 +237,8 @@ class ManageLiveStreamPage extends React.Component<Props, State> {
         return (
             <>
                 <div>You have no any livestreaming</div>
-                <a className="btn btn-primary" href="/newlivestream">
+                <h1></h1>
+                <a className="btn btn-primary btn-sm" href="/newlivestream">
                     New Livestreaming
                 </a>
             </>

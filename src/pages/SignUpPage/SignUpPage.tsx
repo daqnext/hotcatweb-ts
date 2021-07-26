@@ -226,7 +226,7 @@ class SignUpPage extends React.Component<Props, State> {
                             <div className="card">
                                 
                                 <div className="card-body p-lg-5">
-                                    <h3 className=" mb-4 text-gray">Sign Up</h3>
+                                    <h3 className=" mb-4">Sign Up</h3>
                                     <form>
                                         
                                         <div className=" mb-3">
@@ -235,8 +235,7 @@ class SignUpPage extends React.Component<Props, State> {
                                             <input
                                                 className="form-control"
                                                 id="username"
-                                                type="username"
-                                                placeholder="UserName"
+                                                type="username" 
                                                 onChange={(event) => {
                                                     this.setState({
                                                         userName: event.target.value.trim(),
@@ -250,8 +249,7 @@ class SignUpPage extends React.Component<Props, State> {
                                             <input
                                                 className="form-control"
                                                 id="floatingInput"
-                                                type="email"
-                                                placeholder="name@example.com"
+                                                type="email" 
                                                 onChange={(event) => {
                                                     this.setState({
                                                         email: event.target.value.trim(),
@@ -265,8 +263,7 @@ class SignUpPage extends React.Component<Props, State> {
                                             <input
                                                 className="form-control"
                                                 id="floatingPassword"
-                                                type="password"
-                                                placeholder="Password"
+                                                type="password" 
                                                 onChange={(event) => {
                                                     this.setState({
                                                         password: event.target.value.trim(),
@@ -277,7 +274,7 @@ class SignUpPage extends React.Component<Props, State> {
                                         <div className="mb-3">
                                             <label htmlFor="floatingRepeatPassword" className="form-label text-uppercase">Repeat Password</label>
                                             <input className="form-control" id="floatingRepeatPassword"
-                                                type="password" placeholder="Repeat Password"
+                                                type="password" 
                                                 onChange={(event) => {
                                                     this.setState({
                                                         repeatPassword: event.target.value.trim(),
@@ -297,7 +294,7 @@ class SignUpPage extends React.Component<Props, State> {
                                                     className="form-control"
                                                     id="captcha"
                                                     type="text"
-                                                    placeholder="Email Verification Code"
+                                                    
                                                     onChange={(event) => {
                                                         this.setState({
                                                             vCode: event.target.value.trim(),
@@ -324,7 +321,7 @@ class SignUpPage extends React.Component<Props, State> {
                                                         className="form-control"
                                                         id="captcha"
                                                         type="text"
-                                                        placeholder="captcha"
+                                                       
                                                         onChange={(event) => {
                                                             this.setState({
                                                                 captcha: event.target.value.trim(),
@@ -361,7 +358,7 @@ class SignUpPage extends React.Component<Props, State> {
                                         </div> */}
                                         <div className="form-group">
                                             <div
-                                                className="btn btn-outline-primary"
+                                                className="btn btn-primary"
                                                 id="regidter"
                                                 //type="submit"
                                                 // name="registerSubmit"

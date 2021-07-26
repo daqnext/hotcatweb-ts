@@ -232,6 +232,7 @@ class IndexPage extends React.Component<Props, State> {
 
 
                         <div className="input-group indexsearch">
+                            <div></div>
                              <span className="input-group-text "> <i className="far fa-laugh-beam"></i>  YOUR INTERESTS:</span>
                              <select className="form-control" id="choices-multiple" name="choices-multiple" multiple onChange={this.handleSelect2.bind(this)} >
                                 {/* <option value="ALL" key="ALL" selected={this.state.isAllChecked} >ALL</option> */}
@@ -284,14 +285,18 @@ class IndexPage extends React.Component<Props, State> {
                     {this.state.onLiveVideos.length>0&&<div onClick={()=>{
                         console.log("more live video");
                         
-                    }}>------------more live video button-----------</div>}
+                    }}>
+                             <div className="morevideowrap"><div className="btn btn-sm btn-primary"><i className="fas fa-arrow-down"></i> click for more videos</div></div>
+                        </div>}
 
                     {this.renderVideos(this.state.videos)}
 
                     <div onClick={()=>{
                         console.log("more video");
                         
-                    }}>------------more video button-----------</div>
+                    }}>
+                          <div className="morevideowrap"><div className="btn btn-sm btn-primary"><i className="fas fa-arrow-down"></i> click for more videos</div></div>
+                    </div>
                 </div>
                  
 

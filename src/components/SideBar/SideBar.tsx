@@ -47,7 +47,7 @@ class SideBar extends React.Component<Props,State> {
     }
 
     render() {return (
-            <div className="sidebar py-3" id="sidebar">
+            <div className="sidebar" id="sidebar">
              
              
                 <ul className="list-unstyled">
@@ -69,7 +69,7 @@ class SideBar extends React.Component<Props,State> {
 
                     <li className="sidebar-list-item">
                         <a className={"sidebar-link text-muted "+ (this.checkactive("/managelivestream")) } href="/managelivestream">
-                            <i className="fas fa-icons"/><span className="sidebar-link-title">Video Management</span>
+                            <i className="fas fa-icons"/><span className="sidebar-link-title">My Videos</span>
                         </a>
                     </li>
 

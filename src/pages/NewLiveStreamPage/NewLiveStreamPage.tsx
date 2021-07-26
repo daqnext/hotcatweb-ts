@@ -217,8 +217,7 @@ class NewLiveStreamPage extends React.Component<Props, State> {
                             <div className="mb-3">
                                 <label className="form-label text-uppercase">Stream Name</label>
                                 <input
-                                    className="form-control"
-                                    placeholder="Livestreaming name"
+                                    className="form-control" 
                                     onChange={(event) => {
                                         this.setState({
                                             streamName: event.target.value,
@@ -230,8 +229,7 @@ class NewLiveStreamPage extends React.Component<Props, State> {
                             {/* <div className="mb-3">
                                 <label className="form-label text-uppercase">Subtitle</label>
                                 <input
-                                    className="form-control"
-                                    placeholder="Subtitle"
+                                    className="form-control" 
                                     onChange={(event) => {
                                         this.setState({
                                             subTitle: event.target.value,
@@ -273,8 +271,7 @@ class NewLiveStreamPage extends React.Component<Props, State> {
                             <div className="mb-3">
                                 <label className="form-label text-uppercase">Description</label>
                                 <input
-                                    className="form-control"
-                                    placeholder="Description"
+                                    className="form-control" 
                                     onChange={(event) => {
                                         this.setState({
                                             description: event.target.value,

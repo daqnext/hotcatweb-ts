@@ -27,28 +27,33 @@ class VideoCard extends React.Component<Props, State> {
     render() {
         const startTime=moment(this.props.video.startTimeStamp).format("YYYY-MM-DD HH:mm")
         return (
-            <div className="col-md-3" onClick={()=>{
+            <div className="col-md-4" onClick={()=>{
               //window.location.href = `/play?id=${this.props.id}`;
               window.open(`/play?id=${this.props.video.id}`);  
             }}>
-                <div className="card mb-4">
+                <div className="card">
                   {this.props.video.status===ELiveStreamStatus.ONLIVE&&<div className="btn btn-sm btn-outline-danger livetag">Live</div>}
                   
-                  <Image className="card-img-top img-fluid" src={GlobalData.apiHost+this.props.video.coverImgUrl} alt={GlobalData.apiHost+this.props.video.subTitle}/>
+                  <div className="imgwrapper">
+                    <Image className="card-img-top img-fluid" src={GlobalData.apiHost+this.props.video.coverImgUrl} alt={GlobalData.apiHost+this.props.video.subTitle}/>
+                  </div>   
                   <div className="card-body">
-                    <div className="user">
-                      {/* <div className="avawrap"><img src="/img/hotcat.png"></img></div>    */}
-                      <div className="avawrap">
-                      <Avatar
-                        name={this.props && this.props.video.userName ? this.props.video.userName : ""}
-                        round={true}
-                        size="30"
-                        src={GlobalData.apiHost+"/public/avatar/" + (this.props.video ? this.props.video.userId : "0")}
-                    />
-                    </div>
-                      <span>{this.props.video.userName}</span>
-                    </div>
-                    <h5 className="card-title">{this.props.video.name}</h5>
+                         
+                              <div className="avawrap">
+                                <Avatar
+                                  name={this.props && this.props.video.userName ? this.props.video.userName : ""}
+                                  round={true}
+                                  size="40"
+                                  src={GlobalData.apiHost+"/public/avatar/" + (this.props.video ? this.props.video.userId : "0")} />
+                              </div>
+                              <h5 className="card-title">
+                                <span>{this.props.video.name}</span>
+                                <div className="mid">
+                                  <span className="nametext">{this.props.video.userName }</span>
+                                  <span>|</span>
+                                  <span className="lan"> {this.props.video.language} </span>
+                                </div>
+                              </h5>
                     {/* <p className="card-text">{this.props.video.userName}</p> */}
                     {/* <p className="card-text">{this.props.video.subTitle}</p> */}
                     <p className="card-text footer">

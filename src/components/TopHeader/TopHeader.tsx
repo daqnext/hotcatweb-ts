@@ -39,12 +39,12 @@ class TopHeader extends React.Component<Props, State> {
     render() {
         return (
             <header className="header">
-                <nav className="navbar navbar-expand-lg px-4 py-2 bg-white shadow">
+                <nav className="navbar navbar-expand-lg px-4 py-2 ">
                     <a className="sidebar-toggler text-gray-500 me-4 me-lg-5 lead" href="#">
                         <i className="fas fa-align-left"></i>
                     </a>
                     {/* <img className="navlogo" src="/img/navlogo.png" /> */}
-                    <h3 className="navtext">HOTCAT.LIVE</h3>
+                    <h3 className="navtext"><span>HOT</span>CAT.LIVE</h3>
                     {this.state.userInfo ? (
                         <ul className="ms-auto d-flex align-items-center list-unstyled mb-0">
                             {/* <a href="/newlivestream">
@@ -67,7 +67,7 @@ class TopHeader extends React.Component<Props, State> {
                                 >
                                     {/* <img className="avatar p-1" src="/img/avatar.png" /> */}
                                     <Avatar name={this.state.userInfo ? this.state.userInfo.name : ""}
-                                        round={true} size="35"
+                                        round={true} size="30"
                                         src={
                                             this.state.userInfo &&
                                             this.state.userInfo.avatarUrl !== ""
@@ -105,10 +105,7 @@ class TopHeader extends React.Component<Props, State> {
                         </ul>
                     ) : (
                         <div className="ms-auto d-flex align-items-center list-unstyled mb-0 ">
-                            <a className="btn btn-sm btn-outline-primary" href="/signin">
-                                Sign In
-                            </a>
-                            
+                            <a className="btn btn-sm btn-primary " href="/signin"> Sign In </a>
                         </div>
                     )}
                 </nav>

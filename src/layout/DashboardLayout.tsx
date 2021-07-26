@@ -21,7 +21,7 @@ class DashboardLayout extends React.Component<Props, State> {
                 <TopHeader></TopHeader>
                 <div className="d-flex align-items-stretch">
                     <SideBar></SideBar>
-                    <div className="page-holder bg-gray-100">
+                    <div className="page-holder">
                         <div className="container-fluid px-lg-4 px-xl-5">{this.props.children}</div>
                         <Footer></Footer>
                     </div>
