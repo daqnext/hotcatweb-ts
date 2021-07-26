@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-20 09:15:51
- * @LastEditTime: 2021-07-26 08:59:03
+ * @LastEditTime: 2021-07-26 10:03:45
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/ManageLiveStreamPage/LiveStreamDetail.tsx
@@ -154,7 +154,7 @@ class LiveStreamDetail extends React.Component<Props, State> {
             coverImgUrl: this.state.coverImgUrl,
         };
 
-        let response = await RequestTool.post("/api/livestream/update", sendData, {
+        let response = await RequestTool.post(GlobalData.apiHost+"/api/livestream/update", sendData, {
             headers: {
                 Authorization: "Bearer " + UserManager.GetUserToken(),
             },
