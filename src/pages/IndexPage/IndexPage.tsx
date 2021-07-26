@@ -198,6 +198,7 @@ class IndexPage extends React.Component<Props, State> {
         if (cate.length>0) {
             const checked:{[key:string]:boolean}={}
             for (let i = 0; i < cate.length; i++) {
+                
                 checked[cate[i]]=true
             }
             this.setState({
@@ -205,13 +206,23 @@ class IndexPage extends React.Component<Props, State> {
                 checkedCategory:checked,
                 //videoList:{}
             },()=>{
-                this.getVideoList(ELiveStreamStatus.ONLIVE,8)
+                 
                 for (let i = 0; i < cate.length; i++) {
-                    this.getVideoList(cate[i],12)
+                    for(let j=0;j<10;j++)
+                    {
+                        this.getVideoList(ELiveStreamStatus.ONLIVE,8)
+                        this.getVideoList(cate[i],12)
+                    }
+                     
                 }
                 //this.getVideoList("Crypto",12)
             })
         }
+
+
+        const multipleChoices = new (window as any).Choices("#choices-multiple", {
+            removeItemButton: true,
+        });
 
         
         
@@ -222,25 +233,12 @@ class IndexPage extends React.Component<Props, State> {
         if (!list||list.length<=0) {
             return null
         }
-        return <><h2 className="section-heading section-heading-ms mb-4 mb-lg-5">On Live</h2>
+        return <>
+        {/* <h2 className="section-heading section-heading-ms mb-4 mb-lg-5">On Live</h2> */}
         <div className="row">
             {list&&list.map((value, index, array) => {
                 return (
-                    <VideoCard
-                        id={value.id}
-                        key={index}
-                        title={value.name}
-                        subTitle={value.subTitle}
-                        author={value.userName}
-                        description={value.description}
-                        status={value.status===ELiveStreamStatus.ONLIVE?"onLive":"record"}
-                        //duration={value.duration}
-                        //createTimeStamp={value.createTimeStamp}
-                        startTimeStamp={value.startTimeStamp}
-                        //endTimeStamp={value.endTimeStamp}
-                        //videoLink={value.videoLink}
-                        coverImgUrl={value.coverImgUrl}
-                    ></VideoCard>
+                    <VideoCard video={value}></VideoCard>
                 );
             })}
         </div></>
@@ -254,25 +252,12 @@ class IndexPage extends React.Component<Props, State> {
         if (!list||list.length<=0) {
             return null
         }
-        return <><h2 className="section-heading section-heading-ms mb-4 mb-lg-5">{category}</h2>
+        return <>
+        {/* <h2 className="section-heading section-heading-ms mb-4 mb-lg-5">{category}</h2> */}
         <div className="row">
             {list&&list.map((value, index, array) => {
                 return (
-                    <VideoCard
-                        id={value.id}
-                        key={index}
-                        title={value.name}
-                        subTitle={value.subTitle}
-                        author={value.userName}
-                        description={value.description}
-                        status={value.status===ELiveStreamStatus.ONLIVE?"onLive":"record"}
-                        //duration={value.duration}
-                        //createTimeStamp={value.createTimeStamp}
-                        startTimeStamp={value.startTimeStamp}
-                        //endTimeStamp={value.endTimeStamp}
-                        //videoLink={value.videoLink}
-                        coverImgUrl={value.coverImgUrl}
-                    ></VideoCard>
+                    <VideoCard video={value}></VideoCard>
                 );
             })}
         </div></>
@@ -281,9 +266,20 @@ class IndexPage extends React.Component<Props, State> {
     render() {
         return (
             <DashboardLayout>
-                <div className="form-group">
-                    <label>Search your interest</label>
-                    <div
+
+
+                        <div className="input-group indexsearch">
+                             <span className="input-group-text "> <i className="far fa-laugh-beam"></i>  YOUR INTERESTS:</span>
+                             <select className="form-control" id="choices-multiple" name="choices-multiple" multiple>
+                                <option value="ALL" selected >ALL</option>
+                                <option value="Choice 2">Choice 2</option>
+                                <option value="Choice 3">Choice 3</option>
+                                <option value="Choice 4">Choice 4</option>
+                             </select>
+                         </div>
+
+
+                  {/* <div
                         className="btn-group"
                         role="group"
                         aria-label="Basic checkbox toggle button group"
@@ -315,15 +311,18 @@ class IndexPage extends React.Component<Props, State> {
                                 </div>
                             );
                         })}
-                    </div>
-                </div>
+                    </div> */}
                 
                 {/* onlive */}
-                {this.renderOnliveVideo()}
 
-                {this.state.categoryArray.map((value,index,array)=>{
-                    return this.renderCategory(value)
-                })}
+                <div className="videoscontainer">
+                    {this.renderOnliveVideo()}
+
+                    {this.state.categoryArray.map((value,index,array)=>{
+                        return this.renderCategory(value)
+                    })}
+                </div>
+                 
 
                 {/* hot video */}
                 {/* <h2 className="section-heading section-heading-ms mb-4 mb-lg-5">Crypto</h2>

@@ -43,7 +43,8 @@ class TopHeader extends React.Component<Props, State> {
                     <a className="sidebar-toggler text-gray-500 me-4 me-lg-5 lead" href="#">
                         <i className="fas fa-align-left"></i>
                     </a>
-                    <img className="navlogo" src="/img/navlogo.png" />
+                    {/* <img className="navlogo" src="/img/navlogo.png" /> */}
+                    <h3 className="navtext">HOTCAT.LIVE</h3>
                     {this.state.userInfo ? (
                         <ul className="ms-auto d-flex align-items-center list-unstyled mb-0">
                             {/* <a href="/newlivestream">
