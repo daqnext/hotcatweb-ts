@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-20 09:15:51
- * @LastEditTime: 2021-07-25 18:56:36
+ * @LastEditTime: 2021-07-26 08:59:03
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/ManageLiveStreamPage/LiveStreamDetail.tsx
@@ -18,6 +18,7 @@ import { CategoryManager } from "../../manager/CategoryManager";
 import { Confirm } from "../../components/Confirm/Confirm";
 import { ILanguage, ILiveStreamInfo } from "../../interface/interface";
 import { LanguageOptionManager } from "../../manager/LanguageManager";
+import { GlobalData } from "../../global/global";
 
 interface Props {
     liveStreamInfo: ILiveStreamInfo;
@@ -184,7 +185,7 @@ class LiveStreamDetail extends React.Component<Props, State> {
             secret: secret,
         };
 
-        let response = await RequestTool.post("/api/livestream/delete", sendData, {
+        let response = await RequestTool.post(GlobalData.apiHost+"/api/livestream/delete", sendData, {
             headers: {
                 Authorization: "Bearer " + UserManager.GetUserToken(),
             },

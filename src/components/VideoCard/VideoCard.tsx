@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-18 13:16:44
- * @LastEditTime: 2021-07-25 10:08:02
+ * @LastEditTime: 2021-07-26 08:52:50
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/components/VideoCard/VideoCard.tsx
@@ -9,6 +9,7 @@
 import React from "react";
 import moment from "moment"
 import Image from "../Image/Img";
+import { GlobalData } from "../../global/global";
 
 interface Props {
   id:number
@@ -40,7 +41,7 @@ class VideoCard extends React.Component<Props, State> {
               //window.location.href = `/play?id=${this.props.id}`;
               window.open(`/play?id=${this.props.id}`);  
             }}>
-                <div className="card mb-4"><Image className="card-img-top img-fluid" src={this.props.coverImgUrl} alt={this.props.title}/>
+                <div className="card mb-4"><Image className="card-img-top img-fluid" src={GlobalData.apiHost+this.props.coverImgUrl} alt={GlobalData.apiHost+this.props.title}/>
                   <div className="card-body">
                     <h5 className="card-title">{this.props.title}</h5>
                     <p className="card-text">{this.props.subTitle}</p>
