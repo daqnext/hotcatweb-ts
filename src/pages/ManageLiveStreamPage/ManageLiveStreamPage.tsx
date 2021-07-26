@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-18 17:36:43
- * @LastEditTime: 2021-07-25 18:54:15
+ * @LastEditTime: 2021-07-26 15:56:56
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/ManageLiveStream/ManageLiveStreamPage.tsx
@@ -194,7 +194,7 @@ class ManageLiveStreamPage extends React.Component<Props, State> {
         console.log(page, sizePerPage);
 
         try {
-            this.setState({ sizePerPage: sizePerPage });
+            this.setState({ sizePerPage: sizePerPage ,page:page});
             const offset = (page - 1) * sizePerPage;
             await this.getLiveStreamList(sizePerPage, offset);
         } catch (error) {

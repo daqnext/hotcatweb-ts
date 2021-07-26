@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-16 15:19:04
- * @LastEditTime: 2021-07-26 13:41:55
+ * @LastEditTime: 2021-07-26 15:35:36
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/IndexPage/IndexPage.tsx
@@ -21,7 +21,7 @@ interface State {
     categoryArray:string[];
     //checkedCategory:{[key:string]:boolean}
     checkedCategory:string[]
-
+    isAllChecked:boolean
     //videoList:{[key:string]:ILiveStreamInfo[]}
 
     
@@ -38,6 +38,7 @@ class IndexPage extends React.Component<Props, State> {
         this.state={
             categoryArray:[],
             checkedCategory:[],
+            isAllChecked:true,
             //videoList:{},
 
             onLiveVideos:[],
@@ -64,7 +65,7 @@ class IndexPage extends React.Component<Props, State> {
         //     return;
         // }
 
-        console.log(responseData);
+        //console.log(responseData);
         const data=responseData.data
         const streamInfos:ILiveStreamInfo[]=[]
         if (data.id.length<=0) {
@@ -79,7 +80,7 @@ class IndexPage extends React.Component<Props, State> {
             if (streamInfo===null) {
                 continue
             }
-            console.log(streamInfo);
+            //console.log(streamInfo);
             streamInfos.push(streamInfo)
         }
 
@@ -183,6 +184,38 @@ class IndexPage extends React.Component<Props, State> {
     //     </div></>
     // }
 
+    handleSelect(event: React.ChangeEvent<HTMLSelectElement>){
+        const options = event.target.options
+        console.log(options);
+        const checked:string[]=[]
+        for (let i = 0; i < options.length; i++) {
+            checked.push(options[i].value)
+        }
+        console.log(checked);
+        if (checked.includes("ALL")) {
+            this.setState({isAllChecked:true})
+        }
+
+        for (let i = 0; i < this.state.categoryArray.length; i++) {
+            if (!checked.includes(this.state.categoryArray[i])) {
+                this.setState({isAllChecked:false})
+                console.log("unchecked:",this.state.categoryArray[i]);
+                
+            }
+        } 
+    }
+
+    handleSelect2(event: React.ChangeEvent<HTMLSelectElement>){
+        const options = event.target.options
+        console.log(options);
+        const checked:string[]=[]
+        for (let i = 0; i < options.length; i++) {
+            checked.push(options[i].value)
+        }
+        console.log(checked);
+        
+    }
+
     render() {
         return (
             <DashboardLayout>
@@ -190,11 +223,11 @@ class IndexPage extends React.Component<Props, State> {
 
                         <div className="input-group indexsearch">
                              <span className="input-group-text "> <i className="far fa-laugh-beam"></i>  YOUR INTERESTS:</span>
-                             <select className="form-control" id="choices-multiple" name="choices-multiple" multiple>
-                                <option value="ALL" selected >ALL</option>
-                                <option value="Choice 2">Choice 2</option>
-                                <option value="Choice 3">Choice 3</option>
-                                <option value="Choice 4">Choice 4</option>
+                             <select className="form-control" id="choices-multiple" name="choices-multiple" multiple onChange={this.handleSelect2.bind(this)} >
+                                {/* <option value="ALL" key="ALL" selected={this.state.isAllChecked} >ALL</option> */}
+                                {this.state.categoryArray.map((value,index,array)=>{
+                                    return <option  key={value} value={value} selected={this.state.checkedCategory.includes(value)} >{value}</option>
+                                })}
                              </select>
                          </div>
 

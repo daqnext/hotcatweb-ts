@@ -2,7 +2,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-18 17:33:49
- * @LastEditTime: 2021-07-26 13:19:02
+ * @LastEditTime: 2021-07-26 15:46:20
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/NewLiveStreamPage/NewLiveStreamPage.tsx
@@ -98,10 +98,10 @@ class NewLiveStreamPage extends React.Component<Props, State> {
     }
 
     checkStreamName() {
-        const temp=this.state.subTitle.trim()
-        if (temp.length <= 5 || temp.length >= 40) {
+        const temp=this.state.streamName.trim()
+        if (temp.length <= 5 || temp.length >= 150) {
             //chapter length error
-            (window as any).notify("error", "Please input stream name(5~40 letters)", "error");
+            (window as any).notify("error", "Please input stream name(5~150 letters)", "error");
             return false;
         }
         return true;
@@ -109,9 +109,9 @@ class NewLiveStreamPage extends React.Component<Props, State> {
 
     checkSubTitle() {
         const temp=this.state.subTitle.trim()
-        if (temp.length <= 5 || temp.length >= 40) {
+        if (temp.length <= 5 || temp.length >= 150) {
             //chapter length error
-            (window as any).notify("error", "Please input subtitle(5~40 letters)", "error");
+            (window as any).notify("error", "Please input subtitle(5~150 letters)", "error");
             return false;
         }
         return true;
