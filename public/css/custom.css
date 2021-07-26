@@ -155,7 +155,7 @@ left: 60px;
 
 .loadertext{
 margin-left: -10px;
-color: #4650dd;
+color: white;
 margin-top: 10px;
 font-weight: bold;
 transition: .3s all ease;
@@ -402,5 +402,12 @@ margin-left: 50px;
 text-align: center;
 }
 
-.morevideowrap .btn{
+.spinner-wrapper
+{
+background-color: black;
 }
+
+.spinner-wrapper .sk-rect {
+    background-color: white;
+}
+
