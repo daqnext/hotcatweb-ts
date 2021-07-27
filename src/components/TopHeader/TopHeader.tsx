@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-16 14:18:43
- * @LastEditTime: 2021-07-20 14:40:10
+ * @LastEditTime: 2021-07-27 23:13:20
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/components/TopHeader/TopHeader.ts
@@ -86,10 +86,10 @@ class TopHeader extends React.Component<Props, State> {
                                         </h6>
                                         {/* <small>Programmer</small> */}
                                     </div>
-                                    <div className="dropdown-divider"></div>
+                                    {/* <div className="dropdown-divider"></div>
                                     <a className="dropdown-item" href="#">
                                         Settings
-                                    </a>
+                                    </a> */}
                                     <div className="dropdown-divider"></div>
                                     <a
                                         className="dropdown-item"
