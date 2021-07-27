@@ -147,18 +147,34 @@ class PlayPage extends React.Component<Props, State> {
                         />
                     </div>
 
-                    <div>{liveStreamInfo&&liveStreamInfo.name}</div>
-                    <div>{liveStreamInfo&&liveStreamInfo.userName}</div>
-                    <Avatar
-                        name={this.state.liveStreamInfo && this.state.liveStreamInfo.userName ? this.state.liveStreamInfo.userName : ""}
-                        round={true}
-                        size="45"
-                        src={"/public/avatar/" + (this.state.liveStreamInfo ? this.state.liveStreamInfo.userId : "0")}
-                    />
-                    <div>{liveStreamInfo&&liveStreamInfo.description}</div>
-                    <div>{liveStreamInfo&&liveStreamInfo.status===ELiveStreamStatus.ONLIVE?"onlive":"record"}</div>
-                    <div>share button</div>
-                    <div>{liveStreamInfo?moment(liveStreamInfo.startTimeStamp).format("lll"):""}</div>
+
+                    <div className="row">
+                            <div className="col-1">
+                                <Avatar
+                                    name={this.state.liveStreamInfo && this.state.liveStreamInfo.userName ? this.state.liveStreamInfo.userName : ""}
+                                    round={true}
+                                    size="50"
+                                    src={"/public/avatar/" + (this.state.liveStreamInfo ? this.state.liveStreamInfo.userId : "0")}
+                                />
+                                <div style={{width:'50px',textAlign:'center'}}>
+                                 {liveStreamInfo&&liveStreamInfo.userName}
+                                </div>
+                            </div>
+
+                            <div className="col-10">
+                                <div>
+                                    <span> {liveStreamInfo&&liveStreamInfo.name}</span>
+                                    <span> {liveStreamInfo&&liveStreamInfo.status===ELiveStreamStatus.ONLIVE?"onlive":"record"}</span>
+                                    <span>share button</span>
+                                </div>
+                                <div>{liveStreamInfo&&liveStreamInfo.description}</div>
+                                <div>{liveStreamInfo?moment(liveStreamInfo.startTimeStamp).format("lll"):""}</div>
+                            </div>
+                    </div>            
+                    
+                    
+                     
+                    
                 </div>
                 {/* ):(
                     this.errorLiveStream()
