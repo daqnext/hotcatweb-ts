@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-16 15:19:04
- * @LastEditTime: 2021-07-28 00:47:08
+ * @LastEditTime: 2021-07-28 16:03:27
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/IndexPage/IndexPage.tsx
@@ -32,6 +32,7 @@ interface State {
 
 class IndexPage extends React.Component<Props, State> {
     lastIndexMap:{[key:string]:number}={}
+    onLiveVideoLastIndex:number=0
     
     constructor(props: Props) {
         super(props);
@@ -46,11 +47,12 @@ class IndexPage extends React.Component<Props, State> {
         };
     }
 
-    async getVideoList(category: string[], count: number) {
+    async getVideoList(category: string[], count: number,isOnlyOnLive:boolean=false) {
         const url = GlobalData.apiHost + "/api/livestream/getvideolist";
         const sendData = {
             category: category,
             count: count,
+            isOnlyOnLive:isOnlyOnLive,
             lastIndexMap:this.lastIndexMap
         };
         const responseData = await RequestTool.post<{ id: number[]; contentMap: { [key: number]: string },lastIndexMap:{[key:string]:number} }>(url, sendData);
@@ -69,11 +71,11 @@ class IndexPage extends React.Component<Props, State> {
         //console.log(responseData);
         
         const data = responseData.data;
-        this.lastIndexMap=data.lastIndexMap
+        this.lastIndexMap={...data.lastIndexMap}
         const streamInfos: ILiveStreamInfo[] = [];
         if (data.id.length <= 0) {
-            (window as any).notify("", "no more videos", "info");
-            return;
+           
+            return false;
         }
         for (let i = 0; i < data.id.length; i++) {
             const streamInfoStr = data.contentMap[data.id[i]];
@@ -88,7 +90,7 @@ class IndexPage extends React.Component<Props, State> {
             streamInfos.push(streamInfo);
         }
 
-        if (category[0] === ELiveStreamStatus.ONLIVE) {
+        if (isOnlyOnLive) {
             const list = [...this.state.onLiveVideos];
             list.push(...streamInfos);
             this.setState({ onLiveVideos: list });
@@ -97,13 +99,23 @@ class IndexPage extends React.Component<Props, State> {
             list.push(...streamInfos);
             this.setState({ videos: list });
         }
+
+        return true
     }
 
-    async getMoreOnLiveVideo() {}
+    async getMoreOnLiveVideo() {
+        const hasNewVideo=await this.getVideoList(this.state.checkedCategory,8)
+        if (!hasNewVideo) {
+            (window as any).notify("", "no more videos", "info");
+        }
+    }
 
     async getMoreVideo() {
         console.log(this.state.checkedCategory);
-        this.getVideoList(this.state.checkedCategory,12)
+        const hasNewVideo=await this.getVideoList(this.state.checkedCategory,12)
+        if (!hasNewVideo) {
+            (window as any).notify("", "no more videos", "info");
+        }
     }
 
     async componentDidMount() {
@@ -120,9 +132,9 @@ class IndexPage extends React.Component<Props, State> {
                 },
                 () => {
                     //for(let j=0;j<10;j++)
-                    {
-                        //this.getVideoList(ELiveStreamStatus.ONLIVE, 8);
-                    }
+                    
+                    this.getVideoList(checked, 8,true);
+                    
 
                     this.getVideoList(checked,36)
 
@@ -153,7 +165,7 @@ class IndexPage extends React.Component<Props, State> {
                 <div className="row">
                     {list &&
                         list.map((value, index, array) => {
-                            return <VideoCard video={value}></VideoCard>;
+                            return <VideoCard key={value.id} video={value}></VideoCard>;
                         })}
                 </div>
             </>
@@ -195,25 +207,25 @@ class IndexPage extends React.Component<Props, State> {
     //     </div></>
     // }
 
-    handleSelect(event: React.ChangeEvent<HTMLSelectElement>) {
-        const options = event.target.options;
-        console.log(options);
-        const checked: string[] = [];
-        for (let i = 0; i < options.length; i++) {
-            checked.push(options[i].value);
-        }
-        console.log(checked);
-        if (checked.includes("ALL")) {
-            this.setState({ isAllChecked: true });
-        }
+    // handleSelect(event: React.ChangeEvent<HTMLSelectElement>) {
+    //     const options = event.target.options;
+    //     console.log(options);
+    //     const checked: string[] = [];
+    //     for (let i = 0; i < options.length; i++) {
+    //         checked.push(options[i].value);
+    //     }
+    //     console.log(checked);
+    //     if (checked.includes("ALL")) {
+    //         this.setState({ isAllChecked: true });
+    //     }
 
-        for (let i = 0; i < this.state.categoryArray.length; i++) {
-            if (!checked.includes(this.state.categoryArray[i])) {
-                this.setState({ isAllChecked: false });
-                console.log("unchecked:", this.state.categoryArray[i]);
-            }
-        }
-    }
+    //     for (let i = 0; i < this.state.categoryArray.length; i++) {
+    //         if (!checked.includes(this.state.categoryArray[i])) {
+    //             this.setState({ isAllChecked: false });
+    //             console.log("unchecked:", this.state.categoryArray[i]);
+    //         }
+    //     }
+    // }
 
     handleSelect2(event: React.ChangeEvent<HTMLSelectElement>) {
         const options = event.target.options;
@@ -252,58 +264,27 @@ class IndexPage extends React.Component<Props, State> {
                     </select>
                 </div>
 
-                {/* <div
-                        className="btn-group"
-                        role="group"
-                        aria-label="Basic checkbox toggle button group"
-                    >
-                        {this.state.categoryArray.map((value, index, array) => {
-                            return (
-                                <div key={index}>
-                                    <input
-                                        type="checkbox"
-                                        className="btn-check"
-                                        id={value}
-                                        autoComplete="off"
-                                        checked={this.state.checkedCategory[value]}
-                                        onChange={(event)=>{
-                                            // console.log(event.target.id);
-                                            // console.log(event.target.checked);
-                                            const checkedCategory=this.state.checkedCategory
-                                            if (event.target.checked) {
-                                                checkedCategory[value]=true
-                                            }else{
-                                                checkedCategory[value]=false
-                                            }
-                                            this.setState({checkedCategory:checkedCategory})
-                                        }}
-                                    />
-                                    <label className="btn btn-outline-primary" htmlFor={value}>
-                                        {value}
-                                    </label>
-                                </div>
-                            );
-                        })}
-                    </div> */}
 
                 {/* onlive */}
 
                 <div className="videoscontainer">
-                    {/* {this.renderVideos(this.state.onLiveVideos)}
-
+                    {this.renderVideos(this.state.onLiveVideos)}
+                    
                     {this.state.onLiveVideos.length > 0 && (
                         <div
+                            style={{marginBottom:"40px"}}
                             onClick={() => {
-                                console.log("more live video");
+                                console.log("more on live video");
+                                this.getMoreOnLiveVideo()
                             }}
                         >
                             <div className="morevideowrap">
                                 <div className="btn btn-sm btn-primary">
-                                    <i className="fas fa-arrow-down"></i> click for more videos
+                                    <i className="fas fa-arrow-down"></i> click for more on live videos
                                 </div>
                             </div>
                         </div>
-                    )} */}
+                    )}
 
                     {this.renderVideos(this.state.videos)}
 

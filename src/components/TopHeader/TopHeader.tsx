@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-16 14:18:43
- * @LastEditTime: 2021-07-27 23:13:20
+ * @LastEditTime: 2021-07-29 21:22:07
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/components/TopHeader/TopHeader.ts
@@ -10,6 +10,7 @@ import React from "react";
 import { IUserInfo } from "../../interface/interface";
 import { UserManager } from "../../manager/UserManager";
 import Avatar from "react-avatar";
+import { GlobalData } from "../../global/global";
 
 interface Props {}
 interface State {
@@ -68,12 +69,12 @@ class TopHeader extends React.Component<Props, State> {
                                     {/* <img className="avatar p-1" src="/img/avatar.png" /> */}
                                     <Avatar name={this.state.userInfo ? this.state.userInfo.name : ""}
                                         round={true} size="30"
-                                        src={
-                                            this.state.userInfo &&
-                                            this.state.userInfo.avatarUrl !== ""
-                                                ? this.state.userInfo.avatarUrl
-                                                : ""
-                                        }
+                                        // src={
+                                        //     this.state.userInfo &&
+                                        //     this.state.userInfo.avatarUrl !== ""
+                                        //         ? GlobalData.apiHost+this.state.userInfo.avatarUrl
+                                        //         : ""
+                                        // }
                                     />
                                 </a>
                                 <div
