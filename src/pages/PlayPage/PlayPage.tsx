@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-18 17:42:28
- * @LastEditTime: 2021-07-30 16:13:23
+ * @LastEditTime: 2021-07-30 17:34:37
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/PlayPage/PlayPage.tsx
@@ -52,7 +52,6 @@ class PlayPage extends React.Component<Props, State> {
         return false;
     }
 
-
     async componentDidMount() {
         const liveStreamId = this.getQueryVariable("id");
         if (liveStreamId === false) {
@@ -65,18 +64,18 @@ class PlayPage extends React.Component<Props, State> {
             return;
         }
 
-        this.getLiveStream(id); 
+        this.getLiveStream(id);
 
-        const token=UserManager.GetUserToken()
-        Utils.loadScript("http://"+GlobalData.apiDomain+":3600/chat.js",()=>{
+        //chat.js
+        const token = UserManager.GetUserToken();
+        Utils.loadScript("http://" + GlobalData.apiDomain + ":3600/chat.js", () => {
             console.log(token);
-            
-            (window as any).startChat("ws://"+GlobalData.apiDomain+":3601",liveStreamId,GlobalData.apiHost+'/api/user/userverify',token);
-        })
+            (window as any).startChat("ws://" + GlobalData.apiDomain + ":3601", liveStreamId, GlobalData.apiHost + "/api/user/userverify", token);
+        });
     }
 
-    async watched(id:number,category:string){
-        const url = GlobalData.apiHost + "/api/livestream/watch/"+id+"/"+category;
+    async watched(id: number, category: string) {
+        const url = GlobalData.apiHost + "/api/livestream/watch/" + id + "/" + category;
         await RequestTool.get(url);
     }
 
@@ -101,25 +100,21 @@ class PlayPage extends React.Component<Props, State> {
         //console.log(responseData);
         const stream = responseData.data;
         //watched
-        this.watched(id,stream.category)
-        
-        
+        this.watched(id, stream.category);
+
         this.setState({ liveStreamInfo: stream });
         if (stream.status === ELiveStreamStatus.PAUSE || stream.status === ELiveStreamStatus.END) {
-            
-            if(!await Utils.IsRemoteFileAvailable(stream.cdnRecordM3u8Link)){                
+            if (!(await Utils.IsRemoteFileAvailable(stream.cdnRecordM3u8Link))) {
                 this.setState({ videoUrl: stream.originRecordM3u8Link, playing: false });
-            }else{                
+            } else {
                 this.setState({ videoUrl: stream.cdnRecordM3u8Link, playing: false });
             }
-            
         } else if (stream.status === ELiveStreamStatus.ONLIVE) {
-            if(!await Utils.IsRemoteFileAvailable(stream.cdnLiveM3u8Link)){
+            if (!(await Utils.IsRemoteFileAvailable(stream.cdnLiveM3u8Link))) {
                 this.setState({ videoUrl: stream.originLiveM3u8Link, playing: true });
-            }else{
+            } else {
                 this.setState({ videoUrl: stream.cdnLiveM3u8Link, playing: true });
             }
-            
         } else {
             //this.setState({ videoUrl: stream.cdnRecordM3u8Link, playing: true });
             (window as any).notify("error", "Livestreaming has not started yet", "error");
@@ -132,10 +127,37 @@ class PlayPage extends React.Component<Props, State> {
 
     render() {
         //console.log(this.state.liveStreamInfo);
-        const {liveStreamInfo}=this.state
+        const { liveStreamInfo } = this.state;
         return (
-            
             <DashboardLayout>
+
+                {/* pc */}
+                <div
+                    id="chatwindow"
+                    style={{
+                        backgroundColor: "#0f0f11",
+                        height: "60%",
+                        width: "360px",
+                        position: "absolute",
+                        top: "80px",
+                        right: "50px",
+                        border: "1px solid #777777",
+                        overflow: "hidden",
+                        borderRadius: "5px",
+                        boxShadow: "1px 1px 1px #b1b1b1",
+                    }}
+                ></div>
+
+                {/* phone */}
+                {/* <div style="width: 100%;height: 400px;text-align: center;font-size: 20px;background-color: red;">
+		Your content 
+	</div>
+
+	<div id="chatwindow" style="background-color:#0f0f11;height:600px;width:100%;position: relative;
+	border: 1px solid #777777; overflow:hidden; box-shadow: 1px 1px 1px #b1b1b1;">
+  
+	</div> */}
+
                 {/* {this.state.liveStreamInfo ? ( */}
                 <div className="container">
                     <div className="col-10">
@@ -145,9 +167,11 @@ class PlayPage extends React.Component<Props, State> {
                             height="100%"
                             url={this.state.videoUrl}
                             controls
-                            config={{file:{
-                                forceHLS:true
-                            }}}
+                            config={{
+                                file: {
+                                    forceHLS: true,
+                                },
+                            }}
                             playing={this.state.playing}
                             // onReady={(player)=>{
                             //     player.
@@ -155,34 +179,27 @@ class PlayPage extends React.Component<Props, State> {
                         />
                     </div>
 
-
                     <div className="row">
-                            <div className="col-1">
-                                <Avatar
-                                    name={this.state.liveStreamInfo && this.state.liveStreamInfo.userName ? this.state.liveStreamInfo.userName : ""}
-                                    round={true}
-                                    size="50"
-                                    src={"/public/avatar/" + (this.state.liveStreamInfo ? this.state.liveStreamInfo.userId : "0")}
-                                />
-                                <div style={{width:'50px',textAlign:'center'}}>
-                                 {liveStreamInfo&&liveStreamInfo.userName}
-                                </div>
-                            </div>
+                        <div className="col-1">
+                            <Avatar
+                                name={this.state.liveStreamInfo && this.state.liveStreamInfo.userName ? this.state.liveStreamInfo.userName : ""}
+                                round={true}
+                                size="50"
+                                src={"/public/avatar/" + (this.state.liveStreamInfo ? this.state.liveStreamInfo.userId : "0")}
+                            />
+                            <div style={{ width: "50px", textAlign: "center" }}>{liveStreamInfo && liveStreamInfo.userName}</div>
+                        </div>
 
-                            <div className="col-10">
-                                <div>
-                                    <span> {liveStreamInfo&&liveStreamInfo.name}</span>
-                                    <span> {liveStreamInfo&&liveStreamInfo.status===ELiveStreamStatus.ONLIVE?"onlive":"record"}</span>
-                                    <span>share button</span>
-                                </div>
-                                <div>{liveStreamInfo&&liveStreamInfo.description}</div>
-                                <div>{liveStreamInfo?moment(liveStreamInfo.startTimeStamp).format("lll"):""}</div>
+                        <div className="col-10">
+                            <div>
+                                <span> {liveStreamInfo && liveStreamInfo.name}</span>
+                                <span> {liveStreamInfo && liveStreamInfo.status === ELiveStreamStatus.ONLIVE ? "onlive" : "record"}</span>
+                                <span>share button</span>
                             </div>
-                    </div>            
-                    
-                    
-                     
-                    
+                            <div>{liveStreamInfo && liveStreamInfo.description}</div>
+                            <div>{liveStreamInfo ? moment(liveStreamInfo.startTimeStamp).format("lll") : ""}</div>
+                        </div>
+                    </div>
                 </div>
                 {/* ):(
                     this.errorLiveStream()
