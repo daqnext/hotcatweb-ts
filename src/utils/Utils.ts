@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-16 17:01:26
- * @LastEditTime: 2021-07-29 21:23:07
+ * @LastEditTime: 2021-07-30 14:45:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/manager/Utils.ts
@@ -47,7 +47,17 @@ export class Utils {
         return null;
     }
 
-    static loadScript(src:string) {
+    static loadScript(src:string,callback:()=>void){
+        let tag = document.createElement("script")
+          tag.async = true
+          tag.src = src
+      
+          document.body.appendChild(tag)
+      
+          tag.addEventListener("load", callback)
+    }
+
+    static loadScriptSync(src:string) {
         return new Promise(resolve => {
           let tag = document.createElement("script")
           tag.async = true

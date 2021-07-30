@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-16 15:19:04
- * @LastEditTime: 2021-07-28 16:03:27
+ * @LastEditTime: 2021-07-30 14:41:22
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/IndexPage/IndexPage.tsx
@@ -56,17 +56,17 @@ class IndexPage extends React.Component<Props, State> {
             lastIndexMap:this.lastIndexMap
         };
         const responseData = await RequestTool.post<{ id: number[]; contentMap: { [key: number]: string },lastIndexMap:{[key:string]:number} }>(url, sendData);
-        // if (responseData === null) {
-        //     //request error
-        //     (window as any).notify("error", "program error", "error");
-        //     return;
-        // }
-        // if (responseData && responseData.status !== 0) {
-        //     //error
-        //     console.log(responseData.msg);
-        //     (window as any).notify("error", responseData.msg, "error");
-        //     return;
-        // }
+        if (responseData === null) {
+            //request error
+            (window as any).notify("error", "program error", "error");
+            return;
+        }
+        if (responseData && responseData.status !== 0) {
+            //error
+            console.log(responseData.msg);
+            (window as any).notify("error", responseData.msg, "error");
+            return;
+        }
 
         //console.log(responseData);
         
@@ -79,7 +79,7 @@ class IndexPage extends React.Component<Props, State> {
         }
         for (let i = 0; i < data.id.length; i++) {
             const streamInfoStr = data.contentMap[data.id[i]];
-            if (streamInfoStr === null) {
+            if (streamInfoStr === null||streamInfoStr===undefined) {
                 continue;
             }
             const streamInfo: ILiveStreamInfo = JSON.parse(streamInfoStr);

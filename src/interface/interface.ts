@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-16 15:59:57
- * @LastEditTime: 2021-07-23 11:29:35
+ * @LastEditTime: 2021-07-30 14:53:32
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/interface/interface.ts
@@ -12,7 +12,8 @@ export interface IUserInfo {
     name: string;
     email: string;
     cookie: string;
-    permission: string[];
+    permission:string,
+    permissionArray: string[];
     created: number;
     avatarUrl:string;
 }

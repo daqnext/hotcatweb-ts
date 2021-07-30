@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-16 15:43:01
- * @LastEditTime: 2021-07-25 17:56:50
+ * @LastEditTime: 2021-07-30 14:53:10
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/manager/usermanager.ts
@@ -44,7 +44,7 @@ export class UserManager {
         if (UserManager.userInfo===null) {
             return false;
         }
-        return UserManager.userInfo.permission.includes(auth);
+        return UserManager.userInfo.permissionArray.includes(auth);
     }
 
     static SetUserToken(token: string) {

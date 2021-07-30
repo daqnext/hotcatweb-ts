@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-18 17:42:28
- * @LastEditTime: 2021-07-27 23:11:01
+ * @LastEditTime: 2021-07-30 16:13:23
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/PlayPage/PlayPage.tsx
@@ -17,6 +17,7 @@ import Avatar from "react-avatar";
 import "./PlayPage.css";
 import moment from "moment";
 import { Utils } from "../../utils/Utils";
+import { UserManager } from "../../manager/UserManager";
 
 interface Props {}
 
@@ -51,6 +52,7 @@ class PlayPage extends React.Component<Props, State> {
         return false;
     }
 
+
     async componentDidMount() {
         const liveStreamId = this.getQueryVariable("id");
         if (liveStreamId === false) {
@@ -64,6 +66,13 @@ class PlayPage extends React.Component<Props, State> {
         }
 
         this.getLiveStream(id); 
+
+        const token=UserManager.GetUserToken()
+        Utils.loadScript("http://"+GlobalData.apiDomain+":3600/chat.js",()=>{
+            console.log(token);
+            
+            (window as any).startChat("ws://"+GlobalData.apiDomain+":3601",liveStreamId,GlobalData.apiHost+'/api/user/userverify',token);
+        })
     }
 
     async watched(id:number,category:string){
@@ -89,7 +98,7 @@ class PlayPage extends React.Component<Props, State> {
             return;
         }
 
-        console.log(responseData);
+        //console.log(responseData);
         const stream = responseData.data;
         //watched
         this.watched(id,stream.category)
@@ -122,7 +131,7 @@ class PlayPage extends React.Component<Props, State> {
     }
 
     render() {
-        console.log(this.state.liveStreamInfo);
+        //console.log(this.state.liveStreamInfo);
         const {liveStreamInfo}=this.state
         return (
             
