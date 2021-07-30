@@ -18,6 +18,7 @@ import "./PlayPage.css";
 import moment from "moment";
 import { Utils } from "../../utils/Utils";
 import { UserManager } from "../../manager/UserManager";
+import PlayDynamic from "../../layout/PlayDynamic";
 
 interface Props {}
 
@@ -70,7 +71,9 @@ class PlayPage extends React.Component<Props, State> {
         const token = UserManager.GetUserToken();
         Utils.loadScript("http://" + GlobalData.apiDomain + ":3600/chat.js", () => {
             console.log(token);
-            (window as any).startChat("ws://" + GlobalData.apiDomain + ":3601", liveStreamId, GlobalData.apiHost + "/api/user/userverify", token);
+            (window as any).startChat("ws://" + GlobalData.apiDomain + ":3601", 'prefix_'+liveStreamId, GlobalData.apiHost + "/api/user/userverify", token);
+
+            console.log("ws://" + GlobalData.apiDomain + ":3601", liveStreamId, GlobalData.apiHost + "/api/user/userverify", token);
         });
     }
 
@@ -129,82 +132,91 @@ class PlayPage extends React.Component<Props, State> {
         //console.log(this.state.liveStreamInfo);
         const { liveStreamInfo } = this.state;
         return (
-            <DashboardLayout>
+            <PlayDynamic>
+                <div className="videocontainer">
 
-                {/* pc */}
-                <div
-                    id="chatwindow"
-                    style={{
-                        backgroundColor: "#0f0f11",
-                        height: "60%",
-                        width: "360px",
-                        position: "absolute",
-                        top: "80px",
-                        right: "50px",
-                        border: "1px solid #777777",
-                        overflow: "hidden",
-                        borderRadius: "5px",
-                        boxShadow: "1px 1px 1px #b1b1b1",
-                    }}
-                ></div>
+                                {/* pc */}
 
-                {/* phone */}
-                {/* <div style="width: 100%;height: 400px;text-align: center;font-size: 20px;background-color: red;">
-		Your content 
-	</div>
+                           {   (window as any).mobileCheck()?<div/>:
+                           
+                            <div
+                                    id="chatwindow"
+                                    style={{
+                                        backgroundColor: "#0f0f11",
+                                        height: "60%",
+                                        width: "300px",
+                                        position: "absolute",
+                                        top: "110px",
+                                        right: "0px",
+                                        overflow: "hidden",
+                                        borderRadius: "5px",
+                                        border:"1px solid #232323",
+                                        boxShadow: "1px 1px 1px black",
+                                        
+                                    }}
+                                ></div>
 
-	<div id="chatwindow" style="background-color:#0f0f11;height:600px;width:100%;position: relative;
-	border: 1px solid #777777; overflow:hidden; box-shadow: 1px 1px 1px #b1b1b1;">
-  
-	</div> */}
+                            }
+                             
+ 
+                            {/* {this.state.liveStreamInfo ? ( */}
+                            <div >
+                                <div >
+                                    <ReactPlayer
+                                        className="video-player"
+                                        width="100%"
+                                        height="100%"
+                                        url={this.state.videoUrl}
+                                        controls
+                                        config={{
+                                            file: {
+                                                forceHLS: true,
+                                            },
+                                        }}
+                                        playing={this.state.playing}
+                                        // onReady={(player)=>{
+                                        //     player.
+                                        // }}
+                                    />
+                                </div>
 
-                {/* {this.state.liveStreamInfo ? ( */}
-                <div className="container">
-                    <div className="col-10">
-                        <ReactPlayer
-                            className="video-player"
-                            width="100%"
-                            height="100%"
-                            url={this.state.videoUrl}
-                            controls
-                            config={{
-                                file: {
-                                    forceHLS: true,
-                                },
-                            }}
-                            playing={this.state.playing}
-                            // onReady={(player)=>{
-                            //     player.
-                            // }}
-                        />
-                    </div>
+                                <div className="row">
+                                    <div className="col-1">
+                                        <Avatar
+                                            name={this.state.liveStreamInfo && this.state.liveStreamInfo.userName ? this.state.liveStreamInfo.userName : ""}
+                                            round={true}
+                                            size="50"
+                                            src={"/public/avatar/" + (this.state.liveStreamInfo ? this.state.liveStreamInfo.userId : "0")}
+                                        />
+                                        <div style={{ width: "50px", textAlign: "center" }}>{liveStreamInfo && liveStreamInfo.userName}</div>
+                                    </div>
 
-                    <div className="row">
-                        <div className="col-1">
-                            <Avatar
-                                name={this.state.liveStreamInfo && this.state.liveStreamInfo.userName ? this.state.liveStreamInfo.userName : ""}
-                                round={true}
-                                size="50"
-                                src={"/public/avatar/" + (this.state.liveStreamInfo ? this.state.liveStreamInfo.userId : "0")}
-                            />
-                            <div style={{ width: "50px", textAlign: "center" }}>{liveStreamInfo && liveStreamInfo.userName}</div>
-                        </div>
-
-                        <div className="col-10">
-                            <div>
-                                <span> {liveStreamInfo && liveStreamInfo.name}</span>
-                                <span> {liveStreamInfo && liveStreamInfo.status === ELiveStreamStatus.ONLIVE ? "onlive" : "record"}</span>
-                                <span>share button</span>
+                                    <div className="col-10">
+                                        <div>
+                                            <span> {liveStreamInfo && liveStreamInfo.name}</span>
+                                            <span> {liveStreamInfo && liveStreamInfo.status === ELiveStreamStatus.ONLIVE ? "onlive" : "record"}</span>
+                                            <span>share button</span>
+                                        </div>
+                                        <div>{liveStreamInfo && liveStreamInfo.description}</div>
+                                        <div>{liveStreamInfo ? moment(liveStreamInfo.startTimeStamp).format("lll") : ""}</div>
+                                    </div>
+                                </div>
                             </div>
-                            <div>{liveStreamInfo && liveStreamInfo.description}</div>
-                            <div>{liveStreamInfo ? moment(liveStreamInfo.startTimeStamp).format("lll") : ""}</div>
-                        </div>
-                    </div>
+                            {/* ):(
+                                this.errorLiveStream()
+                            )} */}
+ 
+
+
+                        {   (window as any).mobileCheck()?                         
+                            <div id="chatwindow" className="mobilechatwindow"> </div>:<div/>
+                        
+                        }
+
+
+
                 </div>
-                {/* ):(
-                    this.errorLiveStream()
-                )} */}
-            </DashboardLayout>
+            </PlayDynamic>
         );
     }
 }

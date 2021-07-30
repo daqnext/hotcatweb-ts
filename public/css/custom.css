@@ -184,8 +184,16 @@ background-color: black !important;
     color: #4d5052 !important;
 }
 
+
 .sidebar{
 background-color: #1f2024;
+}
+
+.sidebar-abs{
+background-color: #1f2024;
+position: absolute;
+z-index: 999;
+display: none;
 }
 
 .sidebar .sidebar-link{
@@ -198,7 +206,7 @@ color: #dedee3 !important;
 .header .navbar{
     padding-top: 0.4rem !important;
     padding-bottom: 0.4rem !important;
-    min-height: 60px;
+    min-height: 66px;
 }
 
 .card-heading
@@ -211,13 +219,15 @@ color: #dedee3 !important;
 
 .signinlogo
 {
-width: 200px;
+margin-top: 50px;
+width: 150px;
 border-radius: 150px;
 background: white;
 border: 12px solid #e7e8e9;
 }
 
 .signinlogotext{
+    font-size: 15px;
 color: #ababab !important;
 }
 
@@ -226,7 +236,7 @@ margin-top: 30px;
 }
 
 .navtext{
-font-size: 22px;
+font-size: 26px;
 font-weight: bold;
 color: white;
 margin-bottom: 0px;
@@ -436,4 +446,25 @@ background-color: black;
 .playtalkbar{
 width:100%;
 height:400px;
+}
+
+
+
+.mobilechatwindow{
+    background-color:#0f0f11;
+    height:600px;width:100%;
+    position: relative; 
+    overflow:hidden; box-shadow: 1px 1px 1px #b1b1b1;
+}
+
+.mr280{
+    margin-right: 280px;
+}
+
+.sidebar-abs .text-muted{
+color: #dedee3 !important;
+}
+
+.sidebar-abs{
+    border-bottom-right-radius: 50px;
 }

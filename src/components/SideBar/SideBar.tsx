@@ -47,7 +47,10 @@ class SideBar extends React.Component<Props,State> {
     }
 
     render() {return (
-            <div className="sidebar" id="sidebar">
+
+
+
+            <div  className= {(window as any).mobileCheck()?"sidebar-abs":"sidebar"} id="sidebar">
              
              
                 <ul className="list-unstyled">

@@ -11,16 +11,16 @@ document.addEventListener("DOMContentLoaded", function () {
     // Sidebar
     // ------------------------------------------------------ //
 
-    const sidebarToggler = document.querySelector(".sidebar-toggler");
+    // const sidebarToggler = document.querySelector(".sidebar-toggler");
 
-    if (sidebarToggler) {
-        sidebarToggler.addEventListener("click", function (e) {
-            e.preventDefault();
+    // if (sidebarToggler) {
+    //     sidebarToggler.addEventListener("click", function (e) {
+    //         e.preventDefault();
 
-            document.querySelector(".sidebar").classList.toggle("shrink");
-            document.querySelector(".sidebar").classList.toggle("show");
-        });
-    }
+    //         document.querySelector(".sidebar").classList.toggle("shrink");
+    //         document.querySelector(".sidebar").classList.toggle("show");
+    //     });
+    // }
  
     // ------------------------------------------------------- //
     // Init Tooltips
@@ -33,4 +33,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     
+});
+
+
+
+$(function(){
+    $("#sidebar-toggler").click(function(){
+        $("#sidebar").toggle();
+    });
 });

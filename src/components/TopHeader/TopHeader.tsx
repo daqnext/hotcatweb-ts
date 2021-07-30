@@ -41,7 +41,7 @@ class TopHeader extends React.Component<Props, State> {
         return (
             <header className="header">
                 <nav className="navbar navbar-expand-lg px-4 py-2 ">
-                    <a className="sidebar-toggler text-gray-500 me-4 me-lg-5 lead" href="#">
+                    <a  id="sidebar-toggler" className="sidebar-toggler text-gray-500 me-4 me-lg-5 lead" href="#">
                         <i className="fas fa-align-left"></i>
                     </a>
                     {/* <img className="navlogo" src="/img/navlogo.png" /> */}
@@ -68,7 +68,7 @@ class TopHeader extends React.Component<Props, State> {
                                 >
                                     {/* <img className="avatar p-1" src="/img/avatar.png" /> */}
                                     <Avatar name={this.state.userInfo ? this.state.userInfo.name : ""}
-                                        round={true} size="30"
+                                        round={true} size="36"
                                         // src={
                                         //     this.state.userInfo &&
                                         //     this.state.userInfo.avatarUrl !== ""
