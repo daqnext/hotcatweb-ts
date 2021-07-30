@@ -468,3 +468,35 @@ color: #dedee3 !important;
 .sidebar-abs{
     border-bottom-right-radius: 50px;
 }
+
+.videoPlayName{
+ font-size: 20px;
+ font-weight: bold;
+ color: #989898;
+}
+
+.videoPlayTG{
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 1px 8px;
+    font-size: 16px;
+    background-color: #a00808;
+    color: #d8d8d8;
+}
+
+.videoPlaySEP{
+    font-size: 22px;
+    margin: 0px 5px;
+}
+
+.videoPlayAVATAR{
+    margin: 8px;
+}
+
+.videoPlayRIGHTPART{
+    padding: 0px 0px 0px 55px;
+}
+.videoPlayDESC{
+    font-size: 15px;
+    color: #989898;
+}

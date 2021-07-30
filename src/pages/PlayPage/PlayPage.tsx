@@ -180,25 +180,29 @@ class PlayPage extends React.Component<Props, State> {
                                     />
                                 </div>
 
-                                <div className="row">
+                                <div className="row" style={{marginBottom:'10px'}}>
                                     <div className="col-1">
                                         <Avatar
+                                            className="videoPlayAVATAR"
                                             name={this.state.liveStreamInfo && this.state.liveStreamInfo.userName ? this.state.liveStreamInfo.userName : ""}
                                             round={true}
                                             size="50"
                                             src={"/public/avatar/" + (this.state.liveStreamInfo ? this.state.liveStreamInfo.userId : "0")}
                                         />
-                                        <div style={{ width: "50px", textAlign: "center" }}>{liveStreamInfo && liveStreamInfo.userName}</div>
+                                         
                                     </div>
 
-                                    <div className="col-10">
-                                        <div>
-                                            <span> {liveStreamInfo && liveStreamInfo.name}</span>
-                                            <span> {liveStreamInfo && liveStreamInfo.status === ELiveStreamStatus.ONLIVE ? "onlive" : "record"}</span>
-                                            <span>share button</span>
+                                    <div className="col-10 videoPlayRIGHTPART">
+                                        <div>   
+                                            <span className="videoPlayName"> {liveStreamInfo && liveStreamInfo.name}</span>
+                                            <span className="videoPlaySEP"> | </span>
+                                             {liveStreamInfo && liveStreamInfo.status === ELiveStreamStatus.ONLIVE ? <span className="videoPlayTG"> </span> : <div/>}                       
                                         </div>
-                                        <div>{liveStreamInfo && liveStreamInfo.description}</div>
-                                        <div>{liveStreamInfo ? moment(liveStreamInfo.startTimeStamp).format("lll") : ""}</div>
+                                        <div className="videoPlayDESC">{liveStreamInfo && liveStreamInfo.description}</div>
+                                        <div>
+                                            <span  style={{ width: "50px", textAlign: "center",margin:"0px 15px 0px 0px" ,fontWeight:"bold"}}>{liveStreamInfo && liveStreamInfo.userName}</span>
+                                            <span>{liveStreamInfo ? moment(liveStreamInfo.startTimeStamp).format("lll") : ""}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
