@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-16 15:06:28
- * @LastEditTime: 2021-07-25 19:10:05
+ * @LastEditTime: 2021-08-01 19:30:32
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/SignUpPage/SignUpPage.tsx
@@ -77,7 +77,7 @@ class SignUpPage extends React.Component<Props, State> {
     }
 
     checkUserName(): boolean {
-        if (this.state.userName.length < 4 || this.state.userName.length > 20) {
+        if (this.state.userName.length < 5 || this.state.userName.length > 20) {
             //length error
             (window as any).notify("error", "User name length should be 5~20", "error");
             return false;
@@ -158,7 +158,7 @@ class SignUpPage extends React.Component<Props, State> {
             return false;
         }
 
-        (window as any).notify("success", "send success", "error");
+        (window as any).notify("success", "An email has been sent. Please check your inbox.", "error");
         return true;
     }
 

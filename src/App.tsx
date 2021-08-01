@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-16 12:54:09
- * @LastEditTime: 2021-07-20 14:17:24
+ * @LastEditTime: 2021-08-01 15:04:09
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/App.tsx
@@ -17,6 +17,7 @@ import BlankPage from "./pages/BlankPage/BlankPage";
 import NewLiveStreamPage from "./pages/NewLiveStreamPage/NewLiveStreamPage";
 import ManageLiveStreamPage from "./pages/ManageLiveStreamPage/ManageLiveStreamPage";
 import PlayPage from "./pages/PlayPage/PlayPage";
+import AdminMangageLiveStreamPage from "./pages/AdminManageLiveStreamPage/AdminManageLiveStreamPage"
 //import PageLoaderPage from './pages/components/PageLoaderPage';
 //import IconPage from './pages/document/IconPage';
 //import FullDocsPage from './pages/document/FullDocsPage';
@@ -31,7 +32,10 @@ function App() {
         "/signup": SignUpPage,
         "/newlivestream":NewLiveStreamPage,
         "/managelivestream":ManageLiveStreamPage,
-        "/play":PlayPage
+        "/play":PlayPage,
+
+        "/admin/managelivestream":AdminMangageLiveStreamPage
+        
         //'/components/notify':NotifyPage,
         //'/components/pageloader':PageLoaderPage,
     };

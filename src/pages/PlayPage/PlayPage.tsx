@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-18 17:42:28
- * @LastEditTime: 2021-07-30 17:34:37
+ * @LastEditTime: 2021-08-01 18:58:36
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/PlayPage/PlayPage.tsx
@@ -102,17 +102,20 @@ class PlayPage extends React.Component<Props, State> {
 
         //console.log(responseData);
         const stream = responseData.data;
-        //watched
-        this.watched(id, stream.category);
+       
+
+        document.title = stream.name
 
         this.setState({ liveStreamInfo: stream });
         if (stream.status === ELiveStreamStatus.PAUSE || stream.status === ELiveStreamStatus.END) {
+            this.watched(id, stream.category);
             if (!(await Utils.IsRemoteFileAvailable(stream.cdnRecordM3u8Link))) {
                 this.setState({ videoUrl: stream.originRecordM3u8Link, playing: false });
             } else {
                 this.setState({ videoUrl: stream.cdnRecordM3u8Link, playing: false });
             }
         } else if (stream.status === ELiveStreamStatus.ONLIVE) {
+            this.watched(id, stream.category);
             if (!(await Utils.IsRemoteFileAvailable(stream.cdnLiveM3u8Link))) {
                 this.setState({ videoUrl: stream.originLiveM3u8Link, playing: true });
             } else {
@@ -122,6 +125,10 @@ class PlayPage extends React.Component<Props, State> {
             //this.setState({ videoUrl: stream.cdnRecordM3u8Link, playing: true });
             (window as any).notify("error", "Livestreaming has not started yet", "error");
         }
+
+        
+        
+        
     }
 
     errorLiveStream() {

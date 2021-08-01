@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-20 09:15:51
- * @LastEditTime: 2021-07-26 17:35:45
+ * @LastEditTime: 2021-08-01 19:31:26
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/ManageLiveStreamPage/LiveStreamDetail.tsx
@@ -80,9 +80,9 @@ class LiveStreamDetail extends React.Component<Props, State> {
 
     checkStreamName() {
         const temp=this.state.subTitle.trim()
-        if (temp.length <= 5 || temp.length >= 40) {
+        if (temp.length < 5 || temp.length > 150) {
             //chapter length error
-            (window as any).notify("error", "Please input stream name(5~40 letters)", "error");
+            (window as any).notify("error", "Please input stream name(5~150 letters)", "error");
             return false;
         }
         return true;
@@ -90,9 +90,9 @@ class LiveStreamDetail extends React.Component<Props, State> {
 
     checkSubTitle() {
         const temp=this.state.subTitle.trim()
-        if (temp.length <= 5 || temp.length >= 40) {
+        if (temp.length < 5 || temp.length > 150) {
             //chapter length error
-            (window as any).notify("error", "Please input subtitle(5~40 letters)", "error");
+            (window as any).notify("error", "Please input subtitle(5~150 letters)", "error");
             return false;
         }
         return true;
@@ -100,9 +100,9 @@ class LiveStreamDetail extends React.Component<Props, State> {
 
     checkDescription() {
         const temp=this.state.description.trim()
-        if (temp.length <= 5 || temp.length >= 100) {
+        if (temp.length < 5 || temp.length > 100) {
             //chapter length error
-            (window as any).notify("error", "Please input description(10~100 letters)", "error");
+            (window as any).notify("error", "Please input description(5~100 letters)", "error");
             return false;
         }
         return true;

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-18 17:36:43
- * @LastEditTime: 2021-07-26 15:56:56
+ * @LastEditTime: 2021-08-01 17:07:28
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/ManageLiveStream/ManageLiveStreamPage.tsx
@@ -28,6 +28,9 @@ const columns = [
     {
         dataField: "name",
         text: "Name",
+        headerStyle: () => {
+            return { width: "20%" };
+        },
     },
     {
         dataField: "rtmpLink",
@@ -47,10 +50,16 @@ const columns = [
     {
         dataField: "category",
         text: "Category",
+        headerStyle: () => {
+            return { width: "7%" };
+        },
     },
     {
         dataField: "created",
         text: "Created",
+        headerStyle: () => {
+            return { width: "11%" };
+        },
         formatter: (cellContent: any, row: any) => {
             return moment(row.created).format("lll");
         },
@@ -58,6 +67,9 @@ const columns = [
     {
         dataField: "status",
         text: "Status",
+        headerStyle: () => {
+            return { width: "7%" };
+        },
     },
     // {
     //     dataField: "df1",

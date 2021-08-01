@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-16 14:17:58
- * @LastEditTime: 2021-07-23 12:13:22
+ * @LastEditTime: 2021-08-01 17:04:52
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/components/SideBar/SideBar.ts
@@ -75,6 +75,14 @@ class SideBar extends React.Component<Props,State> {
                             <i className="fas fa-icons"/><span className="sidebar-link-title">My Videos</span>
                         </a>
                     </li>
+
+                    {UserManager.CheckUserHasAuth("admin")&&
+                        <li className="sidebar-list-item">
+                        <a className={"sidebar-link text-muted "+ (this.checkactive("/admin/managelivestream")) } href="/admin/managelivestream">
+                            <i className="fas fa-icons"/><span className="sidebar-link-title">Admin manage video</span>
+                        </a>
+                    </li>
+                    }
 
 
 
