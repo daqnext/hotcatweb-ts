@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-20 09:15:51
- * @LastEditTime: 2021-08-01 19:31:26
+ * @LastEditTime: 2021-08-03 19:07:01
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/ManageLiveStreamPage/LiveStreamDetail.tsx
@@ -19,6 +19,7 @@ import { Confirm } from "../../components/Confirm/Confirm";
 import { ILanguage, ILiveStreamInfo } from "../../interface/interface";
 import { LanguageOptionManager } from "../../manager/LanguageManager";
 import { GlobalData } from "../../global/global";
+import VideoUpload from "../../components/VideoUpload/VideoUpload";
 
 interface Props {
     liveStreamInfo: ILiveStreamInfo;
@@ -79,7 +80,7 @@ class LiveStreamDetail extends React.Component<Props, State> {
 
 
     checkStreamName() {
-        const temp=this.state.subTitle.trim()
+        const temp=this.state.streamName.trim()
         if (temp.length < 5 || temp.length > 150) {
             //chapter length error
             (window as any).notify("error", "Please input stream name(5~150 letters)", "error");
@@ -390,6 +391,19 @@ class LiveStreamDetail extends React.Component<Props, State> {
                             oldCoverImgUrl={this.props.liveStreamInfo.coverImgUrl}
                         ></CoverUploader>
                     </div>
+
+                    {/* video uploader */}
+                    {/* {(UserManager.CheckUserHasAuth("admin")||UserManager.CheckUserHasAuth("support"))&&
+                    <div className="mb-3">
+                        <label className="form-label text-uppercase">Video</label>
+                        <VideoUpload
+                            onVideoUploaded={()=>{
+                                console.log("uploaded");
+                            }}
+                            liveStreamInfo={this.props.liveStreamInfo}
+                        ></VideoUpload>
+                    </div>} */}
+
                     <div className="mb-3">
                         <div
                             className="btn btn-primary"

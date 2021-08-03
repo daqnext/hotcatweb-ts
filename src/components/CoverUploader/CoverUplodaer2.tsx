@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-24 22:34:08
- * @LastEditTime: 2021-07-25 19:05:26
+ * @LastEditTime: 2021-08-03 13:12:16
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/components/CoverUploader/CoverUplodaer2.tsx
@@ -72,7 +72,7 @@ class CoverUploader extends React.Component<Props, State> {
                     },
                 };
 
-                const responseData = await RequestTool.post(GlobalData.apiHost+"/api/livestream/uploadcover", formData, config);
+                const responseData = await RequestTool.post(GlobalData.apiHost+"/api/livestream/uploadcover", formData, config,60000);
 
                 if (responseData === null) {
                     //request error
@@ -229,7 +229,7 @@ class CoverUploader extends React.Component<Props, State> {
 
                         {this.state.coverImgUrl && this.state.coverImgUrl !== "" && (
                             <div className="text-center">
-                                <img className="rounded img-fluid" src={GlobalData.apiHost+this.state.coverImgUrl} alt={GlobalData.apiHost+this.state.coverImgUrl} />
+                                <img className="rounded img-fluid" src={this.state.coverImgUrl} alt={this.state.coverImgUrl} />
                                 <a
                                     href="#"
                                     style={{ display: "block" }}

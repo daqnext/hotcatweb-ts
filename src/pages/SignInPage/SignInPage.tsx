@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-16 15:06:05
- * @LastEditTime: 2021-07-21 15:21:51
+ * @LastEditTime: 2021-08-02 15:23:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/SignInPage/SignInPage.tsx
@@ -136,7 +136,7 @@ class SignInPage extends React.Component<Props, State> {
         UserManager.SetUserToken(userInfo.cookie);
 
         //show login success msg
-        (window as any).notify("success", "SignIn success", "error");
+        (window as any).notify("success", "SignIn success", "success");
 
         //to index page
         window.location.href = "/index";

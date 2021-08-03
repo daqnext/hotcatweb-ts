@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-16 15:06:28
- * @LastEditTime: 2021-08-01 19:30:32
+ * @LastEditTime: 2021-08-02 15:22:21
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/SignUpPage/SignUpPage.tsx
@@ -158,7 +158,7 @@ class SignUpPage extends React.Component<Props, State> {
             return false;
         }
 
-        (window as any).notify("success", "An email has been sent. Please check your inbox.", "error");
+        (window as any).notify("success", "An email has been sent. Please check your inbox.", "success");
         return true;
     }
 
@@ -211,7 +211,7 @@ class SignUpPage extends React.Component<Props, State> {
         UserManager.SetUserToken(userInfo.cookie);
 
         //show login success msg
-        (window as any).notify("success", "SignUp success", "error");
+        (window as any).notify("success", "SignUp success", "success");
 
         //to index page
         window.location.href = "/index";

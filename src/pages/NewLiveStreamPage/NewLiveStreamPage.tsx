@@ -2,7 +2,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-18 17:33:49
- * @LastEditTime: 2021-08-01 19:31:56
+ * @LastEditTime: 2021-08-03 11:32:49
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/NewLiveStreamPage/NewLiveStreamPage.tsx
@@ -27,35 +27,37 @@ import { LanguageOptionManager } from "../../manager/LanguageManager";
 // declare function Dropzone(elementId:string,option:any): void;
 
 interface Props {}
-
 interface State {
-    categoryArray:string[];
-    languageOption:ILanguage;
+    categoryArray: string[];
+    languageOption: ILanguage;
 
     streamName: string;
     subTitle: string;
     description: string;
     category: string;
-    language:string;
+    area:string;
+    language: string;
     coverImgUrl: string;
     captcha: string;
     captchaId: string;
 }
 
 const category = ["Crypto", "Games", "Sports", "Technology"];
+const areaArray=["","Asia","Oceania","Africa","Europe","North America","South America","China"]
 
 class NewLiveStreamPage extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            categoryArray:[],
-            languageOption:{},
+            categoryArray: [],
+            languageOption: {},
 
             streamName: "",
             subTitle: "",
             description: "",
             category: category[0],
-            language:"English",
+            area:"",
+            language: "English",
             coverImgUrl: "",
             captcha: "",
             captchaId: "",
@@ -67,27 +69,27 @@ class NewLiveStreamPage extends React.Component<Props, State> {
             await UserManager.UpdateUserInfo();
         }
         //UserManager.TokenCheckAndRedirectLogin();
-        const info=UserManager.GetUserInfo()
-        if (info==null) {
+        const info = UserManager.GetUserInfo();
+        if (info == null) {
             //show login success msg
             (window as any).notify("success", "Please sign in first", "error");
 
             //to login page
             window.location.href = "/signin";
-            return
+            return;
         }
 
-        const cate=await CategoryManager.GetCategory()
-        if (cate.length>0) {
+        const cate = await CategoryManager.GetCategory();
+        if (cate.length > 0) {
             this.setState({
-                categoryArray:cate,
-                category:cate[0]
-            })
+                categoryArray: cate,
+                category: cate[0],
+            });
         }
 
-        const languageOption=await LanguageOptionManager.GetLanguageOption()
-        this.setState({languageOption:languageOption})
-        
+        const languageOption = await LanguageOptionManager.GetLanguageOption();
+        this.setState({ languageOption: languageOption });
+
         //category
         const category = document.querySelector(".choices-category-newstream");
         new Choices(category as any);
@@ -95,10 +97,14 @@ class NewLiveStreamPage extends React.Component<Props, State> {
         //language
         const language = document.querySelector(".choices-language-newstream");
         new Choices(language as any);
+
+        //region
+        const area = document.querySelector(".choices-area-newstream");
+        new Choices(area as any);
     }
 
     checkStreamName() {
-        const temp=this.state.streamName.trim()
+        const temp = this.state.streamName.trim();
         if (temp.length < 5 || temp.length > 150) {
             //chapter length error
             (window as any).notify("error", "Please input stream name(5~150 letters)", "error");
@@ -108,7 +114,7 @@ class NewLiveStreamPage extends React.Component<Props, State> {
     }
 
     checkSubTitle() {
-        const temp=this.state.subTitle.trim()
+        const temp = this.state.subTitle.trim();
         if (temp.length < 5 || temp.length > 150) {
             //chapter length error
             (window as any).notify("error", "Please input subtitle(5~150 letters)", "error");
@@ -118,7 +124,7 @@ class NewLiveStreamPage extends React.Component<Props, State> {
     }
 
     checkDescription() {
-        const temp=this.state.description.trim()
+        const temp = this.state.description.trim();
         if (temp.length < 5 || temp.length > 100) {
             //chapter length error
             (window as any).notify("error", "Please input description(5~100 letters)", "error");
@@ -131,6 +137,15 @@ class NewLiveStreamPage extends React.Component<Props, State> {
         if (this.state.category === "") {
             //chapter length error
             (window as any).notify("error", "Please choose a category", "error");
+            return false;
+        }
+        return true;
+    }
+
+    checkArea() {
+        if (this.state.area === "") {
+            //chapter length error
+            (window as any).notify("error", "Please choose a location", "error");
             return false;
         }
         return true;
@@ -158,17 +173,21 @@ class NewLiveStreamPage extends React.Component<Props, State> {
         if (!this.checkCategory()) {
             return;
         }
+        if (!this.checkArea()) {
+            return;
+        }
         if (!this.checkCover()) {
             return;
         }
 
         const url = GlobalData.apiHost + "/api/livestream/create";
-        const sendData = {
+        const sendData:any = {
             streamName: this.state.streamName.trim(),
             subTitle: this.state.subTitle.trim(),
             description: this.state.description.trim(),
             category: this.state.category,
-            language:this.state.language,
+            area:this.state.area,
+            language: this.state.language,
             coverImgUrl: this.state.coverImgUrl,
             captcha: "",
             captchaId: "",
@@ -197,13 +216,13 @@ class NewLiveStreamPage extends React.Component<Props, State> {
     }
 
     render() {
-        const languageNameArray:string[]=[]
-        const languageLocalNameArray:string[]=[]
+        const languageNameArray: string[] = [];
+        const languageLocalNameArray: string[] = [];
         for (const key in this.state.languageOption) {
-            languageNameArray.push(key)
-            languageLocalNameArray.push(this.state.languageOption[key])
+            languageNameArray.push(key);
+            languageLocalNameArray.push(this.state.languageOption[key]);
         }
-        
+
         return (
             <DashboardLayout>
                 <div className="card">
@@ -217,7 +236,7 @@ class NewLiveStreamPage extends React.Component<Props, State> {
                             <div className="mb-3">
                                 <label className="form-label text-uppercase">Stream Name</label>
                                 <input
-                                    className="form-control" 
+                                    className="form-control"
                                     onChange={(event) => {
                                         this.setState({
                                             streamName: event.target.value,
@@ -243,12 +262,12 @@ class NewLiveStreamPage extends React.Component<Props, State> {
                                 <select
                                     className="choices-language-newstream"
                                     onChange={(event) => {
-                                        console.log(event.target.value);
+                                        //console.log(event.target.value);
                                         this.setState({ language: event.target.value });
                                     }}
                                 >
                                     {languageLocalNameArray.map((value, index, array) => {
-                                        return <option value={languageNameArray[index]}>{value+" "+languageNameArray[index] }</option>;
+                                        return <option value={languageNameArray[index]}>{value + " " + languageNameArray[index]}</option>;
                                     })}
                                 </select>
                             </div>
@@ -258,7 +277,7 @@ class NewLiveStreamPage extends React.Component<Props, State> {
                                 <select
                                     className="choices-category-newstream"
                                     onChange={(event) => {
-                                        console.log(event.target.value);
+                                        //console.log(event.target.value);
                                         this.setState({ category: event.target.value });
                                     }}
                                 >
@@ -267,11 +286,29 @@ class NewLiveStreamPage extends React.Component<Props, State> {
                                     })}
                                 </select>
                             </div>
+
+                            {/* area */}
+                            <div className="mb-3">
+                                <label className="form-label text-uppercase">Your Location</label>
+                                <select
+                                    className="choices-area-newstream"
+                                    value={this.state.area}
+                                    onChange={(event) => {
+                                        //console.log(event.target.value);
+                                        this.setState({ area: event.target.value });
+                                    }}
+                                >
+                                    {areaArray.map((value, index, array) => {
+                                        return <option>{value}</option>;
+                                    })}
+                                </select>
+                            </div>
+
                             {/* description */}
                             <div className="mb-3">
                                 <label className="form-label text-uppercase">Description</label>
                                 <input
-                                    className="form-control" 
+                                    className="form-control"
                                     onChange={(event) => {
                                         this.setState({
                                             description: event.target.value,
@@ -283,8 +320,8 @@ class NewLiveStreamPage extends React.Component<Props, State> {
                             <div className="mb-3">
                                 <label className="form-label text-uppercase">Cover</label>
                                 <CoverUploader
-                                    onCoverUploaded={(uploadedCoverUrl:string)=>{
-                                        this.setState({coverImgUrl:uploadedCoverUrl})
+                                    onCoverUploaded={(uploadedCoverUrl: string) => {
+                                        this.setState({ coverImgUrl: uploadedCoverUrl });
                                     }}
                                     oldCoverImgUrl={this.state.coverImgUrl}
                                 ></CoverUploader>

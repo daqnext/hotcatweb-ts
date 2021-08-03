@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-18 17:36:43
- * @LastEditTime: 2021-08-01 17:29:44
+ * @LastEditTime: 2021-08-03 16:59:26
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/ManageLiveStream/ManageLiveStreamPage.tsx
@@ -386,6 +386,7 @@ class ManageLiveStreamPage extends React.Component<Props, State> {
                     <div className="mb-3">
                         <div
                             className="btn btn-primary"
+                            style={{marginTop:"15px"}}
                             onClick={() => {
                                 console.log("search");
                                 //const offset = (this.state.page - 1) * this.state.sizePerPage;

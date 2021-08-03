@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-18 17:42:28
- * @LastEditTime: 2021-08-01 18:58:36
+ * @LastEditTime: 2021-08-03 19:40:05
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/PlayPage/PlayPage.tsx
@@ -35,7 +35,7 @@ class PlayPage extends React.Component<Props, State> {
         this.state = {
             liveStreamInfo: null,
             videoUrl: null,
-            playing: false,
+            playing: true,
         };
     }
 
@@ -69,7 +69,7 @@ class PlayPage extends React.Component<Props, State> {
 
         //chat.js
         const token = UserManager.GetUserToken();
-        Utils.loadScript("http://" + GlobalData.apiDomain + ":3600/chat.js", () => {
+        Utils.loadScript("/js/chat1.js", () => {
             console.log(token);
             (window as any).startChat("ws://" + GlobalData.apiDomain + ":3601", 'prefix_'+liveStreamId, GlobalData.apiHost + "/api/user/userverify", token);
 
@@ -110,9 +110,9 @@ class PlayPage extends React.Component<Props, State> {
         if (stream.status === ELiveStreamStatus.PAUSE || stream.status === ELiveStreamStatus.END) {
             this.watched(id, stream.category);
             if (!(await Utils.IsRemoteFileAvailable(stream.cdnRecordM3u8Link))) {
-                this.setState({ videoUrl: stream.originRecordM3u8Link, playing: false });
+                this.setState({ videoUrl: stream.originRecordM3u8Link, playing: true });
             } else {
-                this.setState({ videoUrl: stream.cdnRecordM3u8Link, playing: false });
+                this.setState({ videoUrl: stream.cdnRecordM3u8Link, playing: true });
             }
         } else if (stream.status === ELiveStreamStatus.ONLIVE) {
             this.watched(id, stream.category);

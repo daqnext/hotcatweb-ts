@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-18 13:16:44
- * @LastEditTime: 2021-07-26 13:12:04
+ * @LastEditTime: 2021-08-03 14:00:00
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/components/VideoCard/VideoCard.tsx
@@ -35,7 +35,7 @@ class VideoCard extends React.Component<Props, State> {
                   {this.props.video.status===ELiveStreamStatus.ONLIVE&&<div className="btn btn-sm btn-outline-danger livetag">Live</div>}
                   
                   <div className="imgwrapper">
-                    <Image className="card-img-top img-fluid" src={GlobalData.apiHost+this.props.video.coverImgUrl} alt={GlobalData.apiHost+this.props.video.subTitle}/>
+                    <Image className="card-img-top img-fluid" src={this.props.video.coverImgUrl} alt={this.props.video.coverImgUrl}/>
                   </div>   
                   <div className="card-body">
                          

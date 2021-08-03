@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-16 14:18:43
- * @LastEditTime: 2021-07-29 21:22:07
+ * @LastEditTime: 2021-08-03 16:38:08
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/components/TopHeader/TopHeader.ts
@@ -45,7 +45,9 @@ class TopHeader extends React.Component<Props, State> {
                         <i className="fas fa-align-left"></i>
                     </a>
                     {/* <img className="navlogo" src="/img/navlogo.png" /> */}
+                    <a href="/" style={{textDecoration:'none'}}>
                     <h3 className="navtext"><span>HOT</span>CAT.LIVE</h3>
+                    </a>
                     {this.state.userInfo ? (
                         <ul className="ms-auto d-flex align-items-center list-unstyled mb-0">
                             {/* <a href="/newlivestream">
