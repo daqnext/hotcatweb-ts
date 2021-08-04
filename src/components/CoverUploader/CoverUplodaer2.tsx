@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-24 22:34:08
- * @LastEditTime: 2021-08-03 13:12:16
+ * @LastEditTime: 2021-08-04 10:05:38
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/components/CoverUploader/CoverUplodaer2.tsx
@@ -146,15 +146,15 @@ class CoverUploader extends React.Component<Props, State> {
             <Dropzone
                 accept="image/*"
                 maxFiles={1}
-                maxSize={500 * 1024}
+                maxSize={1024 * 1024}
                 multiple={false}
                 validator={(file) => {
                     //console.log(file);
-                    if (file.size > 500 * 1024) {
-                        (window as any).notify("error", "File size limit 500KB", "error");
+                    if (file.size > 1024 * 1024) {
+                        (window as any).notify("error", "File size limit 1MB", "error");
                         return {
                             code: "file size error",
-                            message: `File size limit 500KB`,
+                            message: `File size limit 1MB`,
                         };
                     }
                     return null;
@@ -169,8 +169,8 @@ class CoverUploader extends React.Component<Props, State> {
                     const file = files[0];
                     
 
-                    if (file.size > 500 * 1024) {
-                        (window as any).notify("error", "File size limit 500KB", "error");
+                    if (file.size > 1024 * 1024) {
+                        (window as any).notify("error", "File size limit 1MB", "error");
                         return;
                     }
 

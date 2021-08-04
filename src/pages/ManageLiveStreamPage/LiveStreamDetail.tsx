@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-20 09:15:51
- * @LastEditTime: 2021-08-03 19:07:01
+ * @LastEditTime: 2021-08-04 10:32:27
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/ManageLiveStreamPage/LiveStreamDetail.tsx
@@ -290,7 +290,7 @@ class LiveStreamDetail extends React.Component<Props, State> {
                     {/* secret */}
                     <div className="mb-3">
                         <label className="form-label text-uppercase">Stream Secret</label>
-                        <input className="form-control" placeholder="Livestreaming name" value={this.props.liveStreamInfo.secret} disabled />
+                        <input className="form-control" placeholder="Livestreaming name" value={this.props.liveStreamInfo.id} disabled />
                     </div>
                     {/* rtmp */}
                     <div className="mb-3">
