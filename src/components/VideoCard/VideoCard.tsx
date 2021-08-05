@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-18 13:16:44
- * @LastEditTime: 2021-08-03 14:00:00
+ * @LastEditTime: 2021-08-05 11:01:49
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/components/VideoCard/VideoCard.tsx
@@ -44,7 +44,8 @@ class VideoCard extends React.Component<Props, State> {
                                   name={this.props && this.props.video.userName ? this.props.video.userName : ""}
                                   round={true}
                                   size="40"
-                                  src={GlobalData.apiHost+"/public/avatar/" + (this.props.video ? this.props.video.userId : "0")} />
+                                  //src={GlobalData.apiHost+"/public/avatar/" + (this.props.video ? this.props.video.userId : "0")} 
+                                  />
                               </div>
                               <h5 className="card-title">
                                 <span>{this.props.video.name}</span>

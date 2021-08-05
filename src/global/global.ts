@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-16 15:41:14
- * @LastEditTime: 2021-08-03 16:16:01
+ * @LastEditTime: 2021-08-05 11:00:58
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/global/global.ts

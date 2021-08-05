@@ -2,7 +2,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-18 17:33:49
- * @LastEditTime: 2021-08-04 10:31:04
+ * @LastEditTime: 2021-08-05 11:19:40
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/NewLiveStreamPage/NewLiveStreamPage.tsx
@@ -126,9 +126,9 @@ class NewLiveStreamPage extends React.Component<Props, State> {
 
     checkDescription() {
         const temp = this.state.description.trim();
-        if (temp.length < 5 || temp.length > 100) {
+        if (temp.length < 5 || temp.length > 150) {
             //chapter length error
-            (window as any).notify("error", "Please input description(5~100 letters)", "error");
+            (window as any).notify("error", "Please input description(5~150 letters)", "error");
             return false;
         }
         return true;

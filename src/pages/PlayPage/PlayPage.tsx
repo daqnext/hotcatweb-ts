@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-18 17:42:28
- * @LastEditTime: 2021-08-03 22:28:54
+ * @LastEditTime: 2021-08-05 11:03:24
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/PlayPage/PlayPage.tsx
@@ -70,7 +70,7 @@ class PlayPage extends React.Component<Props, State> {
 
         //chat.js
         const token = UserManager.GetUserToken();
-        Utils.loadScript("/js/chat1.js", () => {
+        Utils.loadScript("http://" + GlobalData.apiDomain + ":3600/chat.js", () => {
             console.log(token);
             (window as any).startChat(
                 "ws://" + GlobalData.apiDomain + ":3601",
@@ -195,7 +195,7 @@ class PlayPage extends React.Component<Props, State> {
 
                     {/* {this.state.liveStreamInfo ? ( */}
                     <div>
-                        <div>{this.renderPlayer2()}</div>
+                        <div>{this.renderPlayer()}</div>
 
                         <div className="row" style={{ marginBottom: "10px" }}>
                             <div className="col-1">
@@ -204,7 +204,7 @@ class PlayPage extends React.Component<Props, State> {
                                     name={this.state.liveStreamInfo && this.state.liveStreamInfo.userName ? this.state.liveStreamInfo.userName : ""}
                                     round={true}
                                     size="50"
-                                    src={"/public/avatar/" + (this.state.liveStreamInfo ? this.state.liveStreamInfo.userId : "0")}
+                                    // src={"/public/avatar/" + (this.state.liveStreamInfo ? this.state.liveStreamInfo.userId : "0")}
                                 />
                             </div>
 

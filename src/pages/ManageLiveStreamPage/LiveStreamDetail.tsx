@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-20 09:15:51
- * @LastEditTime: 2021-08-04 10:32:27
+ * @LastEditTime: 2021-08-05 11:19:32
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/ManageLiveStreamPage/LiveStreamDetail.tsx
@@ -101,9 +101,9 @@ class LiveStreamDetail extends React.Component<Props, State> {
 
     checkDescription() {
         const temp=this.state.description.trim()
-        if (temp.length < 5 || temp.length > 100) {
+        if (temp.length < 5 || temp.length > 150) {
             //chapter length error
-            (window as any).notify("error", "Please input description(5~100 letters)", "error");
+            (window as any).notify("error", "Please input description(5~150 letters)", "error");
             return false;
         }
         return true;
@@ -193,12 +193,17 @@ class LiveStreamDetail extends React.Component<Props, State> {
         });
 
         if (response === null) {
+            (window as any).notify("error", "request error", "error");
             return false;
         }
 
-        console.log(response);
+        //console.log(response);
+        if (response.status !== 0) {
+            (window as any).notify("error", response.msg, "error");
+            return false;
+        }
 
-        if (response && response.status === 0) {
+        if (response.status === 0) {
             return true;
         }
 
@@ -268,7 +273,7 @@ class LiveStreamDetail extends React.Component<Props, State> {
                                     async () => {
                                         console.log("delete confirm");
                                         const result = await this.deleteStream(this.props.liveStreamInfo.id, this.props.liveStreamInfo.secret);
-                                        if (result) {
+                                        if (result&&this.props.onBackClick) {
                                             this.props.onBackClick();
                                         }
                                     }
