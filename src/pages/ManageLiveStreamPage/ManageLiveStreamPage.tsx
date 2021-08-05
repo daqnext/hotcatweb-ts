@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-18 17:36:43
- * @LastEditTime: 2021-08-01 17:07:28
+ * @LastEditTime: 2021-08-05 20:34:13
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/ManageLiveStream/ManageLiveStreamPage.tsx
@@ -173,6 +173,7 @@ class ManageLiveStreamPage extends React.Component<Props, State> {
             style.backgroundColor = "rgba(230, 230, 230, .2)";
         }
         // style.borderTop = 'none';
+        style.minWidth="900px"
         style.cursor = "pointer";
         if (this.state.hoverIndex === rowIndex) {
             style.backgroundColor = "rgba(230, 230, 230, .5)";
@@ -273,6 +274,7 @@ class ManageLiveStreamPage extends React.Component<Props, State> {
                         }}
                     ></LiveStreamDetail>
                 ) : (
+                    <div className="table-container">
                     <BootstrapTable
                         bootstrap4
                         ref={(n) => (this.node = n)}
@@ -292,6 +294,7 @@ class ManageLiveStreamPage extends React.Component<Props, State> {
                         })}
                         onTableChange={this.handleTableChange}
                     />
+                    </div>
                 )}
             </DashboardLayout>
         );

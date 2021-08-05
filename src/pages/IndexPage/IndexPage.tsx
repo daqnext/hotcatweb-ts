@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-16 15:19:04
- * @LastEditTime: 2021-07-30 14:41:22
+ * @LastEditTime: 2021-08-05 18:33:22
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/IndexPage/IndexPage.tsx
@@ -33,6 +33,10 @@ interface State {
 class IndexPage extends React.Component<Props, State> {
     lastIndexMap:{[key:string]:number}={}
     onLiveVideoLastIndex:number=0
+
+    isLoadingOnLiveVideo=false
+    isLoadingRecordVideo=false
+    isLoadingVideo=false
     
     constructor(props: Props) {
         super(props);
@@ -85,6 +89,9 @@ class IndexPage extends React.Component<Props, State> {
             const streamInfo: ILiveStreamInfo = JSON.parse(streamInfoStr);
             if (streamInfo === null) {
                 continue;
+            }
+            if (isOnlyOnLive==false&&streamInfo.status==ELiveStreamStatus.ONLIVE) {
+                continue
             }
             //console.log(streamInfo);
             streamInfos.push(streamInfo);
@@ -273,9 +280,15 @@ class IndexPage extends React.Component<Props, State> {
                     {this.state.onLiveVideos.length > 0 && (
                         <div
                             style={{marginBottom:"40px"}}
-                            onClick={() => {
+                            onClick={async () => {
+                                if (this.isLoadingVideo==true) {
+                                    return
+                                }
+
+                                this.isLoadingVideo=true
                                 console.log("more on live video");
-                                this.getMoreOnLiveVideo()
+                                await this.getMoreOnLiveVideo()
+                                this.isLoadingVideo=false
                             }}
                         >
                             <div className="morevideowrap">
@@ -289,9 +302,14 @@ class IndexPage extends React.Component<Props, State> {
                     {this.renderVideos(this.state.videos)}
 
                     <div
-                        onClick={() => {
+                        onClick={async () => {
+                            if (this.isLoadingVideo==true) {
+                                return
+                            }
+                            this.isLoadingVideo=true
                             console.log("more video");
                             this.getMoreVideo()
+                            this.isLoadingVideo=false
                         }}
                     >
                         <div className="morevideowrap">

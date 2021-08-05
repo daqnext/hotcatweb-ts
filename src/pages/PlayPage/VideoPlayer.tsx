@@ -1,13 +1,13 @@
 /*
  * @Author: your name
  * @Date: 2021-08-03 21:38:49
- * @LastEditTime: 2021-08-03 23:36:46
+ * @LastEditTime: 2021-08-05 13:42:20
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/PlayPage/VideoPlayer.tsx
  */
 import React, { Component } from "react";
-import Videojs from "video.js";
+// import Videojs from "video.js";
 //import "videojs-contrib-hls";
 import "video.js/dist/video-js.css";
 
@@ -31,23 +31,23 @@ class VideoPlayer extends React.Component<Props, State> {
         }
     }
     componentDidMount() {
-        const { height, width, src } = this.props;
-        this.player = Videojs(
-            "custom-video",
-            {
-                // lookup the options in the docs for more options
-                autoplay: true,
-                controls: true,
-                responsive: true,
-                fluid: true,
-                preload: "auto",
-                // muted:true
-            },
-            () => {
-                console.log("ready");
-            }
-        );
-        this.player.src({ src });
+        // const { height, width, src } = this.props;
+        // this.player = Videojs(
+        //     "custom-video",
+        //     {
+        //         // lookup the options in the docs for more options
+        //         autoplay: true,
+        //         controls: true,
+        //         responsive: true,
+        //         fluid: true,
+        //         preload: "auto",
+        //         // muted:true
+        //     },
+        //     () => {
+        //         console.log("ready");
+        //     }
+        // );
+        // this.player.src({ src });
 
         // this.player.ready(()=> {
         //     var promise = this.player.play();

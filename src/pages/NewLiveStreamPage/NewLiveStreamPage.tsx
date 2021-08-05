@@ -2,7 +2,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-18 17:33:49
- * @LastEditTime: 2021-08-05 11:19:40
+ * @LastEditTime: 2021-08-05 21:03:04
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/NewLiveStreamPage/NewLiveStreamPage.tsx
@@ -179,9 +179,9 @@ class NewLiveStreamPage extends React.Component<Props, State> {
         if (!this.checkCategory()) {
             return;
         }
-        if (!this.checkArea()) {
-            return;
-        }
+        // if (!this.checkArea()) {
+        //     return;
+        // }
         if (!this.checkCover()) {
             return;
         }
@@ -192,7 +192,8 @@ class NewLiveStreamPage extends React.Component<Props, State> {
             subTitle: this.state.subTitle.trim(),
             description: this.state.description.trim(),
             category: this.state.category,
-            area:this.state.area,
+            //area:this.state.area,
+            area:"North America",
             language: this.state.language,
             coverImgUrl: this.state.coverImgUrl,
             captcha: "",
@@ -302,7 +303,7 @@ class NewLiveStreamPage extends React.Component<Props, State> {
                             </div>
 
                             {/* area */}
-                            <div className="mb-3">
+                            {/* <div className="mb-3">
                                 <label className="form-label text-uppercase">Your Location</label>
                                 <select
                                     className="choices-area-newstream"
@@ -316,7 +317,7 @@ class NewLiveStreamPage extends React.Component<Props, State> {
                                         return <option>{value}</option>;
                                     })}
                                 </select>
-                            </div>
+                            </div> */}
 
                             {/* description */}
                             <div className="mb-3">

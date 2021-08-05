@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-18 17:36:43
- * @LastEditTime: 2021-08-04 23:12:22
+ * @LastEditTime: 2021-08-05 20:34:25
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/ManageLiveStream/ManageLiveStreamPage.tsx
@@ -686,6 +686,7 @@ class ManageLiveStreamPage extends React.Component<Props, State> {
                         }}
                     ></LiveStreamDetail>
                 ) : ( */}
+                <div className="table-container">
                 <BootstrapTable
                     bootstrap4
                     ref={(n) => (this.node = n)}
@@ -705,6 +706,7 @@ class ManageLiveStreamPage extends React.Component<Props, State> {
                     })}
                     onTableChange={this.handleTableChange}
                 />
+                </div>
                 {/* )} */}
             </DashboardLayout>
         );

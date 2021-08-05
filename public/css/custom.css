@@ -449,6 +449,7 @@ table {
     font-size: 16px;
     background-color: #a00808;
     color: #d8d8d8;
+    padding: 3px 5px;
 }
 
 .videoPlaySEP {
@@ -471,4 +472,18 @@ table {
 .form-label {
     color: #d2d2d7 !important;
     margin-top: 5px !important;
+}
+
+.table-container{
+    width:100%;
+}
+
+@media (max-width: 1200px) {
+    .table-container{
+        overflow-x: auto;
+    }
+}
+
+.react-bootstrap-table{
+    min-width: 1050px;
 }

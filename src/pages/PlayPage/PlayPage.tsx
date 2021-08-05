@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-18 17:42:28
- * @LastEditTime: 2021-08-05 11:03:24
+ * @LastEditTime: 2021-08-05 15:51:24
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/PlayPage/PlayPage.tsx
@@ -19,7 +19,6 @@ import moment from "moment";
 import { Utils } from "../../utils/Utils";
 import { UserManager } from "../../manager/UserManager";
 import PlayDynamic from "../../layout/PlayDynamic";
-import VideoPlayer from "./VideoPlayer";
 
 interface Props {}
 
@@ -139,6 +138,7 @@ class PlayPage extends React.Component<Props, State> {
     }
 
     renderPlayer() {
+        const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
         return (
             <ReactPlayer
                 className="video-player"
@@ -146,9 +146,10 @@ class PlayPage extends React.Component<Props, State> {
                 height="100%"
                 url={this.state.videoUrl}
                 controls
+                playsinline
                 config={{
                     file: {
-                        forceHLS: true,
+                        forceHLS: !isSafari,
                     },
                 }}
                 playing={this.state.playing}
@@ -156,14 +157,14 @@ class PlayPage extends React.Component<Props, State> {
         );
     }
 
-    renderPlayer2() {
-        if (this.state.videoUrl==null||this.state.videoUrl=="") {
-            return null
-        }
-        return (
-            <VideoPlayer src={this.state.videoUrl}></VideoPlayer>
-        );
-    }
+    // renderPlayer2() {
+    //     if (this.state.videoUrl==null||this.state.videoUrl=="") {
+    //         return null
+    //     }
+    //     return (
+    //         <VideoPlayer src={this.state.videoUrl}></VideoPlayer>
+    //     );
+    // }
 
     render() {
         //console.log(this.state.liveStreamInfo);
@@ -213,7 +214,7 @@ class PlayPage extends React.Component<Props, State> {
                                     <span className="videoPlayName"> {liveStreamInfo && liveStreamInfo.name}</span>
                                     <span className="videoPlaySEP"> | </span>
                                     {liveStreamInfo && liveStreamInfo.status === ELiveStreamStatus.ONLIVE ? (
-                                        <span className="videoPlayTG"> </span>
+                                        <span className="videoPlayTG">Live</span>
                                     ) : (
                                         <div />
                                     )}
