@@ -2,7 +2,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-18 17:33:49
- * @LastEditTime: 2021-08-05 21:03:04
+ * @LastEditTime: 2021-08-06 11:07:58
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/NewLiveStreamPage/NewLiveStreamPage.tsx
@@ -20,6 +20,7 @@ import { GlobalData } from "../../global/global";
 import { CategoryManager } from "../../manager/CategoryManager";
 import { ILanguage } from "../../interface/interface";
 import { LanguageOptionManager } from "../../manager/LanguageManager";
+import Tutorial from "../../components/Tutorial/Tutorial";
 
 // declare class Dropzone {
 //     constructor(selectorOrElement: string | HTMLInputElement | HTMLSelectElement, userConfig?: any);
@@ -100,8 +101,8 @@ class NewLiveStreamPage extends React.Component<Props, State> {
         new Choices(language as any);
 
         //region
-        const area = document.querySelector(".choices-area-newstream");
-        new Choices(area as any);
+        // const area = document.querySelector(".choices-area-newstream");
+        // new Choices(area as any);
     }
 
     checkStreamName() {
@@ -240,6 +241,7 @@ class NewLiveStreamPage extends React.Component<Props, State> {
 
         return (
             <DashboardLayout>
+                <Tutorial></Tutorial>
                 <div className="card">
                     <div className="card-header">
                         <h4 className="card-heading">Start a new livestreaming</h4>

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-16 15:19:04
- * @LastEditTime: 2021-08-05 18:33:22
+ * @LastEditTime: 2021-08-06 08:47:33
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/IndexPage/IndexPage.tsx
@@ -137,21 +137,11 @@ class IndexPage extends React.Component<Props, State> {
                     checkedCategory: checked,
                     //videoList:{}
                 },
-                () => {
-                    //for(let j=0;j<10;j++)
-                    
-                    this.getVideoList(checked, 8,true);
-                    
-
-                    this.getVideoList(checked,36)
-
-                    // for (let i = 0; i < cate.length; i++) {
-                    //     //for(let j=0;j<10;j++)
-                    //     {
-                    //         this.getVideoList(cate[i], 12);
-                    //     }
-                    // }
-                    //this.getVideoList("Crypto",12)
+                async () => {
+                    this.isLoadingVideo=true
+                    await this.getVideoList(checked, 8,true);
+                    await this.getVideoList(checked,36)
+                    this.isLoadingVideo=false
                 }
             );
         }

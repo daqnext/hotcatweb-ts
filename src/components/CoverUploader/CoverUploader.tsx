@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-20 10:47:36
- * @LastEditTime: 2021-07-24 23:45:46
+ * @LastEditTime: 2021-08-06 09:59:06
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/components/CoverUploader/CoverUploader.tsx
@@ -36,10 +36,10 @@ class CoverUploader extends React.Component<Props, State> {
                 validator={(file) => {
                     //console.log(file);
                     if (file.size > 500 * 1024) {
-                        (window as any).notify("error", "File size limit 500KB", "error");
+                        (window as any).notify("error", "File size limit 1MB", "error");
                         return {
                             code: "file size error",
-                            message: `File size limit 500KB`,
+                            message: `File size limit 1MB`,
                         };
                     }
                     return null;
@@ -117,7 +117,7 @@ class CoverUploader extends React.Component<Props, State> {
                             <input {...getInputProps()} />
                             <p>Drop image file here or click to upload.</p>
                             <p>
-                                <span className="note">(file size limit:500 KB, Max width:640, Max height:360)</span>
+                                <span className="note">(file size limit:1MB, Max width:640, Max height:360)</span>
                             </p>
                         </div>
                         {this.state.coverImgUrl && this.state.coverImgUrl !== "" && (

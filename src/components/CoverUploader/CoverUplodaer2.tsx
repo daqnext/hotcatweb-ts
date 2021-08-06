@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-24 22:34:08
- * @LastEditTime: 2021-08-04 10:05:38
+ * @LastEditTime: 2021-08-06 09:59:15
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/components/CoverUploader/CoverUplodaer2.tsx
@@ -190,7 +190,7 @@ class CoverUploader extends React.Component<Props, State> {
                             <input {...getInputProps()} />
                             <p>Drop image file here or click to upload.</p>
                             <p>
-                                <span className="note">(file size limit:500 KB, Max width:640, Max height:360)</span>
+                                <span className="note">(file size limit:1MB, Max width:640, Max height:360)</span>
                             </p>
                         </div>
                         <div>
