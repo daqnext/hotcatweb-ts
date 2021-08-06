@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-08-05 20:40:33
- * @LastEditTime: 2021-08-06 13:01:45
+ * @LastEditTime: 2021-08-06 14:38:49
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/components/Tutorial/Tutorial.tsx
@@ -119,7 +119,7 @@ class Tutorial extends React.Component<Props, State> {
                         https://obsproject.com/
                     </a>
                 </p>
-                {this.renderPlayer("http://coldcdn.com/api/livecdn/record/m3u8/playlist/live_20_record/index.m3u8")}
+                {/* {this.renderPlayer("http://coldcdn.com/api/livecdn/record/m3u8/playlist/live_20_record/index.m3u8")} */}
             </>
         );
     }
@@ -128,8 +128,13 @@ class Tutorial extends React.Component<Props, State> {
         return (
             <>
                 <p>IOS</p>
-                <p>Software recommend</p>
-                {this.renderPlayer("http://coldcdn.com/api/livecdn/record/m3u8/playlist/live_36_record/index.m3u8")}
+                <p>
+                    Software recommend:streamlabs{" "}
+                    <a href="https://apps.apple.com/us/app/streamlabs-live-streaming-app/id1294578643" target="_blank" rel="noreferrer">
+                    https://apps.apple.com/us/app/streamlabs-live-streaming-app/id1294578643
+                    </a>
+                </p>
+                {/* {this.renderPlayer("http://coldcdn.com/api/livecdn/record/m3u8/playlist/live_36_record/index.m3u8")} */}
             </>
         );
     }
@@ -139,12 +144,12 @@ class Tutorial extends React.Component<Props, State> {
             <>
                 <p>Android</p>
                 <p>
-                    Software recommend:OBS Studio{" "}
+                    Software recommend:LiveNow{" "}
                     <a href="https://obsproject.com/" target="_blank" rel="noreferrer">
                         https://obsproject.com/
                     </a>
                 </p>
-                {this.renderPlayer("http://coldcdn.com/api/livecdn/record/m3u8/playlist/live_17_record/index.m3u8")}
+                {/* {this.renderPlayer("http://coldcdn.com/api/livecdn/record/m3u8/playlist/live_17_record/index.m3u8")} */}
             </>
         );
     }
@@ -164,50 +169,56 @@ class Tutorial extends React.Component<Props, State> {
                         aria-expanded="false"
                         aria-controls="collapseExample"
                     >
-                        Show tutorial
+                        Show tutorial video
                     </a>
                 </p>
-                <div className="collapse" id="collapseExample">
-                    
-                        <ul className="nav">
-                            <li className="nav-item">
-                                <div
-                                    className="nav-link active"
-                                    aria-current="page"
-                                    onClick={() => {
-                                        this.setState({ terminalType: "pc" });
-                                    }}
-                                >
-                                    Mac & Windows
-                                </div>
-                            </li>
-                            <li className="nav-item">
-                                <div
-                                    className="nav-link"
-                                    onClick={() => {
-                                        this.setState({ terminalType: "ios" });
-                                    }}
-                                >
-                                    iOS
-                                </div>
-                            </li>
-                            <li className="nav-item">
-                                <div
-                                    className="nav-link"
-                                    onClick={() => {
-                                        this.setState({ terminalType: "android" });
-                                    }}
-                                >
-                                    Android
-                                </div>
-                            </li>
-                        </ul>
-                        <div className="card-body" style={{padding:"10px"}}>
-                            {this.state.terminalType === "pc" && this.renderPc()}
-                            {this.state.terminalType === "ios" && this.renderIOS()}
-                            {this.state.terminalType === "android" && this.renderAndroid()}
+                <ul className="nav">
+                    <li className="nav-item">
+                        <div
+                            className="nav-link active"
+                            aria-current="page"
+                            onClick={() => {
+                                this.setState({ terminalType: "pc" });
+                            }}
+                        >
+                            Mac & Windows
                         </div>
-                    
+                    </li>
+                    <li className="nav-item">
+                        <div
+                            className="nav-link"
+                            onClick={() => {
+                                this.setState({ terminalType: "ios" });
+                            }}
+                        >
+                            iOS
+                        </div>
+                    </li>
+                    <li className="nav-item">
+                        <div
+                            className="nav-link"
+                            onClick={() => {
+                                this.setState({ terminalType: "android" });
+                            }}
+                        >
+                            Android
+                        </div>
+                    </li>
+                </ul>
+
+                {this.state.terminalType === "pc" && this.renderPc()}
+                {this.state.terminalType === "ios" && this.renderIOS()}
+                {this.state.terminalType === "android" && this.renderAndroid()}
+
+                <div className="collapse" id="collapseExample">
+                    <div className="card-body" style={{ padding: "10px" }}>
+                        {this.state.terminalType === "pc" &&
+                            this.renderPlayer("http://coldcdn.com/api/livecdn/record/m3u8/playlist/live_20_record/index.m3u8")}
+                        {this.state.terminalType === "ios" &&
+                            this.renderPlayer("http://coldcdn.com/api/livecdn/record/m3u8/playlist/live_36_record/index.m3u8")}
+                        {this.state.terminalType === "android" &&
+                            this.renderPlayer("http://coldcdn.com/api/livecdn/record/m3u8/playlist/live_17_record/index.m3u8")}
+                    </div>
                 </div>
             </div>
         );
