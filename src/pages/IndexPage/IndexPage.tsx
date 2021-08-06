@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-16 15:19:04
- * @LastEditTime: 2021-08-06 08:47:33
+ * @LastEditTime: 2021-08-06 14:20:39
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/IndexPage/IndexPage.tsx
@@ -21,7 +21,7 @@ interface State {
     categoryArray: string[];
     //checkedCategory:{[key:string]:boolean}
     checkedCategory: string[];
-    isAllChecked: boolean;
+    //isAllChecked: boolean;
     //videoList:{[key:string]:ILiveStreamInfo[]}
 
     onLiveVideos: ILiveStreamInfo[];
@@ -33,17 +33,18 @@ interface State {
 class IndexPage extends React.Component<Props, State> {
     lastIndexMap:{[key:string]:number}={}
     onLiveVideoLastIndex:number=0
-
-    isLoadingOnLiveVideo=false
-    isLoadingRecordVideo=false
+    
     isLoadingVideo=false
+
+    allLoadedOnLiveVideo:ILiveStreamInfo[]=[]
+    allLoadedVideo:ILiveStreamInfo[]=[]
     
     constructor(props: Props) {
         super(props);
         this.state = {
             categoryArray: [],
             checkedCategory: [],
-            isAllChecked: false,
+            //isAllChecked: false,
             //videoList:{},
 
             onLiveVideos: [],
@@ -98,28 +99,50 @@ class IndexPage extends React.Component<Props, State> {
         }
 
         if (isOnlyOnLive) {
-            const list = [...this.state.onLiveVideos];
-            list.push(...streamInfos);
+            this.allLoadedOnLiveVideo.push(...streamInfos)
+            const list = [];
+            for (let i = 0; i < this.allLoadedOnLiveVideo.length; i++) {
+                if (this.state.checkedCategory.includes(this.allLoadedOnLiveVideo[i].category)) {
+                    list.push(this.allLoadedOnLiveVideo[i])
+                }
+            }
             this.setState({ onLiveVideos: list });
-        } else {
-            const list = [...this.state.videos];
-            list.push(...streamInfos);
+        }else{
+            this.allLoadedVideo.push(...streamInfos)
+            const list = [];
+            for (let i = 0; i < this.allLoadedVideo.length; i++) {
+                if (this.state.checkedCategory.includes(this.allLoadedVideo[i].category)) {
+                    list.push(this.allLoadedVideo[i])
+                }
+            }
             this.setState({ videos: list });
         }
+        
+        // if (isOnlyOnLive) {
+        //     const list = [...this.state.onLiveVideos];
+        //     list.push(...streamInfos);
+        //     this.setState({ onLiveVideos: list });
+        // } else {
+        //     const list = [...this.state.videos];
+        //     list.push(...streamInfos);
+        //     this.setState({ videos: list });
+        // }
 
         return true
     }
 
     async getMoreOnLiveVideo() {
-        const hasNewVideo=await this.getVideoList(this.state.checkedCategory,8)
+        //const hasNewVideo=await this.getVideoList(this.state.checkedCategory,8)
+        const hasNewVideo=await this.getVideoList(this.state.categoryArray,12)
         if (!hasNewVideo) {
             (window as any).notify("", "no more videos", "info");
         }
     }
 
     async getMoreVideo() {
-        console.log(this.state.checkedCategory);
-        const hasNewVideo=await this.getVideoList(this.state.checkedCategory,12)
+        //console.log(this.state.checkedCategory);
+        //const hasNewVideo=await this.getVideoList(this.state.checkedCategory,12)
+        const hasNewVideo=await this.getVideoList(this.state.categoryArray,24)
         if (!hasNewVideo) {
             (window as any).notify("", "no more videos", "info");
         }
@@ -231,12 +254,36 @@ class IndexPage extends React.Component<Props, State> {
         for (let i = 0; i < options.length; i++) {
             checked.push(options[i].value);
         }
-        
-        if (checked.length>0) {
-            this.setState({checkedCategory:checked})
-        }else{
-            this.setState({checkedCategory:[...this.state.categoryArray]})
+
+        if (checked.length<=0) {
+            checked.push(...this.state.categoryArray)
         }
+        this.setState({checkedCategory:checked})
+        
+        // if (checked.length>0) {
+        //     this.setState({checkedCategory:checked})
+        // }else{
+        //     this.setState({checkedCategory:[...this.state.categoryArray]})
+        // }
+
+        
+
+        const onLiveVideos= []
+        for (let i = 0; i < this.allLoadedOnLiveVideo.length; i++) {
+            const category=this.allLoadedOnLiveVideo[i].category
+            if (checked.includes(category)) {
+                onLiveVideos.push(this.allLoadedOnLiveVideo[i])
+            }
+        }
+        this.setState({onLiveVideos:onLiveVideos})
+        const videos= []
+        for (let i = 0; i < this.allLoadedVideo.length; i++) {
+            const category=this.allLoadedVideo[i].category
+            if (checked.includes(category)) {
+                videos.push(this.allLoadedVideo[i])
+            }
+        }
+        this.setState({videos:videos})
         
     }
 
