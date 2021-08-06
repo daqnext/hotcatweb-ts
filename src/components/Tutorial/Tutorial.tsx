@@ -13,6 +13,7 @@ import { GlobalData } from "../../global/global";
 import { ELiveStreamStatus, ILiveStreamInfo } from "../../interface/interface";
 import { RequestTool } from "../../utils/RequestTool";
 import { Utils } from "../../utils/Utils";
+import "./Tutorial.css"
 
 interface Props {}
 
@@ -111,72 +112,53 @@ class Tutorial extends React.Component<Props, State> {
 
     renderPc() {
         return (
-            <>
-                <p>PC</p>
-                <p>
-                    Software recommend:OBS Studio{" "}
-                    <a href="https://obsproject.com/" target="_blank" rel="noreferrer">
-                        https://obsproject.com/
-                    </a>
-                </p>
+            <div className="bodywrapper">
+                <p>PC software recommended [OBS Studio] click download :</p> 
+                <a href="https://obsproject.com/" target="_blank" className="btn btn-primary" rel="noreferrer"> https://obsproject.com/</a>
                 {/* {this.renderPlayer("http://coldcdn.com/api/livecdn/record/m3u8/playlist/live_20_record/index.m3u8")} */}
-            </>
+            </div>
         );
     }
 
     renderIOS() {
         return (
-            <>
-                <p>IOS</p>
-                <p>
-                    Software recommend:streamlabs{" "}
-                    <a href="https://apps.apple.com/us/app/streamlabs-live-streaming-app/id1294578643" target="_blank" rel="noreferrer">
+            <div className="bodywrapper">
+                <p>IOS software recommended [streamlabs] click download : </p>
+                <a href="https://apps.apple.com/us/app/streamlabs-live-streaming-app/id1294578643" className="btn btn-primary" target="_blank" rel="noreferrer">
                     https://apps.apple.com/us/app/streamlabs-live-streaming-app/id1294578643
-                    </a>
-                </p>
+                 </a>
                 {/* {this.renderPlayer("http://coldcdn.com/api/livecdn/record/m3u8/playlist/live_36_record/index.m3u8")} */}
-            </>
+            </div>
         );
     }
 
     renderAndroid() {
         return (
-            <>
-                <p>Android</p>
-                <p>
-                    Software recommend:LiveNow{" "}
-                    <a href="https://obsproject.com/" target="_blank" rel="noreferrer">
-                        https://obsproject.com/
-                    </a>
-                </p>
+            <div className="bodywrapper">
+                <p>Android software recommended [LiveNow] click download : </p>
+                <a href="https://obsproject.com/" className="btn btn-primary" target="_blank" rel="noreferrer">https://obsproject.com/</a>
                 {/* {this.renderPlayer("http://coldcdn.com/api/livecdn/record/m3u8/playlist/live_17_record/index.m3u8")} */}
-            </>
+            </div>
         );
     }
 
     render() {
+ 
         return (
             <div className="card" style={{ marginBottom: "20px" }}>
-                {/* <div className="card-header">
-                    <h4 className="card-heading">How to start</h4>
-                </div> */}
-                <p>
-                    <a
-                        className="btn btn-primary"
-                        data-bs-toggle="collapse"
-                        href="#collapseExample"
-                        role="button"
-                        aria-expanded="false"
-                        aria-controls="collapseExample"
-                    >
-                        Show tutorial video
-                    </a>
-                </p>
-                <ul className="nav">
+                
+                <ul className="toolbartop nav nav-pills card-header-pills">
+
                     <li className="nav-item">
-                        <div
-                            className="nav-link active"
-                            aria-current="page"
+                            <a  className="nav-link" data-bs-toggle="collapse"
+                                href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                        Show tutorial video
+                            </a>
+                    </li>
+                     
+
+                    <li className="nav-item">
+                        <div  className="nav-link active" aria-current="page"
                             onClick={() => {
                                 this.setState({ terminalType: "pc" });
                             }}
@@ -209,6 +191,8 @@ class Tutorial extends React.Component<Props, State> {
                 {this.state.terminalType === "pc" && this.renderPc()}
                 {this.state.terminalType === "ios" && this.renderIOS()}
                 {this.state.terminalType === "android" && this.renderAndroid()}
+ 
+                
 
                 <div className="collapse" id="collapseExample">
                     <div className="card-body" style={{ padding: "10px" }}>

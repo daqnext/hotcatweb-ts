@@ -1,0 +1,23 @@
+.toolbartop{
+border-top-right-radius: 10px;
+border-top-left-radius: 10px;
+color: white;
+background-color: #39393a;
+padding: 20px;
+margin: 0px;
+}
+
+
+.toolbartop .nav-link{
+    color: white !important;
+    font-weight: bold;
+}
+
+.bodywrapper{
+    padding: 20px;
+}
+
+.bodywrapper p{
+    color: white;
+    font-weight: bold;
+}
