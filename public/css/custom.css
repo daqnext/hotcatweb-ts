@@ -147,7 +147,7 @@ table {
 }
 
 .loadertext {
-    margin-left: -15px;
+    /* margin-left: -15px; */
     color: white;
     margin-top: 10px;
     font-weight: bold;
@@ -486,4 +486,8 @@ table {
 
 .react-bootstrap-table{
     min-width: 1050px;
+}
+
+.sk-wave{
+    width: auto;
 }

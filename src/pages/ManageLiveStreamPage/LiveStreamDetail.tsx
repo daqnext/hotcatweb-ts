@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-20 09:15:51
- * @LastEditTime: 2021-08-05 16:59:46
+ * @LastEditTime: 2021-08-09 19:29:17
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/ManageLiveStreamPage/LiveStreamDetail.tsx
@@ -237,7 +237,7 @@ class LiveStreamDetail extends React.Component<Props, State> {
                     </div>
 
                     <div className="row justify-content-end">
-                        <div
+                        {/* <div
                             className="btn btn-success col-1"
                             onClick={() => {
                                 console.log("finishButton click");
@@ -257,7 +257,7 @@ class LiveStreamDetail extends React.Component<Props, State> {
                             }}
                         >
                             {"Finish"}
-                        </div>
+                        </div> */}
 
                         <div
                             className="btn btn-danger col-1"
@@ -308,7 +308,7 @@ class LiveStreamDetail extends React.Component<Props, State> {
                         <input
                             className="form-control"
                             placeholder="Livestreaming name"
-                            value={"https://hotcat.live/play?id=" + this.props.liveStreamInfo.id}
+                            value={"http://hotcat.live/play?id=" + this.props.liveStreamInfo.id}
                             disabled
                         />
                     </div>

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-16 15:19:04
- * @LastEditTime: 2021-08-06 14:20:39
+ * @LastEditTime: 2021-08-09 19:30:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/pages/IndexPage/IndexPage.tsx
@@ -60,7 +60,7 @@ class IndexPage extends React.Component<Props, State> {
             isOnlyOnLive:isOnlyOnLive,
             lastIndexMap:this.lastIndexMap
         };
-        const responseData = await RequestTool.post<{ id: number[]; contentMap: { [key: number]: string },lastIndexMap:{[key:string]:number} }>(url, sendData);
+        const responseData = await RequestTool.post<{ id: number[]; contentMap: { [key: number]: string },watchedMap:{[key: number]: number},lastIndexMap:{[key:string]:number} }>(url, sendData);
         if (responseData === null) {
             //request error
             (window as any).notify("error", "program error", "error");
@@ -82,6 +82,7 @@ class IndexPage extends React.Component<Props, State> {
            
             return false;
         }
+        const watchedMap=data.watchedMap
         for (let i = 0; i < data.id.length; i++) {
             const streamInfoStr = data.contentMap[data.id[i]];
             if (streamInfoStr === null||streamInfoStr===undefined) {
@@ -93,6 +94,11 @@ class IndexPage extends React.Component<Props, State> {
             }
             if (isOnlyOnLive==false&&streamInfo.status==ELiveStreamStatus.ONLIVE) {
                 continue
+            }
+
+            const watched=watchedMap[data.id[i]]
+            if (watched!=undefined) {
+                streamInfo.watched=watched
             }
             //console.log(streamInfo);
             streamInfos.push(streamInfo);
@@ -163,7 +169,7 @@ class IndexPage extends React.Component<Props, State> {
                 async () => {
                     this.isLoadingVideo=true
                     await this.getVideoList(checked, 8,true);
-                    await this.getVideoList(checked,36)
+                    await this.getVideoList(checked,48)
                     this.isLoadingVideo=false
                 }
             );

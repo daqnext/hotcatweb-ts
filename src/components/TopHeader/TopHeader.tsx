@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-16 14:18:43
- * @LastEditTime: 2021-08-03 16:38:08
+ * @LastEditTime: 2021-08-09 11:04:44
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /hotcatweb2-ts/src/components/TopHeader/TopHeader.ts
@@ -108,6 +108,7 @@ class TopHeader extends React.Component<Props, State> {
                         </ul>
                     ) : (
                         <div className="ms-auto d-flex align-items-center list-unstyled mb-0 ">
+                            <a className="btn btn-sm btn-outline-primary " href="/signup" style={{marginRight:"10px"}}> Sign Up </a>
                             <a className="btn btn-sm btn-primary " href="/signin"> Sign In </a>
                         </div>
                     )}
